@@ -16,18 +16,26 @@ module Postino
     end
 
     def create
-      if @campaign = Postino::Campaign.create(resource_params)
-        redirect_to campaigns_wizard_path(@campaign)
+
+      @campaign = Postino::Campaign.new
+      @campaign.step = 1
+
+      @campaign.assign_attributes(resource_params)
+
+      if @campaign.save && @campaign.errors.blank?
+        binding.pry
+        redirect_to campaign_wizard_path(@campaign)
       else
         render "new"
       end
+
     end
 
     protected
 
     def resource_params
       return [] if request.get?
-      [ params.require(:campaign).permit(:list_id) ]
+      params.require(:campaign).permit(:list_id)
     end
 
   end

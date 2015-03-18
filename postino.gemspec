@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "premailer"
   s.add_dependency "lazy_high_charts"
   s.add_dependency "wicked"
+  s.add_dependency "haml"
 
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "sqlite3"

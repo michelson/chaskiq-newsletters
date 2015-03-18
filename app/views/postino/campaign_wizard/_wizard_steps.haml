@@ -1,0 +1,10 @@
+.steps
+  %ol
+    - wizard_steps.each_with_index do |wizard_step, index|
+      %li{ class: "level-#{index+1} #{ step == wizard_step ? 'selected' : '' }"}
+        %div
+          %span
+            #{index+1}
+          = link_to wizard_path(wizard_step) do
+
+            = t(".#{wizard_step}")

@@ -1,0 +1,21 @@
+%nav.navbar.navbar-inverse.navbar-fixed-top
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle.collapsed{"aria-controls" => "navbar", "aria-expanded" => "false", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{:href => "#"} Postino
+    #navbar.navbar-collapse.collapse
+      %ul.nav.navbar-nav.navbar-right
+        %li
+          %a{:href => "#"} Dashboard
+        %li
+          %a{:href => "#"} Settings
+        %li
+          %a{:href => "#"} Profile
+        %li
+          %a{:href => "#"} Help
+      %form.navbar-form.navbar-right
+        %input.form-control{:placeholder => "Search...", :type => "text"}/

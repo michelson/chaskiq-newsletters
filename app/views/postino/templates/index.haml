@@ -1,0 +1,9 @@
+= link_to "new template" , new_template_path , class: "pull-right btn btn-default"
+%h1.page-header Templates
+.row.placeholders
+  - @templates.each do |template|
+    .col-xs-6.col-sm-3.placeholder
+      %img.img-responsive{:alt => "Generic placeholder thumbnail", "data-src" => "holder.js/200x200/auto/sky"}/
+      %h4= template.name
+      %span.text-muted
+      = link_to "edit" , edit_template_path(template)

@@ -1,0 +1,8 @@
+%h1.page-header Campaigns
+= link_to "new campaign" , new_campaign_path
+.row.placeholders
+  - @campaigns.each do |campaign|
+    .col-xs-6.col-sm-3.placeholder
+      %img.img-responsive{:alt => "Generic placeholder thumbnail", "data-src" => "holder.js/200x200/auto/sky"}/
+      %h4= campaign.name
+      %span.text-muted= campaign.state
