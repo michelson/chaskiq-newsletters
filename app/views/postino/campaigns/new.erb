@@ -3,6 +3,12 @@
 
 <div class="row placeholders">
 
+<%= form_for @campaign do |f| %>
 
+  <% #= f.text_field :name %>
+  <%= f.select :list_id, Postino::List.all %>
+  <%= f.submit "Create Campaign" %>
+
+<% end %>
 
 </div>

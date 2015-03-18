@@ -15,14 +15,21 @@ module Postino
 
     def update
       @campaign = Postino::Campaign.find(params[:campaign_id])
-      @campaign.update_attributes(params[:campaign])
+      @campaign.update_attributes(resource_params)
       render_wizard @campaign
     end
 
 
     def create
-      @campaign = Postino::Campaign.create
+      @campaign = Postino::Campaign.create(resource_params)
       redirect_to wizard_path(steps.first, :campaign_id => @campaign.id)
+    end
+
+    protected
+
+    def resource_params
+      return [] if request.get?
+      [ params.require(:campaign).permit(:list_id) ]
     end
 
   end
