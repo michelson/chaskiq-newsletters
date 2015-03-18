@@ -5,6 +5,7 @@ PATH
       lazy_high_charts
       premailer
       rails (~> 4.2.0)
+      wicked
 
 GEM
   remote: https://rubygems.org/
@@ -152,6 +153,8 @@ GEM
     tilt (1.4.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    wicked (1.1.1)
+      rails (>= 3.0.7)
 
 PLATFORMS
   ruby
