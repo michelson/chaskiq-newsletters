@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     postino (0.0.1)
+      active_importer
       cocoon
       haml
       lazy_high_charts
@@ -33,6 +34,8 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.1)
+    active_importer (0.2.6)
+      roo
     activejob (4.2.0)
       activesupport (= 4.2.0)
       globalid (>= 0.3.0)
@@ -128,6 +131,10 @@ GEM
     redis (3.2.1)
     redis-namespace (1.5.1)
       redis (~> 3.0, >= 3.0.4)
+    roo (1.13.2)
+      nokogiri
+      rubyzip
+      spreadsheet (> 0.6.4)
     rspec (3.2.0)
       rspec-core (~> 3.2.0)
       rspec-expectations (~> 3.2.0)
@@ -149,6 +156,8 @@ GEM
       rspec-mocks (~> 3.2.0)
       rspec-support (~> 3.2.0)
     rspec-support (3.2.2)
+    ruby-ole (1.2.11.8)
+    rubyzip (1.1.7)
     shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
     sidekiq (3.3.2)
@@ -161,6 +170,8 @@ GEM
       actionpack (~> 4.0)
       activemodel (~> 4.0)
     slop (3.6.0)
+    spreadsheet (1.0.3)
+      ruby-ole (>= 1.0)
     sprockets (2.12.3)
       hike (~> 1.2)
       multi_json (~> 1.0)

@@ -1,6 +1,6 @@
 %h1.page-header New Campaigns
 .row.placeholders
-  = form_for @campaign do |f|
+  = simple_form_for @campaign do |f|
 
-    = f.select :list_id, Postino::List.all.map{|o| [o.name , o.id]}
+    = f.input :list_id, as: :select , collection: Postino::List.all
     = f.submit "Create Campaign"

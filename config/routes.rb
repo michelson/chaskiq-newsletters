@@ -5,14 +5,14 @@ Postino::Engine.routes.draw do
     resources :wizard, controller: 'campaign_wizard'
   end
 
-
-
   scope 'manage' do
     resources :campaigns do
       resources :attachments
     end
 
-    resources :lists
+    resources :lists do
+      resources :subscribers
+    end
     resources :templates
   end
 

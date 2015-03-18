@@ -1,0 +1,8 @@
+
+
+%h2 subscribers on #{@list.name} list
+%p this list is used on #{@list.campaigns.map(&:id).join(", ")}
+
+- @list.subscribers.each do |sub|
+  = sub.name
+  = sub.email
