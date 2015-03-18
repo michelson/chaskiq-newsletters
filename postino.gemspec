@@ -23,6 +23,9 @@ Gem::Specification.new do |s|
   s.add_dependency "lazy_high_charts"
   s.add_dependency "wicked"
   s.add_dependency "haml"
+  s.add_dependency "simple_form"
+  s.add_dependency "cocoon"
+  s.add_dependency "sidekiq"
 
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "sqlite3"

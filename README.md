@@ -2,6 +2,7 @@
 
 This project rocks and uses MIT-LICENSE.
 
+http://sendy.co/
 
 ### testing
 
