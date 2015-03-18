@@ -12,3 +12,4 @@ gemspec
 
 # To use a debugger
 # gem 'debugger', group: [:development, :test]
+gem "pry"

@@ -1,5 +1,5 @@
 module Postino
-  class CampaignAttachment < ActiveRecord::Base
+  class Attachment < ActiveRecord::Base
     belongs_to :campaign
   end
 end
