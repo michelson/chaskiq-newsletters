@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150318054713) do
+ActiveRecord::Schema.define(version: 20150318225157) do
 
   create_table "postino_attachments", force: :cascade do |t|
     t.string   "image"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20150318054713) do
     t.integer  "list_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "last_name"
   end
 
   add_index "postino_subscribers", ["list_id"], name: "index_postino_subscribers_on_list_id"
