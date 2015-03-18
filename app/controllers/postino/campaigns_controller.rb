@@ -23,8 +23,7 @@ module Postino
       @campaign.assign_attributes(resource_params)
 
       if @campaign.save && @campaign.errors.blank?
-        binding.pry
-        redirect_to campaign_wizard_path(@campaign)
+        redirect_to campaign_wizard_path(@campaign, "setup")
       else
         render "new"
       end

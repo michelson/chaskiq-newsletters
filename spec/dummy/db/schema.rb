@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150318040633) do
+ActiveRecord::Schema.define(version: 20150318054713) do
 
   create_table "postino_attachments", force: :cascade do |t|
     t.string   "image"
@@ -83,8 +83,10 @@ ActiveRecord::Schema.define(version: 20150318040633) do
   create_table "postino_templates", force: :cascade do |t|
     t.string   "name"
     t.text     "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.text     "html_content"
+    t.string   "screenshot"
   end
 
 end
