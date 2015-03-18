@@ -6,7 +6,10 @@ module Postino
     def import_csv(file)
       csv_importer.import(file).each do |row|
         puts "Importing row #{row}"
-        self.subscribers.create(email: row[0], name: row[1], last_name: row[2])
+        sub = self.subscribers.find_or_initialize_by(email: row[0])
+        sub.name = row[1]
+        sub.last_name = row[2]
+        sub.save
       end
     end
 
