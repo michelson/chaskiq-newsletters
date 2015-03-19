@@ -49,7 +49,7 @@ module Postino
     end
 
     def copy_template
-      self.html_content = self.template.html_content
+      self.html_content = self.template.body
     end
 
   end

@@ -44,10 +44,16 @@ module Postino
         @c = FactoryGirl.create(:postino_campaign)
       end
 
-      it "will set step if valid" do
+      it "will copy template" do
         @c.template = template
         @c.save
-        expect(@c.template).to be == template
+        expect(@c.html_content).to be == template.body
+      end
+
+
+      it "will copy template on creation" do
+        @c = FactoryGirl.create(:postino_campaign, template: template)
+        expect(@c.html_content).to be == template.body
       end
 
     end
