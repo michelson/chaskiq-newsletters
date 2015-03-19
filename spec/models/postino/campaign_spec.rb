@@ -4,6 +4,7 @@ module Postino
   RSpec.describe Campaign, type: :model do
 
     it{ should have_many :attachments }
+    it{ should have_many :metrics }
     #it{ should have_one :campaign_template }
     #it{ should have_one(:template).through(:campaign_template) }
     it{ should belong_to :list }

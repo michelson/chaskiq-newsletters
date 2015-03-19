@@ -5,6 +5,7 @@ module Postino
     belongs_to :list
     has_many :subscribers, through: :list
     has_many :attachments
+    has_many :metrics
     #has_one :campaign_template
     #has_one :template, through: :campaign_template
     belongs_to :template, class_name: "Postino::Template"
