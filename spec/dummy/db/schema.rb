@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150318225157) do
+ActiveRecord::Schema.define(version: 20150319044154) do
 
   create_table "postino_attachments", force: :cascade do |t|
     t.string   "image"
@@ -54,10 +54,12 @@ ActiveRecord::Schema.define(version: 20150318225157) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "list_id"
+    t.integer  "template_id"
   end
 
   add_index "postino_campaigns", ["list_id"], name: "index_postino_campaigns_on_list_id"
   add_index "postino_campaigns", ["parent_id"], name: "index_postino_campaigns_on_parent_id"
+  add_index "postino_campaigns", ["template_id"], name: "index_postino_campaigns_on_template_id"
 
   create_table "postino_lists", force: :cascade do |t|
     t.string   "name"

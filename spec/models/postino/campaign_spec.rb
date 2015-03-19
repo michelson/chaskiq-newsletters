@@ -4,9 +4,12 @@ module Postino
   RSpec.describe Campaign, type: :model do
 
     it{ should have_many :attachments }
-    it{ should have_one :campaign_template }
-    it{ should have_one(:template).through(:campaign_template) }
+    #it{ should have_one :campaign_template }
+    #it{ should have_one(:template).through(:campaign_template) }
     it{ should belong_to :list }
+    it{ should belong_to :template }
+
+    let(:template){ FactoryGirl.create(:postino_template) }
 
     describe "creation" do
       it "will create a pending campaign by default" do
@@ -36,11 +39,14 @@ module Postino
     end
 
     context "template step" do
-
-      it "will validate basic info" do
+      before do
+        @c = FactoryGirl.create(:postino_campaign)
       end
 
       it "will set step if valid" do
+        @c.template = template
+        @c.save
+        expect(@c.template).to be == template
       end
 
     end
