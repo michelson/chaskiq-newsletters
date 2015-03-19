@@ -8,7 +8,7 @@
 
     .media
       .media-left
-        = link_to campaign.subject || campaign.id, campaign_path(campaign)
+        = link_to "##{campaign.id}-#{campaign.name}", campaign_path(campaign)
       .media-body
         %h4.media-heading
 

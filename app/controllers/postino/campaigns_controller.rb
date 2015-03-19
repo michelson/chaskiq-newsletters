@@ -30,6 +30,10 @@ module Postino
 
     end
 
+    def preview
+      @campaign  = Postino::Campaign.find(params[:id])
+    end
+
     protected
 
     def resource_params

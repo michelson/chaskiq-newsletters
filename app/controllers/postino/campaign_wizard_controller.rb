@@ -30,7 +30,7 @@ module Postino
 
     def resource_params
       return [] if request.get?
-      [ params.require(:campaign).permit(:list_id) ]
+      params.require(:campaign).permit!
     end
 
   end

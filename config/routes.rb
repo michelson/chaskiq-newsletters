@@ -9,6 +9,9 @@ Postino::Engine.routes.draw do
 
   scope 'manage' do
     resources :campaigns do
+      member do
+        get :preview
+      end
       resources :attachments
     end
 

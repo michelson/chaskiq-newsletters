@@ -6,7 +6,7 @@ module Postino
     has_many :attachments
     #has_one :campaign_template
     #has_one :template, through: :campaign_template
-    belongs_to :template
+    belongs_to :template, class_name: "Postino::Template"
     #accepts_nested_attributes_for :template, :campaign_template
 
     attr_accessor :step

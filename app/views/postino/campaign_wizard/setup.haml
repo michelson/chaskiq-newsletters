@@ -2,6 +2,8 @@
 = render partial: "wizard_steps"
 
 = simple_form_for @campaign, url: wizard_path do |f|
+
+  = f.input :name
   = f.input :subject
   = f.input :from_name
   = f.input :from_email

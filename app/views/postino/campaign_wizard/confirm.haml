@@ -3,6 +3,15 @@
 
 = simple_form_for @campaign do |f|
 
+  %h3 Next steps:
+
+  %ul
+    %li= link_to "preview", preview_campaign_path(@campaign)
+    %li test
+    %li send
+    %li view reports
+    %li
+
   = f.submit
 
 

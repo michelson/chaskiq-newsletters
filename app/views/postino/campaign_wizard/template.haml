@@ -4,7 +4,7 @@
 
 = simple_form_for @campaign, url: wizard_path do |f|
 
-  = f.input :template , as: :select, collection: Postino::Template.all
+  = f.input :template_id , as: :select, collection: Postino::Template.all
 
   = f.submit
 
