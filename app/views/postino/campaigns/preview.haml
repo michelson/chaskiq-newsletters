@@ -1,0 +1,7 @@
+
+= link_to "view" , campaign_path(@campaign), class: "btn btn-default pull-right"
+
+%h1.page-header #{@campaign.name} mail content
+
+
+= @campaign.html_content
