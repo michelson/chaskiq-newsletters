@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
   s.add_dependency "sidekiq"
   s.add_dependency "kaminari"
   s.add_dependency "mustache"
+  s.add_dependency "nokogiri"
 
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "sqlite3"
