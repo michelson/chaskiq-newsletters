@@ -16,7 +16,9 @@
       .media-right
 
         = link_to "edit", campaign_wizard_path(campaign, "setup")
-
+        = link_to "preview", preview_campaign_path(campaign)
+        = link_to "test", test_campaign_path(campaign)
+        = link_to "send", deliver_campaign_path(campaign)
         = link_to "destroy", campaign_path(campaign), method: :delete
 
 

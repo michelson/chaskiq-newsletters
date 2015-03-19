@@ -6,6 +6,6 @@ require "postino/engine"
 
 
 module Postino
-  #autoload :Config, "postino/config"
+  autoload :VERSION, "postino/version"
   autoload :CsvImporter, "postino/csv_importer"
 end

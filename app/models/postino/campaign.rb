@@ -38,6 +38,10 @@ module Postino
       end
     end
 
+    def test_newsletter
+      Postino::CampaignMailer.test(self).deliver_now
+    end
+
     def detect_changed_template
       if self.changes.include?("template_id")
         copy_template

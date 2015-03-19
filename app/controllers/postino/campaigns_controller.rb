@@ -34,6 +34,20 @@ module Postino
       @campaign  = Postino::Campaign.find(params[:id])
     end
 
+    def test
+      @campaign  = Postino::Campaign.find(params[:id])
+      @campaign.test_newsletter
+      flash[:notice] = "test sended"
+      redirect_to campaigns_path()
+    end
+
+    def deliver
+      @campaign  = Postino::Campaign.find(params[:id])
+      @campaign.send_newsletter
+      flash[:notice] = "newsletter sended"
+      redirect_to campaigns_path()
+    end
+
     protected
 
     def resource_params

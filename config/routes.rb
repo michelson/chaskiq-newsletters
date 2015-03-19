@@ -11,6 +11,8 @@ Postino::Engine.routes.draw do
     resources :campaigns do
       member do
         get :preview
+        get :test
+        get :deliver
       end
       resources :attachments
     end

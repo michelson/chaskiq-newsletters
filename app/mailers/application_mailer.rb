@@ -18,4 +18,15 @@ class ApplicationMailer < ActionMailer::Base
           content_type: content_type )
   end
 
+  def test(campaign)
+
+    content_type  = "text/html"
+
+    mail( from: "#{campaign.from_name}<#{campaign.from_email}>",
+          to: "miguelmichelson@gmail.com",
+          subject: campaign.subject,
+          body: campaign.html_content,
+          content_type: content_type )
+  end
+
 end
