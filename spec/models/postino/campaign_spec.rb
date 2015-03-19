@@ -10,6 +10,7 @@ module Postino
     it{ should belong_to :template }
 
     let(:template){ FactoryGirl.create(:postino_template) }
+    let(:list){ FactoryGirl.create(:postino_list) }
 
     describe "creation" do
       it "will create a pending campaign by default" do
@@ -47,6 +48,25 @@ module Postino
         @c.template = template
         @c.save
         expect(@c.template).to be == template
+      end
+
+    end
+
+    context "send newsletter" do
+      before do
+
+        10.times do
+          FactoryGirl.create(:postino_subscriber, list: list)
+        end
+
+        @c = FactoryGirl.create(:postino_campaign, template: template, list: list)
+
+      end
+
+      it "send newsletter" do
+        allow_any_instance_of(ActionMailer::MessageDelivery).to receive(:deliver_now).and_return(true)
+        expect(Postino::CampaignMailer).to receive(:newsletter).exactly(10).times.and_return(ActionMailer::MessageDelivery.new(1,2))
+        @c.send_newsletter
       end
 
     end

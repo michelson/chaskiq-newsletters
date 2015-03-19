@@ -3,6 +3,7 @@ module Postino
 
     belongs_to :parent, class_name: "Postino::Campaign"
     belongs_to :list
+    has_many :subscribers, through: :list
     has_many :attachments
     #has_one :campaign_template
     #has_one :template, through: :campaign_template
@@ -29,7 +30,12 @@ module Postino
     end
 
     def send_newsletter
+      #with custom
+      #Postino::CampaignMailer.my_email.delivery_method.settings.merge!(SMTP_SETTINGS)
       #send newsletter here
+      self.subscribers.each do |s|
+        Postino::CampaignMailer.newsletter(self, s).deliver_now #deliver_later
+      end
     end
 
     def detect_changed_template
