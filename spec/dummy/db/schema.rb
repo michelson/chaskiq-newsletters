@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150319045255) do
+ActiveRecord::Schema.define(version: 20150319223955) do
 
   create_table "postino_attachments", force: :cascade do |t|
     t.string   "image"
@@ -71,6 +71,19 @@ ActiveRecord::Schema.define(version: 20150319045255) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
+
+  create_table "postino_metrics", force: :cascade do |t|
+    t.integer  "subject_id"
+    t.integer  "campaign_id"
+    t.string   "host"
+    t.string   "action"
+    t.string   "data"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "postino_metrics", ["campaign_id"], name: "index_postino_metrics_on_campaign_id"
+  add_index "postino_metrics", ["subject_id"], name: "index_postino_metrics_on_subject_id"
 
   create_table "postino_subscribers", force: :cascade do |t|
     t.string   "name"
