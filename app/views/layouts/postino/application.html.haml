@@ -3,6 +3,7 @@
   %head
     %title Postino
     = stylesheet_link_tag "//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
+    = javascript_include_tag "//code.jquery.com/jquery-git2.min.js"
     = javascript_include_tag "//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"
     = stylesheet_link_tag "postino/application", media: "all"
     = javascript_include_tag "postino/application"
@@ -17,6 +18,7 @@
       .row
         = render partial: "shared/main_nav"
         .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+          = render partial: "shared/flashes", :locals => {:flash => flash}
           = yield
     /
       Bootstrap core JavaScript

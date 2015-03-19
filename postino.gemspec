@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency "simple_form"
   s.add_dependency "cocoon"
   s.add_dependency "sidekiq"
-  s.add_dependency "active_importer"
+  s.add_dependency "kaminari"
 
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "sqlite3"

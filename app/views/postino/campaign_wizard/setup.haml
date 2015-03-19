@@ -1,2 +1,19 @@
 %h1 setup
 = render partial: "wizard_steps"
+
+= simple_form_for @campaign, url: wizard_path do |f|
+  = f.input :subject
+  = f.input :from_name
+  = f.input :from_email
+  = f.input :reply_email
+  = f.input :query_string
+  = f.input :scheduled_at
+  = f.input :timezone, as: :select , collection: ActiveSupport::TimeZone.us_zones, default: "Pacific Time (US & Canada)"
+
+  = f.input :created_at
+  = f.input :updated_at
+
+  = f.submit
+
+
+= render partial: "wizard_nav"

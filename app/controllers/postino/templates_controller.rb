@@ -37,5 +37,10 @@ module Postino
     end
 
 
+    def resource_params
+      return [] if request.get?
+      params.require(:template).permit!
+    end
+
   end
 end

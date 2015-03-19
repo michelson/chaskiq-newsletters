@@ -1,2 +1,11 @@
 %h1 template
 = render partial: "wizard_steps"
+
+
+= simple_form_for @campaign, url: wizard_path do |f|
+
+  = f.input :template , as: :select, collection: Postino::Template.all
+
+  = f.submit
+
+= render partial: "wizard_nav"

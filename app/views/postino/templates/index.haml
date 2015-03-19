@@ -2,8 +2,15 @@
 %h1.page-header Templates
 .row.placeholders
   - @templates.each do |template|
-    .col-xs-6.col-sm-3.placeholder
-      %img.img-responsive{:alt => "Generic placeholder thumbnail", "data-src" => "holder.js/200x200/auto/sky"}/
-      %h4= template.name
-      %span.text-muted
-      = link_to "edit" , edit_template_path(template)
+
+    .col-sm-6.col-md-4
+      .thumbnail
+        %img{:alt => "100%x200", "data-holder-rendered" => "true", "data-src" => "holder.js/100%x200", :src => ""}
+        .caption
+          %h3#thumbnail-label
+            = template.name
+            %a.anchorjs-link{:href => "#thumbnail-label"}
+              %span.anchorjs-icon
+          %p
+            %a.btn.btn-primary{:href => edit_template_path(template), :role => "button"} Edit
+            %a.btn.btn-default{:href => template_path(template), :role => "button"} Remove

@@ -1,0 +1,16 @@
+.line.section
+  .lastUnit.size1of1.below18
+    %h3.nomargin
+      Hello:
+      %span User
+  .unit.size1of2.below18
+    .count.alignr
+      %strong.float-left Subscribers
+      %a{:href => "/lists/", :title => "View All Subscribers"} 0
+      of #{Postino::Subscriber.count}
+      .meter.mar-b0
+        %span{:style => "width:0%"}
+  .lastUnit.size1of2
+    .count.alignr
+      %strong.float-left Sends
+      1 of 12,000

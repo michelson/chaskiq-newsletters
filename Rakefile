@@ -39,3 +39,7 @@ task default: :test
 task :server do
   system "cd spec/dummy && bundle exec rails s"
 end
+
+task :console do
+  system "cd spec/dummy && bundle exec rails c"
+end

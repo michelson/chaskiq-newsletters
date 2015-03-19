@@ -1,10 +1,8 @@
-.steps
-  %ol
-    - wizard_steps.each_with_index do |wizard_step, index|
-      %li{ class: "level-#{index+1} #{ step == wizard_step ? 'selected' : '' }"}
-        %div
-          %span
-            #{index+1}
-          = link_to wizard_path(wizard_step) do
+%ul.nav.nav-pills
+  - wizard_steps.each_with_index do |wizard_step, index|
 
-            = t(".#{wizard_step}")
+    %li{ class: "level-#{index+1} #{ step == wizard_step ? 'active' : '' }"}
+
+      = link_to wizard_path(wizard_step) do
+
+        = t(".#{wizard_step}")

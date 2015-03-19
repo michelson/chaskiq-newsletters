@@ -1,8 +1,23 @@
+= link_to "new campaign" , new_campaign_path, class: "btn btn-default pull-right"
+
 %h1.page-header Campaigns
-= link_to "new campaign" , new_campaign_path
+
+
 .row.placeholders
   - @campaigns.each do |campaign|
-    .col-xs-6.col-sm-3.placeholder
-      %img.img-responsive{:alt => "Generic placeholder thumbnail", "data-src" => "holder.js/200x200/auto/sky"}/
-      %h4= campaign.subject
-      %span.text-muted= campaign.state
+
+    .media
+      .media-left
+        = link_to campaign.subject || campaign.id, campaign_path(campaign)
+      .media-body
+        %h4.media-heading
+
+        = campaign.state
+      .media-right
+
+        = link_to "edit", campaign_wizard_path(campaign, "setup")
+
+        = link_to "destroy", campaign_path(campaign), method: :delete
+
+
+

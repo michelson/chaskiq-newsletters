@@ -4,11 +4,12 @@ module Postino
   class ListsController < ApplicationController
 
     def index
-      @lists = Postino::List.all
+      @lists = Postino::List.page(params[:page]).per(50)
     end
 
     def show
       @list =  Postino::List.find(params[:id])
+      @subscribers = @list.subscribers.page(params[:page]).per(50)
     end
 
     def new

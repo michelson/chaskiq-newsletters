@@ -1,6 +1,7 @@
 require "postino/engine"
 require "haml"
 require "simple_form"
+require "kaminari"
 
 require "postino/engine"
 

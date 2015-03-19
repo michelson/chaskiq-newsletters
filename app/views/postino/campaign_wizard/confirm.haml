@@ -1,2 +1,9 @@
 %h1 confirm
 = render partial: "wizard_steps"
+
+= simple_form_for @campaign do |f|
+
+  = f.submit
+
+
+= render partial: "wizard_nav"
