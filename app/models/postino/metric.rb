@@ -1,6 +1,7 @@
 module Postino
   class Metric < ActiveRecord::Base
-    belongs_to :subject, polymorphic: true
-    belongs_to :campaign
+    belongs_to :trackable, polymorphic: true, required: true
+
+    scope :deliveries, ->{where(action: "deliver")}
   end
 end

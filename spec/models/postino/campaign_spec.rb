@@ -70,10 +70,11 @@ module Postino
 
       end
 
-      it "send newsletter" do
+      it "will send newsletter & create deliver metrics" do
         allow_any_instance_of(ActionMailer::MessageDelivery).to receive(:deliver_now).and_return(true)
         expect(Postino::CampaignMailer).to receive(:newsletter).exactly(10).times.and_return(ActionMailer::MessageDelivery.new(1,2))
         @c.send_newsletter
+        expect(@c.metrics.deliveries.size).to be == 10
       end
 
     end

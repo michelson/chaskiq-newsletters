@@ -2,10 +2,6 @@
 
 FactoryGirl.define do
   factory :postino_metric, :class => 'Metric' do
-    subject nil
-    campaign nil
-    host "MyString"
-    action "MyString"
-    data "MyString"
+    trackable nil
   end
 end

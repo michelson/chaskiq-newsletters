@@ -35,7 +35,7 @@ module Postino
       #Postino::CampaignMailer.my_email.delivery_method.settings.merge!(SMTP_SETTINGS)
       #send newsletter here
       self.subscribers.each do |s|
-        Postino::CampaignMailer.newsletter(self, s).deliver_now #deliver_later
+        push_notification(s)
       end
     end
 
@@ -47,6 +47,12 @@ module Postino
       if self.changes.include?("template_id")
         copy_template
       end
+    end
+
+    #deliver email + create metric
+    def push_notification(subscriber)
+      self.metrics.create(trackable: subscriber, action: "deliver")
+      Postino::CampaignMailer.newsletter(self, subscriber).deliver_now #deliver_later
     end
 
     def copy_template
