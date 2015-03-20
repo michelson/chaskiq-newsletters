@@ -2,12 +2,8 @@ Postino::Engine.routes.draw do
 
   root 'dashboard#show'
 
-  resources :campaigns do
-
-    resources :subscriptions do
-
-    end
-
+  #public
+  resources :campaigns, only: :show do
     resources :tracks do
       member do
         get :click
@@ -16,24 +12,24 @@ Postino::Engine.routes.draw do
         get :spam
       end
     end
-
   end
 
+  #private
   scope 'manage' do
-    resources :campaigns do
-      resources :wizard, controller: 'campaign_wizard'
+    resources :campaigns, controller: 'manage/campaigns' do
+      resources :wizard, controller: 'manage/campaign_wizard'
       member do
         get :preview
         get :test
         get :deliver
       end
-      resources :attachments
+      resources :attachments, controller: 'manage/attachments'
     end
 
-    resources :lists do
-      resources :subscribers
+    resources :lists, controller: 'manage/lists' do
+      resources :subscribers, controller: 'manage/subscribers'
     end
-    resources :templates
+    resources :templates, controller: 'manage/templates'
   end
 
 end

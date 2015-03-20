@@ -1,0 +1,12 @@
+= link_to "new list" , new_list_path , class: "pull-right btn btn-default pull-right"
+
+%h1.page-header Lists
+.row.placeholders
+  - @lists.each do |list|
+    .col-xs-6.col-sm-3.placeholder
+      -#%img.img-responsive{:alt => "Generic placeholder thumbnail", "data-src" => "holder.js/200x200/auto/sky"}/
+      %h4
+        = link_to list.name, list_path(list)
+      %span.text-muted= list.state
+      = link_to "edit", edit_list_path(list)
+      = link_to "destroy", list_path(list), method: :delete

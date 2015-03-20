@@ -20,7 +20,7 @@ module Postino
     def click
       find_subscriber
       #TODO: if subscriber has not an open , we will track open too!
-      # that is probably due to plain email or image not beign displayed
+      #that's probably due to plain email or image not beign displayed
       @subscriber.track_click({ host: get_referrer, campaign_id: @campaign.id })
       redirect_to params[:r]
     end

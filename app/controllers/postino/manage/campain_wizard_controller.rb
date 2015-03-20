@@ -1,8 +1,7 @@
 require_dependency "postino/application_controller"
 require "wicked"
-
 module Postino
-  class CampaignWizardController < ApplicationController
+  class Manage::CampainWizardController < ApplicationController
 
     include Wicked::Wizard
 

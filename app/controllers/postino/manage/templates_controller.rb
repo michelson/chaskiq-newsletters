@@ -1,7 +1,7 @@
 require_dependency "postino/application_controller"
 
 module Postino
-  class TemplatesController < ApplicationController
+  class Manage::TemplatesController < ApplicationController
 
     def index
       @templates = Postino::Template.all
@@ -35,7 +35,6 @@ module Postino
         render "new"
       end
     end
-
 
     def resource_params
       return [] if request.get?
