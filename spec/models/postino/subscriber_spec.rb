@@ -4,6 +4,7 @@ module Postino
   RSpec.describe Subscriber, type: :model do
     it{ should belong_to :list }
     it{ should have_many :metrics }
+    it{ should have_one :campaign }
 
 
     describe "states" do

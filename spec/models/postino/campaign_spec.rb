@@ -20,26 +20,6 @@ module Postino
       end
     end
 
-    context "recipient step" do
-
-      it "will validate the prescence of a list  when setup_step!" do
-      end
-
-      it "will associate a list when setup_step!" do
-      end
-
-    end
-
-    context "setup step" do
-
-      it "will validate basic info" do
-      end
-
-      it "will set step if valid" do
-      end
-
-    end
-
     context "template step" do
       before do
         @c = FactoryGirl.create(:postino_campaign)

@@ -5,6 +5,7 @@ module Postino
 
     belongs_to :list
     has_many :metrics , as: :trackable
+    has_one :campaign , through: :list , class_name: "Postino::Campaign"
 
     include AASM
 
@@ -28,6 +29,15 @@ module Postino
 
     def notify_subscription
       puts "Pending"
+    end
+
+    %w[click open bounce spam].each do |action|
+      define_method("track_#{action}") do |opts|
+        m = self.metrics.new
+        m.assign_attributes(opts)
+        m.action = action
+        m.save
+      end
     end
 
   end
