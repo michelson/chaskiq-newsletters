@@ -3,7 +3,11 @@ Postino::Engine.routes.draw do
   root 'dashboard#show'
 
   resources :campaigns do
-    resources :subscriptions
+
+    resources :subscriptions do
+
+    end
+
     resources :tracks do
       member do
         get :click
@@ -12,6 +16,7 @@ Postino::Engine.routes.draw do
         get :spam
       end
     end
+
   end
 
   scope 'manage' do

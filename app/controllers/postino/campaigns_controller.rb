@@ -48,7 +48,7 @@ module Postino
       redirect_to campaigns_path()
     end
 
-    protected
+  protected
 
     def resource_params
       return [] if request.get?

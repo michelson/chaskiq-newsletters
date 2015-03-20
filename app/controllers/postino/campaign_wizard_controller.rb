@@ -13,13 +13,11 @@ module Postino
       render_wizard
     end
 
-
     def update
       @campaign = Postino::Campaign.find(params[:campaign_id])
       @campaign.update_attributes(resource_params)
       render_wizard @campaign
     end
-
 
     def create
       @campaign = Postino::Campaign.create(resource_params)
