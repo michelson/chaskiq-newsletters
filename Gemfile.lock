@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     postino (0.0.1)
+      aasm
       cocoon
       haml
       kaminari
@@ -17,6 +18,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    aasm (2.2.0)
     actionmailer (4.2.0)
       actionpack (= 4.2.0)
       actionview (= 4.2.0)
