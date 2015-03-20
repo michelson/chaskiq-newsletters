@@ -8,16 +8,16 @@ module Postino
 
     include AASM
 
-    aasm do # default column: aasm_state
-      state :pasive, :initial => true
-      state :subscribed
-      state :unsubscribed
+    aasm :column => :state do # default column: aasm_state
+      state :passive, :initial => true
+      state :subscribed, :after_enter => :notify_subscription
+      state :unsubscribed, :after_enter => :notify_unsubscription
 
-      event :suscribe, :after_commit => :notify_subscription do
+      event :suscribe do
         transitions :from => [:passive, :unsubscribed], :to => :subscribed
       end
 
-      event :unsuscribe, :after_commit => :notify_unsubscription do
+      event :unsuscribe do
         transitions :from => [:subscribed, :passive], :to => :unsubscribed
       end
     end
