@@ -18,7 +18,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    aasm (2.2.0)
+    aasm (4.1.0)
     actionmailer (4.2.0)
       actionpack (= 4.2.0)
       actionview (= 4.2.0)

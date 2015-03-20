@@ -8,7 +8,6 @@ module Postino
 
     include AASM
 
-
     aasm do # default column: aasm_state
       state :pasive, :initial => true
       state :subscribed
