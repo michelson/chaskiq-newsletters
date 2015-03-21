@@ -3,6 +3,13 @@ module Postino
     has_many :subscribers
     has_many :campaigns
 
+    accepts_nested_attributes_for :subscribers
+
+    def subscription_progress
+      return 0 if subscribers.where(state: "subscribed").size.zero?
+      (subscribers.where(state: "subscribed").size.to_f / subscribers.size.to_f  * 100.0).to_i
+    end
+
     def import_csv(file)
       csv_importer.import(file).each do |row|
         puts "Importing row #{row}"

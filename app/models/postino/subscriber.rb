@@ -7,6 +7,9 @@ module Postino
     has_many :metrics , as: :trackable
     has_one :campaign , through: :list , class_name: "Postino::Campaign"
 
+    validates :email , presence: true
+    validates :name , presence: true
+
     include AASM
 
     aasm :column => :state do # default column: aasm_state
@@ -38,6 +41,14 @@ module Postino
         m.action = action
         m.save
       end
+    end
+
+    def encoded_id
+      URLcrypt.encode(self.email)
+    end
+
+    def decoded_id
+      URLcrypt.decode(self.email)
     end
 
   end

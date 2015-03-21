@@ -1,2 +1,23 @@
-%h1.page-header Edit Lists
-= render partial: "form"
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-sm-4
+    %h2 Edit List
+    %ol.breadcrumb
+      %li
+        %a{:href => ""} Home
+      %li.active
+        %strong Campaigns list
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5
+            Basic form
+            %small Simple login form example
+          .ibox-tools
+
+
+        .ibox-content
+          .row
+            = render partial: "form"

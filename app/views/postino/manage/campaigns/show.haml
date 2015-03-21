@@ -14,7 +14,7 @@
           .row
             .col-lg-12
               .m-b-md
-                %a.btn.btn-white.btn-xs.pull-right{:href => "#"} Edit project
+                %a.btn.btn-white.btn-xs.pull-right{:href => manage_campaign_wizard_path(@campaign, "setup")} Edit project
                 %h2= @campaign.name
               %dl.dl-horizontal
                 %dt Status:
@@ -23,15 +23,19 @@
           .row
             .col-lg-5
               %dl.dl-horizontal
-                %dt Created by:
-                %dd Alex Smith
-                %dt Messages:
-                %dd 162
-                %dt Client:
-                %dd
-                  %a.text-navy{:href => "#"} Zender Company
-                %dt Version:
-                %dd v1.4.2
+                -#%dt Created by:
+                -#%dd Alex Smith
+                %dt Deliveries:
+                %dd= @campaign.metrics.deliveries.size
+                %dt Clicks:
+                %dd= @campaign.metrics.clicks.size
+                %dt Opens:
+                %dd= @campaign.metrics.clicks.size
+                -#%dt Client:
+                -#%dd
+                -#  %a.text-navy{:href => "#"} Zender Company
+                -#%dt Version:
+                -#%dd v1.4.2
             #cluster_info.col-lg-7
               %dl.dl-horizontal
                 %dt Last Updated:
@@ -47,10 +51,10 @@
                 %dt Completed:
                 %dd
                   .progress.progress-striped.active.m-b-sm
-                    .progress-bar{:style => "width: 60%;"}
+                    .progress-bar{:style => "width: #{@campaign.delivery_progress}%;"}
                   %small
-                    Project completed in
-                    %strong 60%
+                    Deliveries completed in
+                    %strong "#{@campaign.delivery_progress}%"
           .row.m-t-sm
             .col-lg-12
               .panel.blank-panel
@@ -70,137 +74,153 @@
                         %th End Time
                         %th Comments
                     %tbody
+                      -#
+                        %tr
+                          %td
+                            %span.label.label-primary
+                              %i.fa.fa-check
+                              Completed
+                          %td
+                            Create project in webapp
+                          %td
+                            12.07.2014 10:10:1
+                          %td
+                            14.07.2014 10:16:36
+                          %td
+                            %p.small
+                              Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable.
+                        %tr
+                          %td
+                            %span.label.label-primary
+                              %i.fa.fa-check
+                              Accepted
+                          %td
+                            Various versions
+                          %td
+                            12.07.2014 10:10:1
+                          %td
+                            14.07.2014 10:16:36
+                          %td
+                            %p.small
+                              Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                        %tr
+                          %td
+                            %span.label.label-primary
+                              %i.fa.fa-check
+                              Sent
+                          %td
+                            There are many variations
+                          %td
+                            12.07.2014 10:10:1
+                          %td
+                            14.07.2014 10:16:36
+                          %td
+                            %p.small
+                              There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which
+                        %tr
+                          %td
+                            %span.label.label-primary
+                              %i.fa.fa-check
+                              Reported
+                          %td
+                            Latin words
+                          %td
+                            12.07.2014 10:10:1
+                          %td
+                            14.07.2014 10:16:36
+                          %td
+                            %p.small
+                              Latin words, combined with a handful of model sentence structures
+                        %tr
+                          %td
+                            %span.label.label-primary
+                              %i.fa.fa-check
+                              Accepted
+                          %td
+                            The generated Lorem
+                          %td
+                            12.07.2014 10:10:1
+                          %td
+                            14.07.2014 10:16:36
+                          %td
+                            %p.small
+                              The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+                        %tr
+                          %td
+                            %span.label.label-primary
+                              %i.fa.fa-check
+                              Sent
+                          %td
+                            The first line
+                          %td
+                            12.07.2014 10:10:1
+                          %td
+                            14.07.2014 10:16:36
+                          %td
+                            %p.small
+                              The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+                        %tr
+                          %td
+                            %span.label.label-primary
+                              %i.fa.fa-check
+                              Reported
+                          %td
+                            The standard chunk
+                          %td
+                            12.07.2014 10:10:1
+                          %td
+                            14.07.2014 10:16:36
+                          %td
+                            %p.small
+                              The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.
+                        %tr
+                          %td
+                            %span.label.label-primary
+                              %i.fa.fa-check
+                              Completed
+                          %td
+                            Lorem Ipsum is that
+                          %td
+                            12.07.2014 10:10:1
+                          %td
+                            14.07.2014 10:16:36
+                          %td
+                            %p.small
+                              Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable.
+                        %tr
+                          %td
+                            %span.label.label-primary
+                              %i.fa.fa-check
+                              Sent
+                          %td
+                            Contrary to popular
+                          %td
+                            12.07.2014 10:10:1
+                          %td
+                            14.07.2014 10:16:36
+                          %td
+                            %p.small
+                              Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
+                    - @campaign.metrics.each do |m|
                       %tr
                         %td
                           %span.label.label-primary
                             %i.fa.fa-check
-                            Completed
+                            = m.action
                         %td
-                          Create project in webapp
+                          = m.trackable.try(:name)
                         %td
-                          12.07.2014 10:10:1
+                          = m.created_at
                         %td
-                          14.07.2014 10:16:36
-                        %td
-                          %p.small
-                            Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable.
-                      %tr
-                        %td
-                          %span.label.label-primary
-                            %i.fa.fa-check
-                            Accepted
-                        %td
-                          Various versions
-                        %td
-                          12.07.2014 10:10:1
-                        %td
-                          14.07.2014 10:16:36
+                          = m.updated_at
                         %td
                           %p.small
-                            Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                      %tr
-                        %td
-                          %span.label.label-primary
-                            %i.fa.fa-check
-                            Sent
-                        %td
-                          There are many variations
-                        %td
-                          12.07.2014 10:10:1
-                        %td
-                          14.07.2014 10:16:36
-                        %td
-                          %p.small
-                            There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which
-                      %tr
-                        %td
-                          %span.label.label-primary
-                            %i.fa.fa-check
-                            Reported
-                        %td
-                          Latin words
-                        %td
-                          12.07.2014 10:10:1
-                        %td
-                          14.07.2014 10:16:36
-                        %td
-                          %p.small
-                            Latin words, combined with a handful of model sentence structures
-                      %tr
-                        %td
-                          %span.label.label-primary
-                            %i.fa.fa-check
-                            Accepted
-                        %td
-                          The generated Lorem
-                        %td
-                          12.07.2014 10:10:1
-                        %td
-                          14.07.2014 10:16:36
-                        %td
-                          %p.small
-                            The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-                      %tr
-                        %td
-                          %span.label.label-primary
-                            %i.fa.fa-check
-                            Sent
-                        %td
-                          The first line
-                        %td
-                          12.07.2014 10:10:1
-                        %td
-                          14.07.2014 10:16:36
-                        %td
-                          %p.small
-                            The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-                      %tr
-                        %td
-                          %span.label.label-primary
-                            %i.fa.fa-check
-                            Reported
-                        %td
-                          The standard chunk
-                        %td
-                          12.07.2014 10:10:1
-                        %td
-                          14.07.2014 10:16:36
-                        %td
-                          %p.small
-                            The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.
-                      %tr
-                        %td
-                          %span.label.label-primary
-                            %i.fa.fa-check
-                            Completed
-                        %td
-                          Lorem Ipsum is that
-                        %td
-                          12.07.2014 10:10:1
-                        %td
-                          14.07.2014 10:16:36
-                        %td
-                          %p.small
-                            Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable.
-                      %tr
-                        %td
-                          %span.label.label-primary
-                            %i.fa.fa-check
-                            Sent
-                        %td
-                          Contrary to popular
-                        %td
-                          12.07.2014 10:10:1
-                        %td
-                          14.07.2014 10:16:36
-                        %td
-                          %p.small
-                            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
+                            = m.data
 
   .col-lg-3
     .wrapper.wrapper-content.project-manager
       %h4 Project description
-      %img.img-responsive{:src => image_path('zender_logo.png')}/
+      -#%img.img-responsive{:src => image_path('zender_logo.png')}/
       %p.small
         = @campaign.try(:description)
       %p.small.font-bold

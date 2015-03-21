@@ -1,2 +1,13 @@
-%h1 new list
-= render partial: "form"
+
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-sm-4
+    %h2 Design
+    %ol.breadcrumb
+      %li
+        %a{:href => ""} Home
+      %li.active
+        %strong Campaigns list
+.row
+  .col-lg-12
+    .wrapper.wrapper-content.animated.fadeInUp
+      = render partial: "form"

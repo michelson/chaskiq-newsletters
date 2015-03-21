@@ -15,7 +15,7 @@ module Postino
       response = get("show", id: campaign.id)
       expect(response.status).to be == 200
       expect(response.body).to include "subscribe"
-      expect(response.body).to include @campaign.name
+      expect(response.body).to include campaign.name
     end
   end
 end

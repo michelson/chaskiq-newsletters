@@ -1,18 +1,28 @@
-%h1 confirm
-= render partial: "wizard_steps"
 
-= simple_form_for @campaign do |f|
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-sm-4
+    %h2 Confirm
+    %ol.breadcrumb
+      %li
+        %a{:href => ""} Home
+      %li.active
+        %strong Campaigns list
+.row
+  .col-lg-12
+    .wrapper.wrapper-content.animated.fadeInUp
+      = render partial: "wizard_steps"
+      = simple_form_for @campaign do |f|
 
-  %h3 Next steps:
+        %h3 Next steps:
 
-  %ul
-    %li= link_to "preview", preview_manage_campaign_path(@campaign)
-    %li test
-    %li send
-    %li view reports
-    %li
+        %ul
+          %li= link_to "preview", preview_manage_campaign_path(@campaign)
+          %li test
+          %li send
+          %li view reports
+          %li
 
-  = f.submit
+        = f.submit
 
 
-= render partial: "wizard_nav"
+      = render partial: "wizard_nav"

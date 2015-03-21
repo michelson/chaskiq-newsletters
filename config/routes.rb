@@ -4,6 +4,18 @@ Postino::Engine.routes.draw do
 
   #public
   resources :campaigns, only: :show do
+    member do
+      get :subscribe
+      get :unsubscribe
+      get :forward
+    end
+
+    resources :subscribers do
+      member do
+        get :delete
+      end
+    end
+
     resources :tracks do
       member do
         get :click
@@ -15,7 +27,7 @@ Postino::Engine.routes.draw do
   end
 
   #private
-  scope 'manage' do
+  scope 'manage',as: :manage do
     resources :campaigns, controller: 'manage/campaigns' do
       resources :wizard, controller: 'manage/campaign_wizard'
       member do

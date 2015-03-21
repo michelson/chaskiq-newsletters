@@ -9,7 +9,7 @@ module Postino
 
     def show
       #TODO, we should obfustate code
-      @subscriber = @campaign.list.subscribers.find(params[:id])
+      find_subscriber
       render "edit"
     end
 
@@ -18,11 +18,11 @@ module Postino
     end
 
     def edit
-      @subscriber = @campaign.list.subscribers.find(params[:id])
+      find_subscriber
     end
 
     def update
-      @subscriber = @campaign.list.subscribers.find(params[:id])
+      find_subscriber
       if @subscriber.update_attributes(resource_params) && @subscriber.errors.blank?
         flash[:notice] = "you did it!"
         @subscriber.suscribe! unless @subscriber.subscribed?
@@ -43,11 +43,11 @@ module Postino
     end
 
     def delete
-      @subscriber = @campaign.list.subscribers.find(params[:id])
+      find_subscriber
     end
 
     def destroy
-      @subscriber = @campaign.list.subscribers.find(params[:id])
+      find_subscriber
       begin
         if @subscriber.unsuscribe!
           flash[:notice] = "Thanks, you will not receive more emails from this newsletter!"
@@ -61,6 +61,10 @@ module Postino
 
 
   protected
+
+    def find_subscriber
+      @subscriber = @campaign.list.subscribers.find_by(email: URLcrypt.decode(params[:id]))
+    end
 
     def find_base_models
       @campaign = Postino::Campaign.find(params[:campaign_id])

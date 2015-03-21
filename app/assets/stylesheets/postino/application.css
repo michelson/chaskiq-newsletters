@@ -10,6 +10,6 @@
  *
  *= require_self
  *= require font-awesome
- *= require animate/animate.css
- *= require style
+ * require animate/animate.css
+ *= require postino/style
  */

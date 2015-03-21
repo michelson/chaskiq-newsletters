@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+require 'urlcrypt'
 module Postino
   RSpec.describe Subscriber, type: :model do
     it{ should belong_to :list }
@@ -27,8 +27,8 @@ module Postino
       end
 
       it "encode decode email" do
-
-         expect(subscriber.email).to_not be == subscriber.encoded_name
+        expect(subscriber.email).to_not be == subscriber.encoded_id
+        expect(URLcrypt.encode(subscriber.email)).to be == subscriber.encoded_id
       end
 
     end

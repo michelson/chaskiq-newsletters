@@ -1,9 +1,24 @@
-%h1 List
-= render partial: "wizard_steps"
 
-= simple_form_for @campaign, url: wizard_path do |f|
-  = f.input :list
-  = f.submit
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-sm-4
+    %h2 List
+    %ol.breadcrumb
+      %li
+        %a{:href => ""} Home
+      %li.active
+        %strong Campaigns list
+.row
+  .col-lg-12
+    .wrapper.wrapper-content.animated.fadeInUp
+      = render partial: "wizard_steps"
+
+      = simple_form_for @campaign, url: wizard_path do |f|
+
+        = f.input :name
+
+        = f.input :list, as: :select, collection: Postino::List.all
+
+        = f.submit
 
 
 = render partial: "wizard_nav"

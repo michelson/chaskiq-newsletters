@@ -18,6 +18,7 @@ module Postino
 
     it "will subscribe subscribe!" do
       campaign
+      binding.pry
       response = post("create", campaign_id: campaign.id, subscriber: {name: "some subscriber", last_name: "subscriberson", email: "some@email.com"})
       expect(response.status).to be == 302
       expect(campaign.subscribers.size).to be == 1

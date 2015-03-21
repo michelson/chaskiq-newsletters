@@ -41,9 +41,12 @@
                     %br/
                     %small= list.created_at
                   %td.project-completion
-                    %small Completion with: 48%
+                    %small Completion with: #{list.subscription_progress}%
                     .progress.progress-mini
-                      .progress-bar{:style => "width: 48%;"}
+                      .progress-bar{:style => "width: #{list.subscription_progress}%;"}
+
+                  %td.project-completion
+                    %strong subscribers: #{list.subscribers.size}
 
                   %td.project-actions
 

@@ -41,7 +41,7 @@ module Postino
 
     def resource_params
       return [] if request.get?
-      [ params.require(:list).permit(:name) ]
+      params.require(:list).permit! #(:name)
     end
 
   end
