@@ -3,7 +3,6 @@ require "rails_helper"
 module Postino
   RSpec.describe CampaignMailer, type: :mailer do
 
-
     let(:template){ FactoryGirl.create(:postino_template) }
     let(:list){ FactoryGirl.create(:postino_list) }
     let(:subscriber){  FactoryGirl.create(:postino_subscriber, list: list) }

@@ -24,7 +24,7 @@ module Postino
       if @template.update_attributes(resource_params)
         redirect_to manage_templates_path
       else
-        render "new"
+        render "edit"
       end
     end
 

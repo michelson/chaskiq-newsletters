@@ -1,42 +1,43 @@
+= render "menu"
 
-
-.row.wrapper.border-bottom.white-bg.page-heading
-  .col-sm-4
-    %h2 Setup
-    %ol.breadcrumb
-      %li
-        %a{:href => ""} Home
-      %li.active
-        %strong Campaigns list
 .row
   .col-lg-12
     .wrapper.wrapper-content.animated.fadeInUp
-      = render partial: "wizard_steps"
-      = simple_form_for @campaign, url: wizard_path do |f|
+      .ibox
+        .ibox-title
+          %h5 Setup
+          .ibox-tools
+            %a.btn.btn-primary.btn-xs{:href => new_manage_campaign_path }
+              Create new Template
+        .ibox-content
 
-        .col-lg-6
-          = f.input :name
-        .col-lg-6
-          = f.input :subject
 
-        .col-lg-6
-          = f.input :from_name
-        .col-lg-6
-          = f.input :from_email
-        .col-lg-6
-          = f.input :reply_email
-        .col-lg-6
-          = f.input :query_string
-        .col-lg-6
-          = f.input :scheduled_at
-        .col-lg-6
-          = f.input :timezone, as: :select , collection: ActiveSupport::TimeZone.us_zones, default: "Pacific Time (US & Canada)"
-        .col-lg-6
-          = f.input :description
-        -#= f.input :created_at
-        -#= f.input :updated_at
-        .clearfix
-        %hr
-        = f.button :submit, "Setup!", :class => "btn btn-primary", disable_with: "loading"
+          = render partial: "wizard_steps"
+          = simple_form_for @campaign, url: wizard_path do |f|
 
-      = render partial: "wizard_nav"
+            .col-lg-6
+              = f.input :name
+            .col-lg-6
+              = f.input :subject
+
+            .col-lg-6
+              = f.input :from_name
+            .col-lg-6
+              = f.input :from_email
+            .col-lg-6
+              = f.input :reply_email
+            .col-lg-6
+              = f.input :query_string
+            .col-lg-6
+              = f.input :scheduled_at
+            .col-lg-6
+              = f.input :timezone, as: :select , collection: ActiveSupport::TimeZone.us_zones, default: "Pacific Time (US & Canada)"
+            .col-lg-6
+              = f.input :description
+            -#= f.input :created_at
+            -#= f.input :updated_at
+            .clearfix
+            %hr
+            = f.button :submit, "Setup!", :class => "btn btn-primary", disable_with: "loading"
+
+          = render partial: "wizard_nav"

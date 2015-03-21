@@ -1,11 +1,11 @@
 .row.wrapper.border-bottom.white-bg.page-heading
   .col-sm-4
-    %h2 Campaign #{@campaign.subject}
+    %h2 Campaign #{@campaign.name}
     %ol.breadcrumb
       %li
-        %a{:href => ""} Home
+        %a{:href => manage_campaigns_path} Campaigns
       %li.active
-        %strong Project detail
+        %strong= @campaign.name
 .row
   .col-lg-9
     .wrapper.wrapper-content.animated.fadeInUp
@@ -42,8 +42,9 @@
                 %dd= @campaign.updated_at
                 %dt Created:
                 %dd= @campaign.created_at
-                %dt Participants:
+                %dt Mail list:
                 %dd.project-people
+                  = link_to @campaign.list.name, manage_list_path(@campaign.list.name)
 
           .row
             .col-lg-12

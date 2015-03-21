@@ -1,22 +1,25 @@
+= render "menu"
 
-.row.wrapper.border-bottom.white-bg.page-heading
-  .col-sm-4
-    %h2 Design
-    %ol.breadcrumb
-      %li
-        %a{:href => ""} Home
-      %li.active
-        %strong Campaigns list
+
 .row
   .col-lg-12
     .wrapper.wrapper-content.animated.fadeInUp
-      = render partial: "wizard_steps"
+      .ibox
+        .ibox-title
+          %h5 Design
+          .ibox-tools
+            %a.btn.btn-primary.btn-xs{:href => new_manage_campaign_path }
+              Create new Template
+        .ibox-content
 
-      = simple_form_for @campaign, url: wizard_path do |f|
 
-        = f.input :html_content
+          = render partial: "wizard_steps"
 
-        = f.submit
+          = simple_form_for @campaign, url: wizard_path do |f|
+
+            = f.input :html_content
+
+            = f.submit
 
 
-      = render partial: "wizard_nav"
+          = render partial: "wizard_nav"

@@ -1,4 +1,16 @@
-= simple_form_for ["manage", @template] do |f|
-  = f.input :name
-  = f.input :html_content
-  = f.submit "crear"
+
+.row
+  .col-lg-12
+    .wrapper.wrapper-content.animated.fadeInUp
+      .ibox
+        .ibox-title
+          %h5 All Templates
+          .ibox-tools
+            %a.btn.btn-primary.btn-xs{:href => new_manage_template_path }
+              Create new Template
+        .ibox-content
+
+          = simple_form_for ["manage", @template] do |f|
+            = f.input :name
+            = f.input :html_content
+            = f.submit "crear"

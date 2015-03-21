@@ -7,6 +7,7 @@ require "bootstrap-sass"
 require "postino/engine"
 require "urlcrypt"
 require "cocoon"
+require "mustache"
 
 module Postino
   URLcrypt.key = 'postino123'

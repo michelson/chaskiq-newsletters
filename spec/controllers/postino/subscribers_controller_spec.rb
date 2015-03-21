@@ -8,7 +8,6 @@ module Postino
     let(:subscriber){ FactoryGirl.create(:postino_subscriber, list: list) }
     let(:campaign){ FactoryGirl.create(:postino_campaign, list: list) }
 
-
     it "will show subscriber!" do
       campaign
       response = get("show", campaign_id: campaign.id, id: subscriber.encoded_id)
@@ -18,7 +17,6 @@ module Postino
 
     it "will subscribe subscribe!" do
       campaign
-      binding.pry
       response = post("create", campaign_id: campaign.id, subscriber: {name: "some subscriber", last_name: "subscriberson", email: "some@email.com"})
       expect(response.status).to be == 302
       expect(campaign.subscribers.size).to be == 1

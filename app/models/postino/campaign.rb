@@ -22,7 +22,6 @@ module Postino
 
     before_save :detect_changed_template
 
-
     def delivery_progress
       return 0 if metrics.deliveries.size.zero?
       subscribers.size.to_f / metrics.deliveries.size.to_f * 100.0
@@ -63,6 +62,23 @@ module Postino
 
     def copy_template
       self.html_content = self.template.body
+    end
+
+    def compile_tamplate
+
+    end
+
+    def mustache_template_for(subscriber)
+      Mustache.render(html_content, subscriber.attributes)
+    end
+
+    def compiled_template_for(subscriber)
+      link_prefix = host + "/campaigns/#{self.id}/tracks/#{subscriber.encoded_id}?r="
+      Postino::LinkRenamer.convert(mustache_template_for(subscriber), link_prefix)
+    end
+
+    def host
+      Rails.application.routes.default_url_options[:host] || "http://localhost:3000"
     end
 
   end

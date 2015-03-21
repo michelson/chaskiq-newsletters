@@ -1,0 +1,10 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-sm-4
+    %h2 Manage Lists
+    %ol.breadcrumb
+      %li
+        %a{:href => manage_lists_path}
+          Lists
+      - if @list.present?
+        %li
+          = @list.name

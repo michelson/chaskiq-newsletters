@@ -10,8 +10,13 @@ module Postino
     it{ should belong_to :list }
     it{ should belong_to :template }
 
-    let(:template){ FactoryGirl.create(:postino_template) }
+    let(:html_content){
+      "<p>hola {{name}} {{email}}</p> <a href='http://google.com'>google</a>"
+    }
+    let(:template){ FactoryGirl.create(:postino_template, body: html_content ) }
     let(:list){ FactoryGirl.create(:postino_list) }
+    let(:subscriber){ FactoryGirl.create(:postino_subscriber, list: list)}
+    let(:campaign){ FactoryGirl.create(:postino_campaign, template: template) }
 
     describe "creation" do
       it "will create a pending campaign by default" do
@@ -21,20 +26,15 @@ module Postino
     end
 
     context "template step" do
-      before do
-        @c = FactoryGirl.create(:postino_campaign)
-      end
 
       it "will copy template" do
-        @c.template = template
-        @c.save
-        expect(@c.html_content).to be == template.body
+        campaign.template = template
+        campaign.save
+        expect(campaign.html_content).to be == template.body
       end
 
-
       it "will copy template on creation" do
-        @c = FactoryGirl.create(:postino_campaign, template: template)
-        expect(@c.html_content).to be == template.body
+        expect(campaign.html_content).to be == template.body
       end
 
     end
@@ -55,6 +55,25 @@ module Postino
         expect(Postino::CampaignMailer).to receive(:newsletter).exactly(10).times.and_return(ActionMailer::MessageDelivery.new(1,2))
         @c.send_newsletter
         expect(@c.metrics.deliveries.size).to be == 10
+      end
+
+    end
+
+    context "template compilation" do
+
+      it "will render subscriber attributes" do
+        campaign.template = template
+        campaign.save
+        expect(campaign.html_content).to be == template.body
+        expect(campaign.mustache_template_for(subscriber)).to_not be == template.body
+        expect(campaign.mustache_template_for(subscriber)).to include(subscriber.name)
+      end
+
+      it "will render subscriber and compile links with host ?r=link" do
+        campaign.template = template
+        campaign.save
+        expect(campaign.compiled_template_for(subscriber)).to include("?r=http://google.com")
+        expect(campaign.compiled_template_for(subscriber)).to include(campaign.host)
       end
 
     end

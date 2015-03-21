@@ -32,7 +32,7 @@ module Postino
     end
 
     def find_subscriber
-      @subscriber = @campaign.subscribers.find(params[:id])
+      @subscriber = @campaign.subscribers.find_by(email: URLcrypt.decode(params[:id]))
     end
 
   end

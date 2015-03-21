@@ -18,7 +18,7 @@ class ApplicationMailer < ActionMailer::Base
     mail( from: "#{campaign.from_name}<#{campaign.from_email}>",
           to: subscriber.email,
           subject: campaign.subject,
-          body: mustache_template(campaign.html_content, attrs),
+          body: campaign.mustache_template_for(subscriber),
           content_type: content_type )
   end
 
@@ -31,11 +31,6 @@ class ApplicationMailer < ActionMailer::Base
           subject: campaign.subject,
           body: campaign.html_content,
           content_type: content_type )
-  end
-
-
-  def mustache_template(html, values)
-    Mustache.render(html, values)
   end
 
 end

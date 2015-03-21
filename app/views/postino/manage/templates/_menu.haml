@@ -1,0 +1,10 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-sm-4
+    %h2 New Templates
+    %ol.breadcrumb
+      %li
+        %a{:href => manage_templates_path} Templates
+
+      - if @template.present?
+        %li.active
+          %strong= @template.name
