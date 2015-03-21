@@ -7,7 +7,7 @@ module Postino
     let(:renamer){  Postino::LinkRenamer }
 
     it "will rename links" do
-      data = renamer.convert(html)
+      data = renamer.convert(html, "AAA")
       expect(data).to include("AAA")
     end
 

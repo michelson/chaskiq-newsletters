@@ -18,7 +18,7 @@ class ApplicationMailer < ActionMailer::Base
     mail( from: "#{campaign.from_name}<#{campaign.from_email}>",
           to: subscriber.email,
           subject: campaign.subject,
-          body: campaign.mustache_template_for(subscriber),
+          body: campaign.compiled_template_for(subscriber),
           content_type: content_type )
   end
 
