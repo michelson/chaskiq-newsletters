@@ -23,7 +23,7 @@ module Postino
     def update
       @list =  Postino::List.find(params[:id])
       if @list.update_attributes(resource_params)
-        redirect_to lists_path
+        redirect_to manage_lists_path
       else
         render "new"
       end
@@ -31,7 +31,7 @@ module Postino
 
     def create
       if @list =  Postino::List.create(resource_params)
-        redirect_to lists_path
+        redirect_to manage_lists_path
       else
         render "new"
       end

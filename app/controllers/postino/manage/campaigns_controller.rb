@@ -23,7 +23,7 @@ module Postino
       @campaign.assign_attributes(resource_params)
 
       if @campaign.save && @campaign.errors.blank?
-        redirect_to campaign_wizard_path(@campaign, "setup")
+        redirect_to manage_campaign_wizard_path(@campaign, "setup")
       else
         render "new"
       end
@@ -38,14 +38,14 @@ module Postino
       @campaign  = Postino::Campaign.find(params[:id])
       @campaign.test_newsletter
       flash[:notice] = "test sended"
-      redirect_to campaigns_path()
+      redirect_to manage_campaigns_path()
     end
 
     def deliver
       @campaign  = Postino::Campaign.find(params[:id])
       @campaign.send_newsletter
       flash[:notice] = "newsletter sended"
-      redirect_to campaigns_path()
+      redirect_to manage_campaigns_path()
     end
 
   protected

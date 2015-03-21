@@ -1,0 +1,32 @@
+.middle-box.text-center.loginscreen.animated.fadeInDown
+  %div
+    %div
+      %h1.logo-name
+        +
+    %h3= @campaign.name
+    %p
+      = @campaign.try(:tagline)
+
+    %p Don't miss our next post!
+
+    Subscribe to our newsletter! We include fresh content, articles from our community and events we attend.
+
+    = simple_form_for(@subscriber, :url => campaign_subscribers_path(@campaign), html: {class: 'm-t', role: "form" }, :defaults => { :input_html => { :class => "form-control" } }) do |f|
+
+      .form-group
+        = f.input :email, :required => false, :autofocus => true, :label=> false, :placeholder=> "email"
+
+      .form-group
+        = f.input :name, :required => false, label: false, placeholder: "first name"
+
+      .form-group
+        = f.input :last_name, :required => false, label: false, placeholder: "last name"
+
+      = f.button :submit, "Sign in", :class => "btn btn-primary block full-width m-b", disable_with: "loading"
+
+
+    %p.m-t
+      %small
+        = @campaign.name
+        ©
+        = Time.now.year

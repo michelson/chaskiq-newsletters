@@ -1,4 +1,4 @@
-= simple_form_for @template do |f|
+= simple_form_for ["manage", @template] do |f|
   = f.input :name
   = f.input :html_content
   = f.submit "crear"

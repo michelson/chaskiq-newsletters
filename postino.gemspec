@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency "aasm"
   s.add_dependency 'bootstrap-sass' #, '3.3.0.0'
   s.add_dependency 'font-awesome-rails' #, '4.3.0.0'
+  s.add_dependecy 'base32'
 
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "sqlite3"

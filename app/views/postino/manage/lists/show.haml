@@ -1,22 +1,46 @@
-%h2 subscribers on #{@list.name} list
 
-%table.table
-  %caption
-    this list is used on #{@list.campaigns.map(&:id).join(", ")}
-  %thead
-    %tr
-      %th #
-      %th Email
-      %th First Name
-      %th Last Name
-  %tbody
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-sm-4
+    %h2 subscribers on #{@list.name} list
+    %ol.breadcrumb
+      %li
+        %a{:href => ""} Home
+      %li.active
+        %strong list
 
-    - @subscribers.each do |sub|
-      %tr
-        %th{:scope => "row"}= sub.id
-        %td=sub.email
-        %td=sub.name
-        %td=sub.last_name
+.wrapper.wrapper-content.animated.fadeInRight
+  .col-lg-12
+    .ibox.float-e-margins
+      .ibox-title
+        %h5 Subscriber list
+        .ibox-tools
+          %a.collapse-link
+            %i.fa.fa-chevron-up
+          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+            %i.fa.fa-wrench
+          %ul.dropdown-menu.dropdown-user
+            %li
+              %a{:href => "#"} Config option 1
+            %li
+              %a{:href => "#"} Config option 2
+          %a.close-link
+            %i.fa.fa-times
 
-.pagination
-  = paginate @subscribers
+      .ibox-content
+        %table.table
+          %thead
+            %tr
+              %th #
+              %th Email
+              %th First Name
+              %th Last Name
+          %tbody
+            - @subscribers.each do |sub|
+              %tr
+                %th{:scope => "row"}= sub.id
+                %td=sub.email
+                %td=sub.name
+                %td=sub.last_name
+
+  .pagination
+    = paginate @subscribers

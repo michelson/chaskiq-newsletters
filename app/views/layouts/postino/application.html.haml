@@ -1,27 +1,67 @@
+-#
+  !!!
+  %html
+    %head
+      %title Postino
+      = stylesheet_link_tag "//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
+      = javascript_include_tag "//code.jquery.com/jquery-git2.min.js"
+      = javascript_include_tag "//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"
+      = stylesheet_link_tag "postino/application", media: "all"
+      = javascript_include_tag "postino/application"
+      = csrf_meta_tags
+      / HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+      /[if lt IE 9]
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    %body
+      = render partial: "shared/menu"
+      .container-fluid
+        .row
+          = render partial: "shared/main_nav"
+          .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+            = render partial: "shared/flashes", :locals => {:flash => flash}
+            = yield
+      /
+        Bootstrap core JavaScript
+        \==================================================
+      / Placed at the end of the document so the pages load faster
+      %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"}
+
+
 !!!
 %html
   %head
-    %title Postino
-    = stylesheet_link_tag "//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
-    = javascript_include_tag "//code.jquery.com/jquery-git2.min.js"
-    = javascript_include_tag "//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"
-    = stylesheet_link_tag "postino/application", media: "all"
-    = javascript_include_tag "postino/application"
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %title Newsletta
+    / Include style per-controller - vendor plugins
+    -#= stylesheet_link_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.css")
+    / Main css styles
+    = stylesheet_link_tag    'postino/application', media: 'all', 'data-turbolinks-track' => true
+    / Main javascript files
+    = javascript_include_tag 'postino/application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-    / HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
-    /[if lt IE 9]
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   %body
-    = render partial: "shared/menu"
-    .container-fluid
-      .row
-        = render partial: "shared/main_nav"
-        .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
-          = render partial: "shared/flashes", :locals => {:flash => flash}
-          = yield
-    /
-      Bootstrap core JavaScript
-      \==================================================
-    / Placed at the end of the document so the pages load faster
-    %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"}
+    / Skin configuration box
+    -#= render 'layouts/skinconfig'
+    / Wrapper
+    #wrapper{:class => "#{params[:controller]}.#{params[:action]}"}
+      / Navigation
+      = render 'layouts/postino/navigation'
+      / Page wraper
+      #page-wrapper{:class => "gray-bg #{@extra_class}"}
+        / Page wrapper
+        = render 'layouts/postino/topnavbar'
+        / Main view
+        = yield
+        / Footer
+        = render 'layouts/postino/footer'
+      / End page wrapper
+    / End wrapper
+    / Include javascript per-controller - vendor plugins
+    -#= javascript_include_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.js")
+    / Include javascript per-view
+    / For demo purpose we include javascript in view but you can easily start SeedProject and organize it with Rails asset pipeline as you want
+    = yield :javascript
+
+

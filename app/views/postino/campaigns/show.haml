@@ -1,2 +1,15 @@
-%h1
-  Campaign #{@campaign.subject}
+.middle-box.text-center.loginscreen.animated.fadeInDown
+  %div
+    %div
+      %h1.logo-name
+        +
+    %h3= @campaign.name
+    %p
+      = @campaign.try(:tagline)
+    %p
+      = render "shared/flashes"
+
+    %p.m-t
+      %small
+        = link_to "subscribe", new_campaign_subscriber_path(@campaign)
+

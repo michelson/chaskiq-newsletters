@@ -1,6 +1,18 @@
-%h1.page-header New Campaigns
-.row.placeholders
-  = simple_form_for @campaign do |f|
 
-    = f.input :list_id, as: :select , collection: Postino::List.all
-    = f.submit "Create Campaign"
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-sm-4
+    %h2 New Campaigns
+    %ol.breadcrumb
+      %li
+        %a{:href => ""} Home
+      %li.active
+        %strong Campaigns list
+
+
+.row
+  .col-lg-9
+    .wrapper.wrapper-content.animated.fadeInUp
+      = simple_form_for ["manage", @campaign] do |f|
+
+        = f.input :list_id, as: :select , collection: Postino::List.all
+        = f.submit "Create Campaign"

@@ -1,4 +1,4 @@
-= link_to "new template" , new_template_path , class: "pull-right btn btn-default"
+= link_to "new template" , new_manage_template_path , class: "pull-right btn btn-default"
 %h1.page-header Templates
 .row.placeholders
   - @templates.each do |template|
@@ -12,5 +12,5 @@
             %a.anchorjs-link{:href => "#thumbnail-label"}
               %span.anchorjs-icon
           %p
-            %a.btn.btn-primary{:href => edit_template_path(template), :role => "button"} Edit
-            %a.btn.btn-default{:href => template_path(template), :role => "button"} Remove
+            %a.btn.btn-primary{:href => edit_manage_template_path(template), :role => "button"} Edit
+            %a.btn.btn-default{:href => manage_template_path(template), :role => "button"} Remove

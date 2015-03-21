@@ -1,0 +1,55 @@
+%nav.navbar-default.navbar-static-side{:role => "navigation"}
+  .sidebar-collapse
+    %ul#side-menu.nav
+      %li.nav-header
+        .dropdown.profile-element
+          %span
+            %img.img-circle{:alt => "image", :src => image_url( 'profile_small.jpg')}/
+          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+            %span.clear
+              %span.block.m-t-xs
+                %strong.font-bold David Williams
+              %span.text-muted.text-xs.block
+                Art Director
+                %b.caret
+          %ul.dropdown-menu.animated.fadeInRight.m-t-xs
+            %li
+              %a{:href => ""} Profile
+            %li
+              %a{:href => ""} Contacts
+            %li
+              %a{:href => ""} Mailbox
+            %li.divider
+            %li
+              %a{:href => ""} Logout
+        .logo-element
+          IN+
+
+      %li
+        %a{:href => ""}
+          %i.fa.fa-bullhorn
+          %span.nav-label Campaigns
+          %span.fa.arrow
+        %ul{:class => "nav nav-second-level"}
+          %li= link_to "View all campaigns", manage_campaigns_path
+          %li= link_to "New campaigns", new_manage_campaign_path
+
+      %li
+        %a{:href => ""}
+          %i.fa.fa-list-ol
+          %span.nav-label Lists
+          %span.fa.arrow
+        %ul{:class => "nav nav-second-level"}
+          %li= link_to "View all lists", manage_lists_path
+          %li= link_to "Create new list", new_manage_list_path
+
+
+      %li
+        %a{:href => ""}
+          %i.fa.fa-newspaper-o
+          %span.nav-label Templates
+          %span.fa.arrow
+
+        %ul{:class => "nav nav-second-level"}
+          %li= link_to "All templates", manage_templates_path
+          %li= link_to "Create new template", new_manage_template_path

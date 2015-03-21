@@ -1,7 +1,7 @@
 require_dependency "postino/application_controller"
 require "wicked"
 module Postino
-  class Manage::CampainWizardController < ApplicationController
+  class Manage::CampaignWizardController < ApplicationController
 
     include Wicked::Wizard
 
@@ -20,7 +20,7 @@ module Postino
 
     def create
       @campaign = Postino::Campaign.create(resource_params)
-      redirect_to wizard_path(steps.first, :campaign_id => @campaign.id)
+      redirect_to manage_wizard_path(steps.first, :campaign_id => @campaign.id)
     end
 
     protected

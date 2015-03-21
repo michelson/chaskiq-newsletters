@@ -1,0 +1,22 @@
+.middle-box.text-center.loginscreen.animated.fadeInDown
+  %div
+    %div
+      %h1.logo-name
+        +
+    %h3= @campaign.name
+    %p
+      = @campaign.try(:tagline)
+
+    = simple_form_for(@subscriber, :url => campaign_subscriber_path(@campaign, @subscriber), method: :delete, html: {class: 'm-t', role: "form" }, :defaults => { :input_html => { :class => "form-control" } }) do |f|
+
+      %h3
+        = @subscriber.email
+
+      = f.button :submit, "Unsubscribe now", :class => "btn btn-primary block full-width m-b", disable_with: "loading"
+
+
+    %p.m-t
+      %small
+        = @campaign.name
+        ©
+        = Time.now.year

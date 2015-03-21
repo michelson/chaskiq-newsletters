@@ -1,2 +1,214 @@
-%h1
-  Campaign #{@campaign.subject}
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-sm-4
+    %h2 Campaign #{@campaign.subject}
+    %ol.breadcrumb
+      %li
+        %a{:href => ""} Home
+      %li.active
+        %strong Project detail
+.row
+  .col-lg-9
+    .wrapper.wrapper-content.animated.fadeInUp
+      .ibox
+        .ibox-content
+          .row
+            .col-lg-12
+              .m-b-md
+                %a.btn.btn-white.btn-xs.pull-right{:href => "#"} Edit project
+                %h2= @campaign.name
+              %dl.dl-horizontal
+                %dt Status:
+                %dd
+                  %span.label.label-primary= @campaign.state
+          .row
+            .col-lg-5
+              %dl.dl-horizontal
+                %dt Created by:
+                %dd Alex Smith
+                %dt Messages:
+                %dd 162
+                %dt Client:
+                %dd
+                  %a.text-navy{:href => "#"} Zender Company
+                %dt Version:
+                %dd v1.4.2
+            #cluster_info.col-lg-7
+              %dl.dl-horizontal
+                %dt Last Updated:
+                %dd= @campaign.updated_at
+                %dt Created:
+                %dd= @campaign.created_at
+                %dt Participants:
+                %dd.project-people
+
+          .row
+            .col-lg-12
+              %dl.dl-horizontal
+                %dt Completed:
+                %dd
+                  .progress.progress-striped.active.m-b-sm
+                    .progress-bar{:style => "width: 60%;"}
+                  %small
+                    Project completed in
+                    %strong 60%
+          .row.m-t-sm
+            .col-lg-12
+              .panel.blank-panel
+                .panel-heading
+                  .panel-options
+
+                    %h3 Last activity
+
+                .panel-body
+
+                  %table.table.table-striped
+                    %thead
+                      %tr
+                        %th Status
+                        %th Title
+                        %th Start Time
+                        %th End Time
+                        %th Comments
+                    %tbody
+                      %tr
+                        %td
+                          %span.label.label-primary
+                            %i.fa.fa-check
+                            Completed
+                        %td
+                          Create project in webapp
+                        %td
+                          12.07.2014 10:10:1
+                        %td
+                          14.07.2014 10:16:36
+                        %td
+                          %p.small
+                            Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable.
+                      %tr
+                        %td
+                          %span.label.label-primary
+                            %i.fa.fa-check
+                            Accepted
+                        %td
+                          Various versions
+                        %td
+                          12.07.2014 10:10:1
+                        %td
+                          14.07.2014 10:16:36
+                        %td
+                          %p.small
+                            Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                      %tr
+                        %td
+                          %span.label.label-primary
+                            %i.fa.fa-check
+                            Sent
+                        %td
+                          There are many variations
+                        %td
+                          12.07.2014 10:10:1
+                        %td
+                          14.07.2014 10:16:36
+                        %td
+                          %p.small
+                            There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which
+                      %tr
+                        %td
+                          %span.label.label-primary
+                            %i.fa.fa-check
+                            Reported
+                        %td
+                          Latin words
+                        %td
+                          12.07.2014 10:10:1
+                        %td
+                          14.07.2014 10:16:36
+                        %td
+                          %p.small
+                            Latin words, combined with a handful of model sentence structures
+                      %tr
+                        %td
+                          %span.label.label-primary
+                            %i.fa.fa-check
+                            Accepted
+                        %td
+                          The generated Lorem
+                        %td
+                          12.07.2014 10:10:1
+                        %td
+                          14.07.2014 10:16:36
+                        %td
+                          %p.small
+                            The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+                      %tr
+                        %td
+                          %span.label.label-primary
+                            %i.fa.fa-check
+                            Sent
+                        %td
+                          The first line
+                        %td
+                          12.07.2014 10:10:1
+                        %td
+                          14.07.2014 10:16:36
+                        %td
+                          %p.small
+                            The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+                      %tr
+                        %td
+                          %span.label.label-primary
+                            %i.fa.fa-check
+                            Reported
+                        %td
+                          The standard chunk
+                        %td
+                          12.07.2014 10:10:1
+                        %td
+                          14.07.2014 10:16:36
+                        %td
+                          %p.small
+                            The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.
+                      %tr
+                        %td
+                          %span.label.label-primary
+                            %i.fa.fa-check
+                            Completed
+                        %td
+                          Lorem Ipsum is that
+                        %td
+                          12.07.2014 10:10:1
+                        %td
+                          14.07.2014 10:16:36
+                        %td
+                          %p.small
+                            Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable.
+                      %tr
+                        %td
+                          %span.label.label-primary
+                            %i.fa.fa-check
+                            Sent
+                        %td
+                          Contrary to popular
+                        %td
+                          12.07.2014 10:10:1
+                        %td
+                          14.07.2014 10:16:36
+                        %td
+                          %p.small
+                            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
+
+  .col-lg-3
+    .wrapper.wrapper-content.project-manager
+      %h4 Project description
+      %img.img-responsive{:src => image_path('zender_logo.png')}/
+      %p.small
+        = @campaign.try(:description)
+      %p.small.font-bold
+        %span
+          %i.fa.fa-circle.text-warning
+          High priority
+
+      .text-center.m-t-md
+        %a.btn.btn-xs.btn-primary{:href => "#"} Add files
+        %a.btn.btn-xs.btn-primary{:href => "#"} Report contact
+

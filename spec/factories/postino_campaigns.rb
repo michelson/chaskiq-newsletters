@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :postino_campaign, :class => 'Postino::Campaign' do
+    name "some Campaign"
     subject "Hello"
     from_name "Me"
     from_email "me@me.com"

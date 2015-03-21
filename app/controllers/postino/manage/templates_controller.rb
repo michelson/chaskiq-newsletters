@@ -22,7 +22,7 @@ module Postino
     def update
       @template =  Postino::Template.find(params[:id])
       if @template.update_attributes(resource_params)
-        redirect_to templates_path
+        redirect_to manage_templates_path
       else
         render "new"
       end
@@ -30,7 +30,7 @@ module Postino
 
     def create
       if @template =  Postino::Template.create(resource_params)
-        redirect_to templates_path
+        redirect_to manage_templates_path
       else
         render "new"
       end

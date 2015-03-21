@@ -1,12 +1,66 @@
-= link_to "new list" , new_list_path , class: "pull-right btn btn-default pull-right"
 
-%h1.page-header Lists
-.row.placeholders
-  - @lists.each do |list|
-    .col-xs-6.col-sm-3.placeholder
-      -#%img.img-responsive{:alt => "Generic placeholder thumbnail", "data-src" => "holder.js/200x200/auto/sky"}/
-      %h4
-        = link_to list.name, list_path(list)
-      %span.text-muted= list.state
-      = link_to "edit", edit_list_path(list)
-      = link_to "destroy", list_path(list), method: :delete
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-sm-4
+    %h2 List
+    %ol.breadcrumb
+      %li
+        %a{:href => ""} Home
+      %li.active
+        %strong list
+.row
+  .col-lg-12
+    .wrapper.wrapper-content.animated.fadeInUp
+      .ibox
+        .ibox-title
+          %h5 All Lists
+          .ibox-tools
+            %a.btn.btn-primary.btn-xs{:href => new_manage_list_path }
+              Create new List
+        .ibox-content
+          .row.m-b-sm.m-t-sm
+            .col-md-1
+              %button#loading-example-btn.btn.btn-white.btn-sm{:type => "button"}
+                %i.fa.fa-refresh
+                Refresh
+            .col-md-11
+              .input-group
+                %input.input-sm.form-control{:placeholder => "Search", :type => "text"}/
+                %span.input-group-btn
+                  %button.btn.btn-sm.btn-primary{:type => "button"} Go!
+          .project-list
+            %table.table.table-hover
+              %tbody
+                - @lists.each do |list|
+                  %tr
+                  %td.project-status
+                    %span.label.label-primary
+                      = list.state
+                  %td.project-title
+                    %a{:href => manage_list_path(list)}
+                      = list.name
+                    %br/
+                    %small= list.created_at
+                  %td.project-completion
+                    %small Completion with: 48%
+                    .progress.progress-mini
+                      .progress-bar{:style => "width: 48%;"}
+
+                  %td.project-actions
+
+                    = link_to edit_manage_list_path(list), class: "btn btn-white btn-sm" do
+                      %i.fa.fa-folder
+                      Edit
+
+                    = link_to manage_list_path(list), class: "btn btn-white btn-sm", method: :delete do
+                      %i.fa.fa-folder
+                      Destroy
+
+
+
+
+
+
+
+
+
+

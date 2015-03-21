@@ -26,6 +26,11 @@ module Postino
         expect(subscriber).to be_unsubscribed
       end
 
+      it "encode decode email" do
+
+         expect(subscriber.email).to_not be == subscriber.encoded_name
+      end
+
     end
   end
 end
