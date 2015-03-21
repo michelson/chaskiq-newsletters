@@ -11,7 +11,7 @@ module Postino
 
     it "will show subscriber!" do
       campaign
-      response = get("show", campaign_id: campaign.id, id: subscriber)
+      response = get("show", campaign_id: campaign.id, id: subscriber.encoded_id)
       expect(response.status).to be == 200
       expect(response.body).to include campaign.name
     end
@@ -26,7 +26,7 @@ module Postino
     it "will unsubscribe subscribe!" do
       campaign
       subscriber
-      response = delete("destroy", campaign_id: campaign.id, id: subscriber.id )
+      response = delete("destroy", campaign_id: campaign.id, id: subscriber.encoded_id )
       expect(response.status).to be == 302
       expect(campaign.subscribers.where(state: 'unsubscribed').size).to be == 1
     end
@@ -34,7 +34,7 @@ module Postino
     it "will update subscriber" do
       campaign
       subscriber
-      response = delete("update", campaign_id: campaign.id, id: subscriber.id, subscriber: {name: "updated name"} )
+      response = delete("update", campaign_id: campaign.id, id: subscriber.encoded_id, subscriber: {name: "updated name"} )
       expect(response.status).to be == 302
       expect(subscriber.reload.name).to be == "updated name"
     end
