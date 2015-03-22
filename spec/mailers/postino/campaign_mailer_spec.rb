@@ -12,8 +12,10 @@ module Postino
     it "should deliver newsletter" do
       allow_any_instance_of(Postino::Campaign).to receive(:html_content).and_return(template_html)
       Postino::CampaignMailer.newsletter(campaign, subscriber).deliver_now
-      last_email.subject.should_not be_blank
+      expect(last_email.subject).to_not be_blank
       expect(last_email.body).to include(subscriber.name)
+      expect(last_email.body).to include("Unsubscribe")
+      expect(last_email.body).to include("Edit subscription")
       #last_email.body.parts.each{|o| o.body.should_not be_blank }
     end
 

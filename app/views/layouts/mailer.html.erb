@@ -1,5 +1,6 @@
 <html>
   <body>
     <%= yield %>
+    <%= render "postino/campaign_mailer/subscription_links" if @campaign.present? %>
   </body>
 </html>

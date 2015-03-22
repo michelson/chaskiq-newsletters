@@ -15,10 +15,15 @@ class ApplicationMailer < ActionMailer::Base
 
     attrs = subscriber.attributes
 
+    @campaign = campaign
+
+    @subscriber = subscriber
+
+    @body = campaign.compiled_template_for(subscriber)
+
     mail( from: "#{campaign.from_name}<#{campaign.from_email}>",
           to: subscriber.email,
           subject: campaign.subject,
-          body: campaign.compiled_template_for(subscriber),
           content_type: content_type )
   end
 
