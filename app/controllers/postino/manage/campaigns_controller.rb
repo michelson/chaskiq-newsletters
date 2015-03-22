@@ -34,6 +34,11 @@ module Postino
       @campaign  = Postino::Campaign.find(params[:id])
     end
 
+    def editor
+      @campaign  = Postino::Campaign.find(params[:id])
+      render "editor_frame", layout: false
+    end
+
     def test
       @campaign  = Postino::Campaign.find(params[:id])
       @campaign.test_newsletter

@@ -1,0 +1,13 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-sm-4
+    %h2 Manage Attachments
+    %ol.breadcrumb
+      %li
+        %a{:href => manage_campaign_path(@campaign)}
+          = @campaign.name
+      %li
+        %a{:href => manage_campaign_attachments_path(@campaign)}
+          Attachments
+      - if @attachment.present?
+        %li
+          = @attachment.image

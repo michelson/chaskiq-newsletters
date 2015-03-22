@@ -62,6 +62,9 @@
     -#= javascript_include_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.js")
     / Include javascript per-view
     / For demo purpose we include javascript in view but you can easily start SeedProject and organize it with Rails asset pipeline as you want
+
+    = render "shared/modal"
+
     = yield :javascript
 
 

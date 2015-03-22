@@ -16,6 +16,13 @@
 //= require metisMenu/jquery.metisMenu.js
 //= require pace/pace.min.js
 //= require peity/jquery.peity.min.js
-//= require postino/inspinia.js
+//= require postino/postino.js
+//= require postino/manage/helpers.js
+//= require datapicker/bootstrap-datepicker.js
 //= require cocoon
+//= require summernote/summernote.min.js
 
+//= require backbone/underscore.min.js
+//= require backbone/backbone.min.js
+
+//= require postino/manage/campaign_wizard

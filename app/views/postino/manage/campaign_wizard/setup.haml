@@ -21,18 +21,27 @@
               = f.input :subject
 
             .col-lg-6
+              = f.input :logo, as: :file, input_html:{ image: @campaign.logo}
+
+            .col-lg-6
               = f.input :from_name
+
             .col-lg-6
               = f.input :from_email
+
             .col-lg-6
               = f.input :reply_email
+
             .col-lg-6
               = f.input :query_string
+
             .col-lg-6
-              = f.input :scheduled_at
+              = f.input :scheduled_at, as: :date_time_picker
+
             .col-lg-6
               = f.input :timezone, as: :select , collection: ActiveSupport::TimeZone.us_zones, default: "Pacific Time (US & Canada)"
-            .col-lg-6
+
+            .col-lg-12
               = f.input :description
             -#= f.input :created_at
             -#= f.input :updated_at

@@ -34,6 +34,7 @@ Postino::Engine.routes.draw do
         get :preview
         get :test
         get :deliver
+        get :editor
       end
       resources :attachments, controller: 'manage/attachments'
     end

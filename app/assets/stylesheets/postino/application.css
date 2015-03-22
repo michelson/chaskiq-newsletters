@@ -11,5 +11,8 @@
  *= require_self
  *= require font-awesome
  * require animate/animate.css
+ *= require summernote/summernote-bs3.css
  *= require postino/style
+ *= require datapicker/datepicker3.css
+ *= require postino/manage/campaign_wizard.css
  */

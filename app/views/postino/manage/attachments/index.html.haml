@@ -1,0 +1,53 @@
+= render "menu"
+
+.row
+  .col-lg-12
+    .wrapper.wrapper-content.animated.fadeInUp
+      .ibox
+        .ibox-title
+          %h5 All Attachments
+          .ibox-tools
+            %a.btn.btn-primary.btn-xs{:href => new_manage_campaign_attachment_path(@campaign) }
+              Create new Attachment
+        .ibox-content
+          .row.m-b-sm.m-t-sm
+            .col-md-1
+              %button#loading-example-btn.btn.btn-white.btn-sm{:type => "button"}
+                %i.fa.fa-refresh
+                Refresh
+            .col-md-11
+              .input-group
+                %input.input-sm.form-control{:placeholder => "Search", :type => "text"}/
+                %span.input-group-btn
+                  %button.btn.btn-sm.btn-primary{:type => "button"} Go!
+          .project-list
+            %table.table.table-hover
+              %tbody
+                - @attachments.each do |attach|
+                  %tr
+
+                  %td.project-title
+                    %a{:href => manage_campaign_attachment_path(@campaign, attach)}
+                      = image_tag attach.image
+                    %br/
+                    %small= attach.created_at
+
+                  %td.project-actions
+
+                    = link_to edit_manage_campaign_attachment_path(@campaign, attach), class: "btn btn-white btn-sm" do
+                      %i.fa.fa-folder
+                      Edit
+
+                    = link_to manage_campaign_attachment_path(@campaign,attach), class: "btn btn-white btn-sm", method: :delete do
+                      %i.fa.fa-folder
+                      Destroy
+
+
+
+
+
+
+
+
+
+

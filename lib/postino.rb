@@ -8,6 +8,10 @@ require "postino/engine"
 require "urlcrypt"
 require "cocoon"
 require "mustache"
+require 'dotenv'
+require 'carrierwave'
+require 'coffee-rails'
+Dotenv.load
 
 module Postino
   URLcrypt.key = 'postino123'

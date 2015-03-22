@@ -1,0 +1,205 @@
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+*/
+
+#editor-controls{
+  background-color: #f6f6f6;
+
+  .block-buttons{
+    display:block;
+  }
+  .wysiwyg{
+    display:none;
+  }
+}
+
+.note-codable{
+  display:none;
+}
+
+.mc-text {
+  background-position: center -124px !important;
+}
+.mc-boxed {
+  background-position: center -238px !important;
+}
+.mc-image{
+  background-position: center -466px !important;
+}
+.mc-image-group{
+  background-position: center -580px !important;
+}
+.mc-image-card {
+  background-position: center -694px !important;
+}
+.mc-separator {
+  background-position: center -352px !important;
+}
+
+ul.blocks li a {
+  background: image_url("postino/blocks_sprite.png") no-repeat scroll center 114px / 114px auto #fff;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.18);
+  height: 120px;
+  padding-top: 90px;
+  width: 108px;
+  display:block;
+
+  font-size: 12px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+ul.blocks{
+  list-style: none;
+  padding:0px;
+  > li{
+    float:left;
+    margin:5px;
+  }
+}
+
+.mojoMcContainerEmptyMessage {
+    color: #959595;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 16px 1px;
+}
+.mojoMcContainerEmptyMessage, .tempImage {
+    background: none repeat scroll 0 0 #f7f7f7;
+    font-size: 12px;
+    outline: 1px solid #bbb;
+    padding: 15px 0;
+    text-align: center;
+    vertical-align: middle;
+}
+.mojoMcContainerEmptyMessage, .mojoMcContainerEmptyMessage *, .tempImage * {
+    color: #333;
+    font-family: "Helvetica Neue",Helvetica,Arial,Verdana,sans-serif;
+    font-weight: normal;
+    line-height: 20px;
+    text-align: center;
+}
+
+
+.tpl-container.over {
+  border: 3px solid green;
+  position:relative;
+}
+.tpl-container .legend{
+  background: none repeat scroll 0 0 green;
+  color: white;
+  height: 26px;
+  padding: 4px;
+  position: absolute;
+  top: -28px;
+  left:-5px;
+  width: 180px;
+}
+
+.mojoMcBlock.focus {
+    outline: 2px solid #666;
+    position: relative;
+    z-index: 1;
+}
+.dojoDndItem {
+    cursor: default;
+}
+
+
+.tpl-block {
+    cursor: pointer;
+    position: relative;
+}
+.tpl-block:hover {
+    outline: 1px solid #555;
+    z-index: 1;
+}
+.tpl-block:hover input {
+    opacity: 0.5;
+    position: relative;
+    z-index: 6;
+}
+.tpl-block:hover .tpl-block-controls {
+    background: none repeat scroll 0 0 rgba(38, 38, 38, 0.8);
+    display: block;
+    height: 48px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.dojoDndMove .tpl-block::after {
+    display: none;
+}
+.dojoDndMove .tpl-block .tpl-block-controls {
+    display: none;
+}
+.tpl-block-controls {
+    display: none;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+}
+.tpl-block-controls a {
+    border-right: 1px solid #8c8c8c;
+    color: #e6e6e6;
+    display: block;
+    height: 36px;
+    line-height: 36px;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    text-decoration: none;
+    top: 6px;
+    width: 50px;
+}
+.tpl-block-controls a:last-child {
+    border-right: medium none;
+}
+.tpl-block-controls a:hover {
+    color: #fff;
+}
+.tpl-block-controls a.tpl-block-delete {
+    right: 0;
+}
+.tpl-block-controls a.tpl-block-clone {
+    right: 50px;
+}
+.tpl-block-controls a.tpl-block-edit {
+    right: 100px;
+}
+.tpl-block-controls .tpl-block-drag {
+    color: #e6e6e6;
+    cursor: move;
+    left: 5px;
+    position: absolute;
+    top: 12px;
+}
+
+
+.mojoImageUploader .imagePlaceholder {
+    padding: 15px 0;
+}
+.mojoImageUploader * {
+    color: #333;
+    font-family: "Helvetica Neue",Helvetica,Arial,Verdana,sans-serif;
+    font-weight: normal;
+    line-height: 20px;
+    text-align: center;
+}
+.mojoImageUploader * {
+    color: #333;
+    font-family: "Helvetica Neue",Helvetica,Arial,Verdana,sans-serif;
+    font-weight: normal;
+    line-height: 20px;
+    text-align: center;
+}
+.mojoImageUploader {
+    font-size: 12px;
+    text-align: center;
+}

@@ -1,3 +1,6 @@
+window.Postino = {
+  Helpers: {}
+}
 // Custom scripts
 $(document).ready(function () {
 
@@ -80,6 +83,13 @@ $(document).ready(function () {
 
     $("[data-toggle=popover]")
         .popover();
+
+
+    $('.input-group.date').datepicker({
+      todayBtn: "linked",
+      keyboardNavigation: false,
+
+    });
 });
 
 
@@ -128,6 +138,51 @@ function SmoothlyMenu() {
         // Remove all inline style from jquery fadeIn function to reset menu state
         $('#side-menu').removeAttr('style');
     }
+}
+
+var sendFile;
+
+sendFile = function(file, callback) {
+  var data;
+  data = new FormData();
+  data.append("image", file);
+  return $.ajax({
+    url: $('.summernote').data('upload-path'),
+    data: data,
+    cache: false,
+    contentType: false,
+    processData: false,
+    type: 'POST',
+    success: function(data) {
+      return callback(data);
+    }
+  });
+};
+
+
+window.InitSummernote = function(){
+    $('.summernote').summernote({
+      toolbar: [
+        //[groupname, [button list]]
+
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['font', ['strikethrough']],
+        ['insert', ['picture']],
+        ['fontsize', ['fontsize']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['height', ['height']],
+      ]
+    , onImageUpload: function(files, editor, $editable) {
+        sendFile(files[0], function(data){
+          url = data.image.url
+          console.log($editable)
+          console.log(url)
+          editor.insertImage($editable, url)
+        })
+        //console.log('image upload:', files, editor, $editable);
+      }
+    });
 }
 
 
