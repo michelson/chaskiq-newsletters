@@ -11,7 +11,8 @@ require "mustache"
 require 'dotenv'
 require 'carrierwave'
 require 'coffee-rails'
-require 'sanitize'
+require 'premailer'
+
 Dotenv.load
 
 module Postino

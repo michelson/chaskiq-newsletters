@@ -4,6 +4,8 @@ class CreatePostinoSubscribers < ActiveRecord::Migration
       t.string :name
       t.string :email
       t.string :state
+      t.string :last_name
+
       t.references :list, index: true
 
       t.timestamps null: false

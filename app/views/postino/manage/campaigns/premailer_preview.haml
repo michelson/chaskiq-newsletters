@@ -1,0 +1,36 @@
+!!!
+%html
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %title Newsletta
+    / Include style per-controller - vendor plugins
+    -#= stylesheet_link_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.css")
+    / Main css styles
+    :css
+      #bodyTable {background-color: #f2f2f2;}
+      #templatePreheader,
+      #templateHeader,
+      #templateColumns,
+      #templateFooter,
+      #templateBody{
+      background-color: #ffffff;
+      border-bottom: 0 none;
+      border-top: 0 none;
+      }
+      .footerContainer .mcnTextContent a {
+      color: #606060;
+      font-weight: normal;
+      text-decoration: underline;
+      }
+      .footerContainer .mcnTextContent, .footerContainer .mcnTextContent p {
+      color: #606060;
+      font-family: Helvetica;
+      font-size: 11px;
+      line-height: 125%;
+      text-align: left;
+      }
+
+
+  %body
+    = h @campaign.html_content.html_safe

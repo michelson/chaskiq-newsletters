@@ -29,7 +29,8 @@ module Postino
     end
 
     def create
-      if @template =  Postino::Template.create(resource_params)
+      @template =  Postino::Template.create(resource_params)
+      if @template.errors.blank?
         redirect_to manage_templates_path
       else
         render "new"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150321210329) do
+ActiveRecord::Schema.define(version: 20150321205815) do
 
   create_table "postino_attachments", force: :cascade do |t|
     t.string   "image"
@@ -25,18 +25,35 @@ ActiveRecord::Schema.define(version: 20150321210329) do
 
   add_index "postino_attachments", ["campaign_id"], name: "index_postino_attachments_on_campaign_id"
 
-  create_table "postino_campaign_templates", force: :cascade do |t|
+  create_table "postino_campaigns", force: :cascade do |t|
+    t.string   "subject"
+    t.string   "from_name"
+    t.string   "from_email"
+    t.string   "reply_email"
+    t.text     "plain_content"
+    t.text     "html_content"
+    t.text     "premailer"
+    t.text     "description"
+    t.string   "logo"
+    t.string   "name"
+    t.string   "query_string"
+    t.datetime "scheduled_at"
+    t.string   "timezone"
+    t.string   "state"
+    t.integer  "recipients_count"
+    t.boolean  "sent"
+    t.integer  "opens_count"
+    t.integer  "clicks_count"
+    t.integer  "parent_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "list_id"
     t.integer  "template_id"
-    t.integer  "campaign_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
   end
 
-  add_index "postino_campaign_templates", ["campaign_id"], name: "index_postino_campaign_templates_on_campaign_id"
-  add_index "postino_campaign_templates", ["template_id"], name: "index_postino_campaign_templates_on_template_id"
-
-# Could not dump table "postino_campaigns" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  add_index "postino_campaigns", ["list_id"], name: "index_postino_campaigns_on_list_id"
+  add_index "postino_campaigns", ["parent_id"], name: "index_postino_campaigns_on_parent_id"
+  add_index "postino_campaigns", ["template_id"], name: "index_postino_campaigns_on_template_id"
 
   create_table "postino_lists", force: :cascade do |t|
     t.string   "name"
@@ -75,10 +92,10 @@ ActiveRecord::Schema.define(version: 20150321210329) do
     t.string   "name"
     t.string   "email"
     t.string   "state"
+    t.string   "last_name"
     t.integer  "list_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "last_name"
   end
 
   add_index "postino_subscribers", ["list_id"], name: "index_postino_subscribers_on_list_id"
@@ -86,10 +103,10 @@ ActiveRecord::Schema.define(version: 20150321210329) do
   create_table "postino_templates", force: :cascade do |t|
     t.string   "name"
     t.text     "body"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
     t.text     "html_content"
     t.string   "screenshot"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
 end

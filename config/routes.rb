@@ -32,6 +32,7 @@ Postino::Engine.routes.draw do
       resources :wizard, controller: 'manage/campaign_wizard'
       member do
         get :preview
+        get :premailer_preview
         get :test
         get :deliver
         get :editor

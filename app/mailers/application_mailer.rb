@@ -19,7 +19,7 @@ class ApplicationMailer < ActionMailer::Base
 
     @subscriber = subscriber
 
-    @body = campaign.compiled_template_for(subscriber)
+    @body = campaign.compiled_template_for(subscriber).html_safe
 
     mail( from: "#{campaign.from_name}<#{campaign.from_email}>",
           to: subscriber.email,

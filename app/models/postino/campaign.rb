@@ -41,6 +41,7 @@ module Postino
       #with custom
       #Postino::CampaignMailer.my_email.delivery_method.settings.merge!(SMTP_SETTINGS)
       #send newsletter here
+      self.apply_premailer
       self.subscribers.each do |s|
         push_notification(s)
       end
@@ -56,11 +57,6 @@ module Postino
       end
     end
 
-    def generate_premailer
-      premailer = Premailer.new('http://localhost:3000/postino/manage/campaigns/1/preview', :warn_level => Premailer::Warnings::SAFE)
-
-    end
-
     #deliver email + create metric
     def push_notification(subscriber)
       self.metrics.create(trackable: subscriber, action: "deliver")
@@ -71,13 +67,20 @@ module Postino
       self.html_content = self.template.body
     end
 
-    def compile_tamplate
+    def campaign_url
+      host = Rails.application.routes.default_url_options[:host]
+      campaign_url = "#{host}/campaigns/#{self.id}"
+    end
 
+    def apply_premailer
+      host = Rails.application.routes.default_url_options[:host]
+      url = "#{host}/manage/campaigns/#{self.id}/premailer_preview"
+      premailer = Premailer.new(url, :warn_level => Premailer::Warnings::SAFE)
+      self.update_column(:premailer, premailer.to_inline_css)
     end
 
     def attributes_for_mailer(subscriber)
-      host = Rails.application.routes.default_url_options[:host]
-      campaign_url = "#{host}/campaigns/#{self.id}"
+
       subscriber_url = "#{campaign_url}/subscribers/#{subscriber.encoded_id}"
 
       { campaign_url: "#{campaign_url}",
@@ -88,7 +91,7 @@ module Postino
     end
 
     def mustache_template_for(subscriber)
-      Mustache.render(html_content, subscriber.attributes.merge(attributes_for_mailer(subscriber)) )
+      Mustache.render(premailer, subscriber.attributes.merge(attributes_for_mailer(subscriber)) )
     end
 
     def compiled_template_for(subscriber)

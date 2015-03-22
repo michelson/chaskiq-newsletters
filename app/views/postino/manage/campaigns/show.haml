@@ -216,6 +216,7 @@
                           = m.updated_at
                         %td
                           %p.small
+                            = m.host
                             = m.data
 
   .col-lg-3
@@ -230,6 +231,7 @@
           High priority
 
       .text-center.m-t-md
-        %a.btn.btn-xs.btn-primary{:href => "#"} Add files
-        %a.btn.btn-xs.btn-primary{:href => "#"} Report contact
+        %a.btn.btn-xs.btn-primary{:href => preview_manage_campaign_path(@campaign)}
+          preview
+        -#%a.btn.btn-xs.btn-primary{:href => preview_manage_campaign_path(@campaign)} Report contact
 

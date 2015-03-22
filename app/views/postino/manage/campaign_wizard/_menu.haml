@@ -4,6 +4,7 @@
     %h2 Campaign Wizard
     %ol.breadcrumb
       %li
-        %a{:href => ""} Home
-      %li.active
-        %strong Campaigns list
+        %a{:href => "/"} Home
+      - if @campaign.present?
+        %li.active
+          %strong= link_to @campaign.name , manage_campaign_path(@campaign)

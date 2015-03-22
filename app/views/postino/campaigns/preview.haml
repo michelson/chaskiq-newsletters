@@ -1,8 +1,0 @@
-
-= link_to "view" , campaign_path(@campaign), class: "btn btn-default pull-right"
-
-%h1.page-header #{@campaign.name} mail content
-
-
-- out = Sanitize.fragment(@campaign.html_content, :elements => ['div'])
-= h out

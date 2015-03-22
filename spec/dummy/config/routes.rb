@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
 
-  mount Postino::Engine => "/postino"
+  mount Postino::Engine => "/"
 end

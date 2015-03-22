@@ -32,7 +32,9 @@ module Postino
 
     def preview
 
+
       @campaign  = Postino::Campaign.find(params[:id])
+      @campaign.apply_premailer
 
 =begin
       out = Sanitize.fragment(@campaign.html_content, :elements => ['img', 'table', 'tbody', 'td', 'th', 'p', 'span', 'ul', 'li'],
@@ -50,6 +52,12 @@ module Postino
 
       @template = out.html_safe
 =end
+      render layout: false
+    end
+
+    def premailer_preview
+
+      @campaign  = Postino::Campaign.find(params[:id])
       render layout: false
     end
 

@@ -17,11 +17,13 @@ module Postino
     let(:list){ FactoryGirl.create(:postino_list) }
     let(:subscriber){ FactoryGirl.create(:postino_subscriber, list: list)}
     let(:campaign){ FactoryGirl.create(:postino_campaign, template: template) }
+    let(:premailer_template){"<p>{{name}} {{last_name}} {{email}} {{campaign_url}} {{campaign_subscribe}} {{campaign_unsubscribe}}this is the template</p>"}
 
     describe "creation" do
       it "will create a pending campaign by default" do
         @c = FactoryGirl.create(:postino_campaign)
         expect(@c).to_not be_sent
+        allow_any_instance_of(Postino::Campaign).to receive(:premailer).and_return(premailer_template)
       end
     end
 
@@ -42,11 +44,15 @@ module Postino
     context "send newsletter" do
       before do
 
+
         10.times do
           FactoryGirl.create(:postino_subscriber, list: list)
         end
 
         @c = FactoryGirl.create(:postino_campaign, template: template, list: list)
+
+        allow(@c).to receive(:premailer).and_return("<p>hi</p>")
+        allow_any_instance_of(Postino::Campaign).to receive(:apply_premailer).and_return(true)
 
       end
 
@@ -65,13 +71,14 @@ module Postino
         campaign.template = template
         campaign.save
         expect(campaign.html_content).to be == template.body
-        expect(campaign.mustache_template_for(subscriber)).to_not be == template.body
+        allow_any_instance_of(Postino::Campaign).to receive(:premailer).and_return("{{name}}")
         expect(campaign.mustache_template_for(subscriber)).to include(subscriber.name)
       end
 
       it "will render subscriber and compile links with host ?r=link" do
         campaign.template = template
         campaign.save
+        allow_any_instance_of(Postino::Campaign).to receive(:premailer).and_return("<a href='http://google.com'>google</a>")
         expect(campaign.compiled_template_for(subscriber)).to include("?r=http://google.com")
         expect(campaign.compiled_template_for(subscriber)).to include(campaign.host)
       end

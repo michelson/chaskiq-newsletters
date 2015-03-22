@@ -37,7 +37,8 @@ end
 task default: :test
 
 task :server do
-  system "cd spec/dummy && bundle exec rails s"
+  #system "cd spec/dummy && bundle exec rails s"
+  system "cd spec/dummy && bundle exec thin --threadpool-size 50"
 end
 
 task :console do
