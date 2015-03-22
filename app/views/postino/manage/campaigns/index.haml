@@ -64,6 +64,10 @@
                       %i.fa.fa-folder
                       Send
 
+                    = link_to manage_campaign_attachments_path(campaign), class: "btn btn-white btn-sm" do
+                      %i.fa.fa-folder
+                      Attachments
+
                     = link_to manage_campaign_path(campaign), method: :delete, class: "btn btn-white btn-sm" do
                       %i.fa.fa-folder
                       Remove

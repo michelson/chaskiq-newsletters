@@ -39,7 +39,7 @@ class window.Editor extends Backbone.View
     "click .tpl-block-delete": "deleteBloc"
 
   initialize: ->
-    @textarea = $(@el).find('#campaign_html_content');
+    @textarea = $(@el).find('#campaign_html_content')
 
   copyToEditor: (ev)->
     $this = $(ev.currentTarget);
@@ -63,9 +63,10 @@ class window.Editor extends Backbone.View
 
   render: ->
     #$(@el).find('#mail-editor').html(@template())
-    console.log(@textarea.val())
-    $(@el).find('#mail-editor').html(@textarea.val());
-    #$(@el).find('#mail-editor').html(@baseTemplate())
+    #console.log(@textarea.val())
+    #$(@el).find('#mail-editor').html(@textarea.val());
+    #$(".navbar-minimalize").click()
+    $(@el).find('#mail-editor').html(@baseTemplate())
 
   displaySections: ()->
     $('.tpl-container').addClass("over")
@@ -233,6 +234,7 @@ class window.Editor extends Backbone.View
                         <tr>
                           <td valign='top' mccontainer='footer_container' style='padding-bottom:9px;' mc:container='footer_container' class='footerContainer tpl-container dojoDndSource dojoDndTarget dojoDndContainer'>
                             <div class='mojoMcContainerEmptyMessage' style='display: block;'>Drop Content Blocks Here</div>
+                              #{@wrapBlock(@subscriptionBlock())}
                           </td>
                         </tr>
                       </tbody>
@@ -424,6 +426,35 @@ class window.Editor extends Backbone.View
       </tbody>
     </table>"
 
+  subscriptionBlock: ()->
+    "<table width='100%' cellspacing='0' cellpadding='0' border='0' class='mcnTextBlock'>
+      <tbody class='mcnTextBlockOuter'>
+        <tr>
+          <td valign='top' class='mcnTextBlockInner'>
+              <table width='600' cellspacing='0' cellpadding='0' border='0' align='left' class='mcnTextContentContainer'>
+                <tbody><tr>
+
+                  <td valign='top' style='padding-top:9px; padding-right: 18px; padding-bottom: 9px; padding-left: 18px;' class='mcnTextContent'>
+                      <em>&copy;</em>
+                      {{campaign_description}}
+                      <br>
+                      <br>
+                      <strong>Our mailing address is:</strong><br>
+                      {{campaign_url}}
+                      <br>
+                      <br>
+                      <a href='{{campaign_unsubscribe}}' class='utilityLink'>unsubscribe from this list</a>&nbsp;&nbsp;&nbsp;
+                      <a href='{{campaign_unsubscribe}}' class='utilityLink'>update subscription preferences</a>&nbsp;<br>
+                      <br>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>"
+
   displayUploaderList: (ev)->
     placeholder = $(ev.currentTarget).parents('.imagePlaceholder')
     @checkExistentImages(placeholder)
@@ -450,6 +481,7 @@ class window.Editor extends Backbone.View
   replaceImagePreview: (html_to_replace, url)->
     html_to_replace.replaceWith( "<img src='#{url}'/>" );
     Postino.Helpers.hideModal()
+    @copyToTextArea()
 
   templateForAttachments: (data)->
     html = "<ul>"

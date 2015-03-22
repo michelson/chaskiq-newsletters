@@ -12,6 +12,12 @@ module Postino
       render_wizard
     end
 
+    def design
+      @campaign = Postino::Campaign.find(params[:campaign_id])
+      render_wizard
+      render :show , layout: false
+    end
+
     def update
       @campaign = Postino::Campaign.find(params[:campaign_id])
       @campaign.update_attributes(resource_params)

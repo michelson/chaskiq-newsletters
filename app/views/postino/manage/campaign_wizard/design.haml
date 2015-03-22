@@ -32,16 +32,17 @@
                         %h4 Settings
                       .panel-options
                         %ul.nav.nav-tabs
+
                           %li.active
                             %a{"data-toggle" => "tab", :href => "#tab-1"}
-                              %i.fa.fa-laptop
-                              Content
+                              %i.fa.fa-cubes
+                              Blocks
                           %li
                             %a{"data-toggle" => "tab", :href => "#tab-2"}
-                              %i.fa.fa-desktop
+                              %i.fa.fa-cubes
                               Design
 
-                    .panel-body
+                    .panel-body{style: "padding:0px"}
                       .tab-content
                         #tab-1.tab-pane.active
 
@@ -68,8 +69,12 @@
                                   image card
 
                         #tab-2.tab-pane
-                          %strong One morning, when Gregor Samsa.
-                          %p Quick zephyrs blow, vexing daft Jim. Sex-charged
+                          %ul.list-group
+                            %li.list-group-item Page
+                            %li.list-group-item Preheader
+                            %li.list-group-item Header
+                            %li.list-group-item Body
+                            %li.list-group-item Footer
 
                 .block-settings
 
@@ -81,12 +86,12 @@
                         %ul.nav.nav-tabs
                           %li.active
                             %a{"data-toggle" => "tab", :href => "#tab-3"}
-                              %i.fa.fa-laptop
+                              %i.fa.fa-align-left
                               Content
                           %li
                             %a{"data-toggle" => "tab", :href => "#tab-4"}
-                              %i.fa.fa-cog
-                              Settings
+                              %i.fa.fa-cubes
+                              Design
 
                     .panel-body
                       .tab-content
@@ -96,7 +101,12 @@
                             .summernote.wrapper.p-md{data:{ upload_path: manage_campaign_attachments_path(@campaign, format: :json) }}
 
                         #tab-4.tab-pane
-                          form
+                          %ul.list-group
+                            %li.list-group-item Page
+                            %li.list-group-item Preheader
+                            %li.list-group-item Header
+                            %li.list-group-item Body
+                            %li.list-group-item Footer
 
 
 
