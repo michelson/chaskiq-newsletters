@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Chaskiq::VERSION
   spec.authors       = ["miguel michelson"]
   spec.email         = ["miguelmichelson@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = "message like a chaskiq"
+  spec.summary       = "message like a chaskiq"
+  spec.homepage      = "https://github.com/michelson/chaskiq"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
