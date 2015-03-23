@@ -16,10 +16,10 @@ module Postino
       #  end
       #end
 
-      #content.css('div').remove
+      content.css('div.mojoMcContainerEmptyMessage').remove
 
-
-      content.to_html
+      #make sure nokogiri does not rips off my mustaches
+      content.to_html.gsub("%7B%7B", "{{").gsub("%7D%7D", "}}")
     end
 
     def self.rename_link(value, url_prefix)

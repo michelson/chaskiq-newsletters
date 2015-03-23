@@ -3,6 +3,8 @@ require_dependency "postino/application_controller"
 module Postino
   class Manage::TemplatesController < ApplicationController
 
+    before_filter :authentication_method
+
     def index
       @templates = Postino::Template.all
     end

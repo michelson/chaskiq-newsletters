@@ -3,6 +3,8 @@ require_dependency "postino/application_controller"
 module Postino
   class Manage::ListsController < ApplicationController
 
+    before_filter :authentication_method
+
     def index
       @lists = Postino::List.page(params[:page]).per(50)
     end

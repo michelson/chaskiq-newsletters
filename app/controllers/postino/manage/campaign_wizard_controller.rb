@@ -1,7 +1,9 @@
 require_dependency "postino/application_controller"
-require "wicked"
+
 module Postino
   class Manage::CampaignWizardController < ApplicationController
+
+    before_filter :authentication_method
 
     include Wicked::Wizard
 

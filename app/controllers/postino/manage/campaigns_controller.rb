@@ -3,6 +3,8 @@ require_dependency "postino/application_controller"
 module Postino
   class Manage::CampaignsController < ApplicationController
 
+    before_filter :authentication_method, except: [:preview, :premailer_preview]
+
     def index
       @campaigns = Postino::Campaign.all
     end

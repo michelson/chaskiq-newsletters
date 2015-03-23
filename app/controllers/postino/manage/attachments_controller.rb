@@ -3,6 +3,7 @@ require_dependency "postino/application_controller"
 module Postino
   class Manage::AttachmentsController < ApplicationController
 
+    before_filter :authentication_method
     before_filter :find_campaign
 
     def index

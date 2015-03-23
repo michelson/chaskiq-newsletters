@@ -163,15 +163,11 @@ sendFile = function(file, callback) {
 window.InitSummernote = function(){
     $('.summernote').summernote({
       toolbar: [
-        //[groupname, [button list]]
-
-        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['style', ['bold', 'italic', 'underline']],
         ['font', ['strikethrough']],
         ['insert', ['picture']],
         ['fontsize', ['fontsize']],
-        ['color', ['color']],
         ['para', ['ul', 'ol', 'paragraph']],
-        ['height', ['height']],
       ]
     , onImageUpload: function(files, editor, $editable) {
         sendFile(files[0], function(data){

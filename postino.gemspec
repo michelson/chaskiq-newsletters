@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = Postino::VERSION
   s.authors     = ["miguel michelson"]
   s.email       = ["miguelmichelson@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Postino."
-  s.description = "TODO: Description of Postino."
+  s.homepage    = "http://chaski.herokuap.com"
+  s.summary     = "Send newslerroeo"
+  s.description = "Postino."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]

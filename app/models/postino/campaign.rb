@@ -1,3 +1,5 @@
+require 'net/http'
+
 module Postino
   class Campaign < ActiveRecord::Base
 
@@ -48,7 +50,7 @@ module Postino
     end
 
     def test_newsletter
-      Postino::CampaignMailer.test(self).deliver_now
+      Postino::CampaignMailer.test(self).deliver_later
     end
 
     def detect_changed_template
@@ -74,8 +76,9 @@ module Postino
 
     def apply_premailer
       host = Rails.application.routes.default_url_options[:host]
-      url = "#{host}/manage/campaigns/#{self.id}/premailer_preview"
-      premailer = Premailer.new(url, :warn_level => Premailer::Warnings::SAFE)
+      url = URI.parse("#{host}/manage/campaigns/#{self.id}/premailer_preview")
+
+      premailer = Premailer.new(url, :adapter => :nokogiri, :escape_url_attributes => false)
       self.update_column(:premailer, premailer.to_inline_css)
     end
 
@@ -83,6 +86,13 @@ module Postino
 
       subscriber_url = "#{campaign_url}/subscribers/#{subscriber.encoded_id}"
 
+=begin
+        { campaign_url: "<a href='#{campaign_url}' class='utilityLink'>#{self.name}</a>".html_safe,
+        campaign_unsubscribe: "<a href='#{subscriber_url}/delete' class='utilityLink'>Unsubscribe</a>".html_safe,
+        campaign_subscribe: "<a href='#{campaign_url}/subscribers/new' class='utilityLink'>Subscribe</a>".html_safe,
+        campaign_description: "#{self.description}" ,
+      }
+=end
       { campaign_url: "#{campaign_url}",
         campaign_unsubscribe: "#{subscriber_url}/delete",
         campaign_subscribe: "#{campaign_url}/subscribers/new",
@@ -91,12 +101,15 @@ module Postino
     end
 
     def mustache_template_for(subscriber)
-      Mustache.render(premailer, subscriber.attributes.merge(attributes_for_mailer(subscriber)) )
+
+      link_prefix = host + "/campaigns/#{self.id}/tracks/#{subscriber.encoded_id}?r="
+      html = Postino::LinkRenamer.convert(premailer, link_prefix)
+
+      Mustache.render(html, subscriber.attributes.merge(attributes_for_mailer(subscriber)) )
     end
 
     def compiled_template_for(subscriber)
-      link_prefix = host + "/campaigns/#{self.id}/tracks/#{subscriber.encoded_id}?r="
-      Postino::LinkRenamer.convert(mustache_template_for(subscriber), link_prefix)
+      mustache_template_for(subscriber)
     end
 
     def host

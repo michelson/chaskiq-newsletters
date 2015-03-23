@@ -63,10 +63,8 @@ class window.Editor extends Backbone.View
 
   render: ->
     #$(@el).find('#mail-editor').html(@template())
-    #console.log(@textarea.val())
-    #$(@el).find('#mail-editor').html(@textarea.val());
-    #$(".navbar-minimalize").click()
-    $(@el).find('#mail-editor').html(@baseTemplate())
+    $(@el).find('#mail-editor').html(@textarea.val()); #init from saved content
+    #$(@el).find('#mail-editor').html(@baseTemplate()) #init from base js tamplarte
 
   displaySections: ()->
     $('.tpl-container').addClass("over")
