@@ -8,6 +8,7 @@
           %h5 All Lists
           .ibox-tools
             %a.btn.btn-primary.btn-xs{:href => new_manage_list_path }
+              %i.fa.fa-plus
               Create new List
         .ibox-content
           .row.m-b-sm.m-t-sm
@@ -44,11 +45,11 @@
                   %td.project-actions
 
                     = link_to edit_manage_list_path(list), class: "btn btn-white btn-sm" do
-                      %i.fa.fa-folder
+                      %i.fa.fa-edit
                       Edit
 
                     = link_to manage_list_path(list), class: "btn btn-white btn-sm", method: :delete do
-                      %i.fa.fa-folder
+                      %i.fa.fa-times
                       Destroy
 
 

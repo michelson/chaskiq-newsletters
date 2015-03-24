@@ -1,17 +1,20 @@
 = form_for ["manage", @list] do |f|
 
-  .col-sm-6.b-r
+  .col-lg-12
     %h3.m-t-none.m-b Sign in
 
-    = f.text_field :name
+    = f.text_field :name, placeholder: "Introduce de List name"
 
+    %hr
 
-  .col-sm-6.b-r
-    = link_to_add_association 'Add Subscriber', f, :subscribers, class: "btn btn-mini btn-default"
+  .col-lg-12
+    = link_to_add_association f, :subscribers, class: "btn btn-mini btn-default" do
+      %i.fa.fa-plus
+      Add Subscriber
 
     = f.simple_fields_for :subscribers, [] do |u|
       = render "subscriber_fields", :f => u
 
-
+  .col-lg-12
     = f.submit "crear", class: "btn btn-primary"
 

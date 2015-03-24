@@ -16,6 +16,7 @@
           %h5 All Campaigns
           .ibox-tools
             %a.btn.btn-primary.btn-xs{:href => new_manage_campaign_path }
+              %i.fa.fa-plus
               Create new Campaigns
         .ibox-content
           .row.m-b-sm.m-t-sm
@@ -48,29 +49,49 @@
 
                   %td.project-actions
 
-                    = link_to manage_campaign_wizard_path(campaign, "setup"), class: "btn btn-white btn-sm" do
-                      %i.fa.fa-folder
-                      setup
+                    .btn-group
+                      %button.btn.btn-info.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown"}
+                        Actions
+                        %span.caret
+                      %ul.dropdown-menu
 
-                    = link_to preview_manage_campaign_path(campaign), class: "btn btn-white btn-sm" do
-                      %i.fa.fa-folder
-                      Preview
+                        %li
+                          = link_to preview_manage_campaign_path(campaign) do
+                            %i.fa.fa-eye
+                            Preview
 
-                    = link_to test_manage_campaign_path(campaign), class: "btn btn-white btn-sm" do
-                      %i.fa.fa-folder
-                      Test
+                        %li
+                          = link_to test_manage_campaign_path(campaign) do
+                            %i.fa.fa-heartbeat
+                            Test
 
-                    = link_to deliver_manage_campaign_path(campaign), class: "btn btn-white btn-sm" do
-                      %i.fa.fa-folder
-                      Send
+                        %li
+                          = link_to deliver_manage_campaign_path(campaign) do
+                            %i.fa.fa-paper-plane
+                            Send
 
-                    = link_to manage_campaign_attachments_path(campaign), class: "btn btn-white btn-sm" do
-                      %i.fa.fa-folder
-                      Attachments
+                    .btn-group
+                      %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown"}
+                        Configuration
+                        %span.caret
+                      %ul.dropdown-menu
+                        %li
+                          = link_to manage_campaign_wizard_path(campaign, "setup") do
+                            %i.fa.fa-edit
+                            Setup
 
-                    = link_to manage_campaign_path(campaign), method: :delete, class: "btn btn-white btn-sm" do
-                      %i.fa.fa-folder
-                      Remove
+                        %li
+                          = link_to manage_campaign_attachments_path(campaign) do
+                            %i.fa.fa-paperclip
+                            Attachments
+
+                        %li
+                          = link_to manage_campaign_path(campaign), method: :delete do
+                            %i.fa.fa-times
+                            Remove
+
+
+
 
 
 

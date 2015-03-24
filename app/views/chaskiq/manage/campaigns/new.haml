@@ -13,13 +13,11 @@
     .wrapper.wrapper-content.animated.fadeInUp
       .ibox
         .ibox-title
-          %h5 All Templates
-          .ibox-tools
-            %a.btn.btn-primary.btn-xs{:href => new_manage_campaign_path }
-              Create new Template
+          %h5 New Campaign
+
         .ibox-content
 
           = simple_form_for ["manage", @campaign] do |f|
 
-            = f.input :list_id, as: :select , collection: Chaskiq::List.all
+            = f.input :list_id, as: :select , collection: Chaskiq::List.all, label: "Choose a mail list"
             = f.submit "Create Campaign"

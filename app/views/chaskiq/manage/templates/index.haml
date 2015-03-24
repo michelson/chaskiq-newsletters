@@ -9,6 +9,7 @@
           %h5 All Templates
           .ibox-tools
             %a.btn.btn-primary.btn-xs{:href => new_manage_template_path }
+              %i.fa.fa-plus
               Create new Template
         .ibox-content
 
@@ -16,14 +17,18 @@
 
             .col-sm-6.col-md-4
               .thumbnail
-                %img{:alt => "100%x200", "data-holder-rendered" => "true", "data-src" => "holder.js/100%x200", :src => ""}
+                %img{:alt => "300%x300", "data-holder-rendered" => "true",  :src => "http://placehold.it/300x300"}
                 .caption
                   %h3#thumbnail-label
                     = template.name
                     %a.anchorjs-link{:href => "#thumbnail-label"}
                       %span.anchorjs-icon
                   %p
-                    %a.btn.btn-primary{:href => edit_manage_template_path(template), :role => "button"} Edit
-                    %a.btn.btn-default{:href => manage_template_path(template), :role => "button"} Remove
+                    %a.btn.btn-primary{:href => edit_manage_template_path(template), :role => "button"}
+                      %i.fa.fa-edit
+                      Edit
+                    %a.btn.btn-default{:href => manage_template_path(template), :role => "button"}
+                      %i.fa.fa-times
+                      Remove
 
           .clearfix

@@ -14,5 +14,8 @@
  *= require summernote/summernote-bs3.css
  *= require chaskiq/style
  *= require datapicker/datepicker3.css
+ *= require toastr/toastr.css
+ *= require codemirror/elegant.css
+ *= require codemirror/codemirror.css
  *= require chaskiq/manage/campaign_wizard.css
  */

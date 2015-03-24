@@ -3,34 +3,18 @@
 
 .row.border-bottom.white-bg.dashboard-header
   .col-sm-3
-    %h2 Welcome Amelia
-    %small You have 42 messages and 6 notifications.
+    %h2 Welcome To Chaskiq
+    %small You have #{@campaigns_count} campaigns and #{@sends_count} sended messages.
     %ul.list-group.clear-list.m-t
-      %li.list-group-item.fist-item
-        %span.pull-right
-          09:00 pm
-        %span.label.label-success 1
-        Please contact me
-      %li.list-group-item
-        %span.pull-right
-          10:16 am
-        %span.label.label-info 2
-        Sign a contract
-      %li.list-group-item
-        %span.pull-right
-          08:22 pm
-        %span.label.label-primary 3
-        Open new shop
-      %li.list-group-item
-        %span.pull-right
-          11:06 pm
-        %span.label.label-default 4
-        Call back to Sylvia
-      %li.list-group-item
-        %span.pull-right
-          12:00 am
-        %span.label.label-primary 5
-        Write a letter to Sandra
+      - Chaskiq::Campaign.order('updated_at desc').limit(3).each do |c|
+        %li.list-group-item.fist-item
+          %span.pull-right
+            = l(c.updated_at, format: :short)
+          %span.label.label-success
+            %i.fa.fa-paper-plane
+            = c.metrics.deliveries.size
+          = c.name
+
   .col-sm-6
     .flot-chart.dashboard-chart
       #flot-dashboard-chart.flot-chart-content
@@ -68,7 +52,7 @@
           .ibox.float-e-margins
             .ibox-title
               %h5 New data for the report
-              %span.label.label-primary IN+
+              %span.label.label-primary CHASKIQ
               .ibox-tools
                 %a.collapse-link
                   %i.fa.fa-chevron-up
@@ -271,7 +255,7 @@
               %small
                 %i.fa.fa-map-marker
                 Meeting is on 6:00am. Check your schedule to see detail.
-            .ibox-content.inspinia-timeline
+            .ibox-content.chaskiq-timeline
               .timeline-item
                 .row
                   .col-xs-3.date
@@ -356,164 +340,164 @@
         Example Company &#169; 2014-2015
 
 
--#
-  - content_for :javascript do
-    :javascript
-      $(function() {
 
-          setTimeout(function() {
-              toastr.options = {
-                  closeButton: true,
-                  progressBar: true,
-                  showMethod: 'slideDown',
-                  timeOut: 4000
-              };
-              toastr.success('Responsive Admin Theme', 'Welcome to INSPINIA');
+- content_for :javascript do
+  :javascript
+    $(function() {
 
-          }, 1300);
+        setTimeout(function() {
+            toastr.options = {
+                closeButton: true,
+                progressBar: true,
+                showMethod: 'slideDown',
+                timeOut: 4000
+            };
+            toastr.success('Welcome to Chaskiq Web Panel');
 
-          $(".bar_dashboard").peity("bar", {
-              fill: ["#1ab394", "#d7d7d7"],
-              width: 100
-          })
+        }, 1300);
 
-          $("#sparkline8").sparkline([5, 6, 7, 2, 0, 4, 2, 4, 5, 7, 2, 4, 12, 14, 4, 2, 14, 12, 7], {
-              type: 'bar',
-              barWidth: 8,
-              height: '150px',
-              barColor: '#1ab394',
-              negBarColor: '#c6c6c6'
-          });
+        $(".bar_dashboard").peity("bar", {
+            fill: ["#1ab394", "#d7d7d7"],
+            width: 100
+        })
 
-          var updatingChart = $(".updating-chart").peity("line", { fill: '#1ab394', stroke: '#169c81', width: 64 })
+        $("#sparkline8").sparkline([5, 6, 7, 2, 0, 4, 2, 4, 5, 7, 2, 4, 12, 14, 4, 2, 14, 12, 7], {
+            type: 'bar',
+            barWidth: 8,
+            height: '150px',
+            barColor: '#1ab394',
+            negBarColor: '#c6c6c6'
+        });
 
-          setInterval(function () {
-              var random = Math.round(Math.random() * 10)
-              var values = updatingChart.text().split(",")
-              values.shift()
-              values.push(random)
+        var updatingChart = $(".updating-chart").peity("line", { fill: '#1ab394', stroke: '#169c81', width: 64 })
 
-              updatingChart
-                      .text(values.join(","))
-                      .change()
-          }, 1000);
+        setInterval(function () {
+            var random = Math.round(Math.random() * 10)
+            var values = updatingChart.text().split(",")
+            values.shift()
+            values.push(random)
 
-          var data1 = [
-              [0, 4], [1, 8], [2, 5], [3, 10], [4, 4], [5, 16], [6, 5], [7, 11], [8, 6], [9, 11], [10, 30], [11, 10], [12, 13], [13, 4], [14, 3], [15, 3], [16, 6]
-          ];
-          var data2 = [
-              [0, 1], [1, 0], [2, 2], [3, 0], [4, 1], [5, 3], [6, 1], [7, 5], [8, 2], [9, 3], [10, 2], [11, 1], [12, 0], [13, 2], [14, 8], [15, 0], [16, 0]
-          ];
-          $("#flot-dashboard-chart").length && $.plot($("#flot-dashboard-chart"), [
-              data1, data2
-          ],
-                  {
-                      series: {
-                          lines: {
-                              show: false,
-                              fill: true
-                          },
-                          splines: {
-                              show: true,
-                              tension: 0.4,
-                              lineWidth: 1,
-                              fill: 0.4
-                          },
-                          points: {
-                              radius: 0,
-                              show: true
-                          },
-                          shadowSize: 2
-                      },
-                      grid: {
-                          hoverable: true,
-                          clickable: true,
-                          tickColor: "#d5d5d5",
-                          borderWidth: 1,
-                          color: '#d5d5d5'
-                      },
-                      colors: ["#1ab394", "#464f88"],
-                      xaxis: {
-                      },
-                      yaxis: {
-                          ticks: 4
-                      },
-                      tooltip: false
-                  }
-          );
+            updatingChart
+                    .text(values.join(","))
+                    .change()
+        }, 1000);
 
-          var doughnutData = [
-              {
-                  value: 300,
-                  color: "#a3e1d4",
-                  highlight: "#1ab394",
-                  label: "App"
-              },
-              {
-                  value: 50,
-                  color: "#dedede",
-                  highlight: "#1ab394",
-                  label: "Software"
-              },
-              {
-                  value: 100,
-                  color: "#b5b8cf",
-                  highlight: "#1ab394",
-                  label: "Laptop"
-              }
-          ];
+        var data1 = [
+            [0, 4], [1, 8], [2, 5], [3, 10], [4, 4], [5, 16], [6, 5], [7, 11], [8, 6], [9, 11], [10, 30], [11, 10], [12, 13], [13, 4], [14, 3], [15, 3], [16, 6]
+        ];
+        var data2 = [
+            [0, 1], [1, 0], [2, 2], [3, 0], [4, 1], [5, 3], [6, 1], [7, 5], [8, 2], [9, 3], [10, 2], [11, 1], [12, 0], [13, 2], [14, 8], [15, 0], [16, 0]
+        ];
+        $("#flot-dashboard-chart").length && $.plot($("#flot-dashboard-chart"), [
+            data1, data2
+        ],
+                {
+                    series: {
+                        lines: {
+                            show: false,
+                            fill: true
+                        },
+                        splines: {
+                            show: true,
+                            tension: 0.4,
+                            lineWidth: 1,
+                            fill: 0.4
+                        },
+                        points: {
+                            radius: 0,
+                            show: true
+                        },
+                        shadowSize: 2
+                    },
+                    grid: {
+                        hoverable: true,
+                        clickable: true,
+                        tickColor: "#d5d5d5",
+                        borderWidth: 1,
+                        color: '#d5d5d5'
+                    },
+                    colors: ["#1ab394", "#464f88"],
+                    xaxis: {
+                    },
+                    yaxis: {
+                        ticks: 4
+                    },
+                    tooltip: false
+                }
+        );
 
-          var doughnutOptions = {
-              segmentShowStroke: true,
-              segmentStrokeColor: "#fff",
-              segmentStrokeWidth: 2,
-              percentageInnerCutout: 45, // This is 0 for Pie charts
-              animationSteps: 100,
-              animationEasing: "easeOutBounce",
-              animateRotate: true,
-              animateScale: false,
-          };
+        var doughnutData = [
+            {
+                value: 300,
+                color: "#a3e1d4",
+                highlight: "#1ab394",
+                label: "App"
+            },
+            {
+                value: 50,
+                color: "#dedede",
+                highlight: "#1ab394",
+                label: "Software"
+            },
+            {
+                value: 100,
+                color: "#b5b8cf",
+                highlight: "#1ab394",
+                label: "Laptop"
+            }
+        ];
 
-          var ctx = document.getElementById("doughnutChart").getContext("2d");
-          var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+        var doughnutOptions = {
+            segmentShowStroke: true,
+            segmentStrokeColor: "#fff",
+            segmentStrokeWidth: 2,
+            percentageInnerCutout: 45, // This is 0 for Pie charts
+            animationSteps: 100,
+            animationEasing: "easeOutBounce",
+            animateRotate: true,
+            animateScale: false,
+        };
 
-          var polarData = [
-              {
-                  value: 300,
-                  color: "#a3e1d4",
-                  highlight: "#1ab394",
-                  label: "App"
-              },
-              {
-                  value: 140,
-                  color: "#dedede",
-                  highlight: "#1ab394",
-                  label: "Software"
-              },
-              {
-                  value: 200,
-                  color: "#b5b8cf",
-                  highlight: "#1ab394",
-                  label: "Laptop"
-              }
-          ];
+        var ctx = document.getElementById("doughnutChart").getContext("2d");
+        var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
 
-          var polarOptions = {
-              scaleShowLabelBackdrop: true,
-              scaleBackdropColor: "rgba(255,255,255,0.75)",
-              scaleBeginAtZero: true,
-              scaleBackdropPaddingY: 1,
-              scaleBackdropPaddingX: 1,
-              scaleShowLine: true,
-              segmentShowStroke: true,
-              segmentStrokeColor: "#fff",
-              segmentStrokeWidth: 2,
-              animationSteps: 100,
-              animationEasing: "easeOutBounce",
-              animateRotate: true,
-              animateScale: false,
-          };
-          var ctx = document.getElementById("polarChart").getContext("2d");
-          var Polarchart = new Chart(ctx).PolarArea(polarData, polarOptions);
+        var polarData = [
+            {
+                value: 300,
+                color: "#a3e1d4",
+                highlight: "#1ab394",
+                label: "App"
+            },
+            {
+                value: 140,
+                color: "#dedede",
+                highlight: "#1ab394",
+                label: "Software"
+            },
+            {
+                value: 200,
+                color: "#b5b8cf",
+                highlight: "#1ab394",
+                label: "Laptop"
+            }
+        ];
 
-      });
+        var polarOptions = {
+            scaleShowLabelBackdrop: true,
+            scaleBackdropColor: "rgba(255,255,255,0.75)",
+            scaleBeginAtZero: true,
+            scaleBackdropPaddingY: 1,
+            scaleBackdropPaddingX: 1,
+            scaleShowLine: true,
+            segmentShowStroke: true,
+            segmentStrokeColor: "#fff",
+            segmentStrokeWidth: 2,
+            animationSteps: 100,
+            animationEasing: "easeOutBounce",
+            animateRotate: true,
+            animateScale: false,
+        };
+        var ctx = document.getElementById("polarChart").getContext("2d");
+        var Polarchart = new Chart(ctx).PolarArea(polarData, polarOptions);
+
+    });

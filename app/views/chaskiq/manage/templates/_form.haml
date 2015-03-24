@@ -4,13 +4,29 @@
     .wrapper.wrapper-content.animated.fadeInUp
       .ibox
         .ibox-title
-          %h5 All Templates
+          %h5 New Template
           .ibox-tools
-            %a.btn.btn-primary.btn-xs{:href => new_manage_template_path }
-              Create new Template
         .ibox-content
 
           = simple_form_for ["manage", @template] do |f|
             = f.input :name
             = f.input :body
             = f.submit "crear"
+
+
+- content_for :javascript do
+
+  :javascript
+
+
+    $(function() {
+
+        var editor_one = CodeMirror.fromTextArea(document.getElementById("template_body"), {
+            lineNumbers: true,
+            matchBrackets: true,
+            styleActiveLine: true,
+            theme: "elegant"
+        });
+
+    });
+

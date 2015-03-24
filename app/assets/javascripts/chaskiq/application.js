@@ -22,6 +22,24 @@
 //= require cocoon
 //= require summernote/summernote.min.js
 
+// DASHBOARD
+//= require flot/jquery.flot.js
+//= require flot/jquery.flot.tooltip.min.js
+//= require flot/jquery.flot.resize.js
+//= require flot/jquery.flot.pie.js
+//= require flot/jquery.flot.time.js
+//= require flot/jquery.flot.spline.js
+//= require sparkline/jquery.sparkline.min.js
+//= require chartjs/Chart.min.js
+// require jvectormap/jquery-jvectormap-1.2.2.min.js
+// require jvectormap/jquery-jvectormap-world-mill-en.js
+//= require toastr/toastr.min.js
+
+
+//CODE
+//= require codemirror/codemirror.js
+//= require codemirror/mode/javascript/javascript.js
+
 //= require backbone/underscore.min.js
 //= require backbone/backbone.min.js
 

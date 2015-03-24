@@ -1,6 +1,16 @@
 = render "menu"
 
-.row
-  .col-lg-12
-    .wrapper.wrapper-content.animated.fadeInUp
-      = render partial: "form"
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5
+            Create new list
+            -#%small Simple login form example
+          .ibox-tools
+
+
+        .ibox-content
+          .row
+            = render partial: "form"

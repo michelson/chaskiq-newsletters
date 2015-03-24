@@ -15,3 +15,7 @@ gemspec
 gem "pry"
 gem 'eventmachine'
 gem "rainbows"
+gem 'wicked', require: true
+gem 'sinatra', :require => nil
+
+#gem 'premailer', github: 'premailer/premailer'

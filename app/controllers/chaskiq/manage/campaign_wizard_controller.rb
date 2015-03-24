@@ -1,4 +1,5 @@
 require_dependency "chaskiq/application_controller"
+require "wicked"
 
 module Chaskiq
   class Manage::CampaignWizardController < ApplicationController

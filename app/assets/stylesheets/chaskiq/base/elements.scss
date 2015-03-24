@@ -1498,7 +1498,7 @@ label.error {
 }
 
 /* Notifie */
-.cg-notify-message.inspinia-notify {
+.cg-notify-message.chaskiq-notify {
   background: #fff;
   padding: 0;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -1509,18 +1509,18 @@ label.error {
   color: inherit;
 }
 
-.inspinia-notify.alert-warning {
+.chaskiq-notify.alert-warning {
   border-left: 6px solid $yellow;
 }
-.inspinia-notify.alert-success {
+.chaskiq-notify.alert-success {
   border-left: 6px solid $blue;
 }
 
-.inspinia-notify.alert-danger {
+.chaskiq-notify.alert-danger {
   border-left: 6px solid $red;
 }
 
-.inspinia-notify.alert-info {
+.chaskiq-notify.alert-info {
   border-left: 6px solid $navy;
 }
 

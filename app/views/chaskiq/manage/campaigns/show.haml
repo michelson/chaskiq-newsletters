@@ -14,7 +14,9 @@
           .row
             .col-lg-12
               .m-b-md
-                %a.btn.btn-white.btn-xs.pull-right{:href => manage_campaign_wizard_path(@campaign, "setup")} Edit project
+                %a.btn.btn-white.btn-xs.pull-right{:href => manage_campaign_wizard_path(@campaign, "setup")}
+                  %i.fa.fa-edit
+                  Edit project
                 %h2= @campaign.name
               %dl.dl-horizontal
                 %dt Status:
