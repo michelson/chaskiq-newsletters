@@ -14,5 +14,19 @@ module Chaskiq
     #reportery
     scope :uniques, ->{group("host")}
 
+
+    def style_class
+      case self.action
+      when "deliver"
+        "plain"
+      when "open"
+        "information"
+      when "click"
+        "primary"
+      when "spam"
+        "danger"
+      end
+    end
+
   end
 end

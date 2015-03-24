@@ -14,9 +14,15 @@
           .row
             .col-lg-12
               .m-b-md
-                %a.btn.btn-white.btn-xs.pull-right{:href => manage_campaign_wizard_path(@campaign, "setup")}
-                  %i.fa.fa-edit
-                  Edit project
+                .pull-right
+                  %a.btn.btn-white.btn-xs{:href => manage_campaign_wizard_path(@campaign, "setup")}
+                    %i.fa.fa-edit
+                    Edit project
+
+                  %a.btn.btn-white.btn-xs{:href => preview_manage_campaign_path(@campaign)}
+                    %i.fa.fa-eye
+                    Preview
+
                 %h2= @campaign.name
               %dl.dl-horizontal
                 %dt Status:
@@ -41,9 +47,9 @@
             #cluster_info.col-lg-7
               %dl.dl-horizontal
                 %dt Last Updated:
-                %dd= @campaign.updated_at
+                %dd= l @campaign.updated_at, format: :long
                 %dt Created:
-                %dd= @campaign.created_at
+                %dd= l @campaign.created_at, format: :long
                 %dt Mail list:
                 %dd.project-people
                   = link_to @campaign.list.name, manage_list_path(@campaign.list.name)
@@ -72,10 +78,9 @@
                     %thead
                       %tr
                         %th Status
-                        %th Title
-                        %th Start Time
-                        %th End Time
-                        %th Comments
+                        %th Who
+                        %th When
+                        %th Info
                     %tbody
                       -#
                         %tr
@@ -207,7 +212,7 @@
                     - @campaign.metrics.each do |m|
                       %tr
                         %td
-                          %span.label.label-primary
+                          %span.label{class: m.style_class}
                             %i.fa.fa-check
                             = m.action
                         %td
@@ -215,25 +220,16 @@
                         %td
                           = m.created_at
                         %td
-                          = m.updated_at
-                        %td
                           %p.small
                             = m.host
                             = m.data
 
   .col-lg-3
     .wrapper.wrapper-content.project-manager
-      %h4 Project description
-      -#%img.img-responsive{:src => image_path('zender_logo.png')}/
+      %h4 Campaign description
+
+      %img.img-responsive{:src => @campaign.logo}/
+      %hr
+
       %p.small
         = @campaign.try(:description)
-      %p.small.font-bold
-        %span
-          %i.fa.fa-circle.text-warning
-          High priority
-
-      .text-center.m-t-md
-        %a.btn.btn-xs.btn-primary{:href => preview_manage_campaign_path(@campaign)}
-          preview
-        -#%a.btn.btn-xs.btn-primary{:href => preview_manage_campaign_path(@campaign)} Report contact
-
