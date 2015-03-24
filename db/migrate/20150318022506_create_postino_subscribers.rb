@@ -1,6 +1,6 @@
-class CreatePostinoSubscribers < ActiveRecord::Migration
+class CreateChaskiqSubscribers < ActiveRecord::Migration
   def change
-    create_table :postino_subscribers do |t|
+    create_table :chaskiq_subscribers do |t|
       t.string :name
       t.string :email
       t.string :state
@@ -10,6 +10,6 @@ class CreatePostinoSubscribers < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_foreign_key :postino_subscribers, :lists
+    add_foreign_key :chaskiq_subscribers, :lists
   end
 end

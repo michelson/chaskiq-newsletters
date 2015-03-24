@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-module Postino
+module Chaskiq
   RSpec.describe Config, type: :model do
 
 
-    let(:postino_config){  Postino::Config }
+    let(:chaskiq_config){  Chaskiq::Config }
 
     it "will setup" do
-      postino_config.setup do |config|
+      chaskiq_config.setup do |config|
         config.mail_settings = {
                           :address => "someuser@gmail.com",
                           :user_name => "xxx", # Your SMTP user here.
@@ -16,8 +16,8 @@ module Postino
                           :enable_starttls_auto => true
                         }
       end
-      expect(postino_config.mail_settings).to be_an_instance_of Hash
-      expect(Postino::Config.mail_settings).to be_an_instance_of Hash
+      expect(chaskiq_config.mail_settings).to be_an_instance_of Hash
+      expect(Chaskiq::Config.mail_settings).to be_an_instance_of Hash
     end
 
   end

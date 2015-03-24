@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-module Postino
+module Chaskiq
   RSpec.describe DashboardController, type: :controller do
 
   end

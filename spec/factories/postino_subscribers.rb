@@ -1,7 +1,7 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :postino_subscriber, :class => 'Postino::Subscriber' do
+  factory :chaskiq_subscriber, :class => 'Chaskiq::Subscriber' do
 
     sequence :email do |n|
       "person#{n}@example.com"

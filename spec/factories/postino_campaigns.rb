@@ -1,7 +1,7 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :postino_campaign, :class => 'Postino::Campaign' do
+  factory :chaskiq_campaign, :class => 'Chaskiq::Campaign' do
     name "some Campaign"
     subject "Hello"
     from_name "Me"

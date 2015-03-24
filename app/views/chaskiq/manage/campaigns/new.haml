@@ -1,0 +1,25 @@
+
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-sm-4
+    %h2 New Campaigns
+    %ol.breadcrumb
+      %li
+        %a{:href => ""} Home
+      %li.active
+        %strong Campaigns list
+
+.row
+  .col-lg-12
+    .wrapper.wrapper-content.animated.fadeInUp
+      .ibox
+        .ibox-title
+          %h5 All Templates
+          .ibox-tools
+            %a.btn.btn-primary.btn-xs{:href => new_manage_campaign_path }
+              Create new Template
+        .ibox-content
+
+          = simple_form_for ["manage", @campaign] do |f|
+
+            = f.input :list_id, as: :select , collection: Chaskiq::List.all
+            = f.submit "Create Campaign"

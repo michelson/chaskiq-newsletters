@@ -1,6 +1,6 @@
-class CreatePostinoTemplates < ActiveRecord::Migration
+class CreateChaskiqTemplates < ActiveRecord::Migration
   def change
-    create_table :postino_templates do |t|
+    create_table :chaskiq_templates do |t|
       t.string :name
       t.text :body
       t.text :html_content

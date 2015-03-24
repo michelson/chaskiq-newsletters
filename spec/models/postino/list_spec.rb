@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-module Postino
+module Chaskiq
   RSpec.describe List, type: :model do
     it{ should have_many :subscribers }
     it{ should have_many :campaigns }
 
 
     describe "creation" do
-      let(:list){FactoryGirl.create(:postino_list)}
+      let(:list){FactoryGirl.create(:chaskiq_list)}
 
       it "will create a list" do
         data = list.import_csv("spec/fixtures/csv_example.csv")

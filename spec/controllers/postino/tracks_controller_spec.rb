@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-module Postino
+module Chaskiq
   RSpec.describe TracksController, type: :controller do
 
-    routes { Postino::Engine.routes }
-    let(:list){ FactoryGirl.create(:postino_list) }
-    let(:subscriber){ FactoryGirl.create(:postino_subscriber, list: list) }
-    let(:campaign){ FactoryGirl.create(:postino_campaign, list: list) }
+    routes { Chaskiq::Engine.routes }
+    let(:list){ FactoryGirl.create(:chaskiq_list) }
+    let(:subscriber){ FactoryGirl.create(:chaskiq_subscriber, list: list) }
+    let(:campaign){ FactoryGirl.create(:chaskiq_campaign, list: list) }
 
     %w[open bounce spam].each do |action|
       it "will track an #{action}" do

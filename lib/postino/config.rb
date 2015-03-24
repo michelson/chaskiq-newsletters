@@ -1,4 +1,4 @@
-module Postino
+module Chaskiq
   class Config
 
     mattr_accessor :mail_settings, :authentication_method

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-module Postino
+module Chaskiq
   RSpec.describe Manage::AttachmentsController, type: :controller do
 
   end

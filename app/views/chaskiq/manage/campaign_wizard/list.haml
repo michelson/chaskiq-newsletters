@@ -1,0 +1,26 @@
+= render "menu"
+
+
+.row
+  .col-lg-12
+    .wrapper.wrapper-content.animated.fadeInUp
+      .ibox
+        .ibox-title
+          %h5 List
+          .ibox-tools
+            %a.btn.btn-primary.btn-xs{:href => new_manage_campaign_path }
+              Create new Template
+        .ibox-content
+
+          = render partial: "wizard_steps"
+
+          = simple_form_for @campaign, url: wizard_path do |f|
+
+            = f.input :name
+
+            = f.input :list_id, as: :select, collection: Chaskiq::List.all
+
+            = f.submit
+
+
+          = render partial: "wizard_nav"

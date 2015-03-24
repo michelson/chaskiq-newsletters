@@ -1,6 +1,6 @@
-class CreatePostinoLists < ActiveRecord::Migration
+class CreateChaskiqLists < ActiveRecord::Migration
   def change
-    create_table :postino_lists do |t|
+    create_table :chaskiq_lists do |t|
       t.string :name
       t.string :state
       t.integer :unsubscribe_count

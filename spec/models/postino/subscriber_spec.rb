@@ -1,6 +1,6 @@
 require 'rails_helper'
 require 'urlcrypt'
-module Postino
+module Chaskiq
   RSpec.describe Subscriber, type: :model do
     it{ should belong_to :list }
     it{ should have_many :metrics }
@@ -8,7 +8,7 @@ module Postino
 
 
     describe "states" do
-      let(:subscriber){ FactoryGirl.create(:postino_subscriber)}
+      let(:subscriber){ FactoryGirl.create(:chaskiq_subscriber)}
 
       it "will set passive state" do
         expect(subscriber).to be_passive

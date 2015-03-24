@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-module Postino
+module Chaskiq
   RSpec.describe Attachment, type: :model do
     it{ should belong_to :campaign }
 

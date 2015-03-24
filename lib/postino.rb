@@ -1,10 +1,10 @@
-require "postino/engine"
+require "chaskiq/engine"
 require "haml"
 require "simple_form"
 require "kaminari"
 require "font-awesome-rails"
 require "bootstrap-sass"
-require "postino/engine"
+require "chaskiq/engine"
 require "urlcrypt"
 require "cocoon"
 require "mustache"
@@ -15,10 +15,10 @@ require 'premailer'
 
 Dotenv.load
 
-module Postino
-  URLcrypt.key = 'postino123'
-  autoload :VERSION, "postino/version"
-  autoload :Config, "postino/config"
-  autoload :CsvImporter, "postino/csv_importer"
-  autoload :LinkRenamer, "postino/link_renamer"
+module Chaskiq
+  URLcrypt.key = 'chaskiq123'
+  autoload :VERSION, "chaskiq/version"
+  autoload :Config, "chaskiq/config"
+  autoload :CsvImporter, "chaskiq/csv_importer"
+  autoload :LinkRenamer, "chaskiq/link_renamer"
 end

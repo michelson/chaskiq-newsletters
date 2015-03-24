@@ -1,6 +1,6 @@
-class CreatePostinoMetrics < ActiveRecord::Migration
+class CreateChaskiqMetrics < ActiveRecord::Migration
   def change
-    create_table :postino_metrics do |t|
+    create_table :chaskiq_metrics do |t|
       t.references :trackable,  polymorphic: true, index: true, null: false
       t.references :campaign, index: true
       t.string :action
@@ -8,6 +8,6 @@ class CreatePostinoMetrics < ActiveRecord::Migration
       t.string :data
       t.timestamps null: false
     end
-    add_foreign_key :postino_metrics, :trackables
+    add_foreign_key :chaskiq_metrics, :trackables
   end
 end

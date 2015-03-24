@@ -1,4 +1,4 @@
 # desc "Explaining what the task does"
-# task :postino do
+# task :chaskiq do
 #   # Task goes here
 # end

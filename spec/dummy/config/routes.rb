@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
 
-  mount Postino::Engine => "/"
+  mount Chaskiq::Engine => "/"
 end
