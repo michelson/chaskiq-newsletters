@@ -51,5 +51,17 @@ module Chaskiq
       URLcrypt.decode(self.email)
     end
 
+
+    def style_class
+      case self.state
+      when "passive"
+        "plain"
+      when "subscribed"
+        "information"
+      when "unsusbscribed"
+        "warning"
+      end
+    end
+
   end
 end
