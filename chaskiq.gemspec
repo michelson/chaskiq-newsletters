@@ -39,6 +39,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'dotenv-rails'
   s.add_dependency 'coffee-rails'
   s.add_dependency 'sanitize'
+  s.add_dependency "groupdate"
+  s.add_dependency "chartkick"
 
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "sqlite3"

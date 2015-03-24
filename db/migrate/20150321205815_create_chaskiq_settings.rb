@@ -6,6 +6,6 @@ class CreateChaskiqSettings < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_foreign_key :chaskiq_settings, :campaigns
+    #add_foreign_key :chaskiq_settings, :campaign
   end
 end

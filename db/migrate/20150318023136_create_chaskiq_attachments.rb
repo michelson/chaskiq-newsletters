@@ -9,6 +9,6 @@ class CreateChaskiqAttachments < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_foreign_key :chaskiq_attachments, :campaigns
+    #add_foreign_key :chaskiq_attachments, :chaskiq_campaigns
   end
 end

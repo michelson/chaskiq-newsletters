@@ -5,11 +5,13 @@ PATH
       aasm
       bootstrap-sass
       carrierwave
+      chartkick
       cocoon
       coffee-rails
       dotenv-rails
       fog
       font-awesome-rails
+      groupdate
       haml
       kaminari
       lazy_high_charts
@@ -80,6 +82,7 @@ GEM
       mime-types (>= 1.16)
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    chartkick (1.3.2)
     cocoon (1.2.6)
     coderay (1.1.0)
     coffee-rails (4.1.0)
@@ -152,7 +155,7 @@ GEM
       fog-xml
     fog-json (1.0.0)
       multi_json (~> 1.0)
-    fog-profitbricks (0.0.1)
+    fog-profitbricks (0.0.2)
       fog-core
       fog-xml
       nokogiri
@@ -193,6 +196,8 @@ GEM
     formatador (0.2.5)
     globalid (0.3.3)
       activesupport (>= 4.1.0)
+    groupdate (2.4.0)
+      activesupport (>= 3)
     haml (4.0.6)
       tilt
     hash-deep-merge (0.1.1)
@@ -221,6 +226,7 @@ GEM
     minitest (5.5.1)
     multi_json (1.11.0)
     mustache (1.0.1)
+    mysql2 (0.3.18)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
@@ -348,6 +354,7 @@ DEPENDENCIES
   eventmachine
   factory_girl
   factory_girl_rails
+  mysql2
   pry
   rainbows
   rspec

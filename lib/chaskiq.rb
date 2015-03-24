@@ -12,6 +12,8 @@ require 'dotenv'
 require 'carrierwave'
 require 'coffee-rails'
 require 'premailer'
+require 'groupdate'
+require 'chartkick'
 
 Dotenv.load
 

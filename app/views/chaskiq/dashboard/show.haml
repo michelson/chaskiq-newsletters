@@ -15,35 +15,44 @@
             = c.metrics.deliveries.size
           = c.name
 
-  .col-sm-6
+  .col-sm-9
     .flot-chart.dashboard-chart
-      #flot-dashboard-chart.flot-chart-content
-    .row.text-left
-      .col-xs-4
-        .m-l-md
-          %span.h4.font-bold.m-t.block $ 406,100
-          %small.text-muted.m-b.block Sales marketing report
-      .col-xs-4
-        %span.h4.font-bold.m-t.block $ 150,401
-        %small.text-muted.m-b.block Annual sales revenue
-      .col-xs-4
-        %span.h4.font-bold.m-t.block $ 16,822
-        %small.text-muted.m-b.block Half-year revenue margin
-  .col-sm-3
-    .statistic-box
-      %h4
-        Project Beta progress
-      %p
-        You have two project with not compleated task.
-      .row.text-center
-        .col-lg-6
-          %canvas#polarChart{:height => "80", :width => "80"}
-          %h5 Kolter
-        .col-lg-6
-          %canvas#doughnutChart{:height => "78", :width => "78"}
-          %h5 Maxtor
-      .m-t
-        %small Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      -##flot-dashboard-chart.flot-chart-content
+      = line_chart( @daily_metrics, height: "200px", width: "500px")
+
+    -#
+      .row.text-left
+        .col-xs-4
+          .m-l-md
+            %span.h4.font-bold.m-t.block $ 406,100
+            %small.text-muted.m-b.block Sales marketing report
+        .col-xs-4
+          %span.h4.font-bold.m-t.block $ 150,401
+          %small.text-muted.m-b.block Annual sales revenue
+        .col-xs-4
+          %span.h4.font-bold.m-t.block $ 16,822
+          %small.text-muted.m-b.block Half-year revenue margin
+
+  -#
+    .col-sm-3
+      .statistic-box
+        %h4
+          Project Beta progress
+        %p
+          You have two project with not compleated task.
+        .row.text-center
+          .col-lg-6
+            %canvas#polarChart{:height => "80", :width => "80"}
+            %h5 Kolter
+          .col-lg-6
+            %canvas#doughnutChart{:height => "78", :width => "78"}
+            %h5 Maxtor
+        .m-t
+          %small Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+
+
+
+
 .row
   .col-lg-12
     .wrapper.wrapper-content
@@ -361,7 +370,7 @@
             width: 100
         })
 
-        $("#sparkline8").sparkline([5, 6, 7, 2, 0, 4, 2, 4, 5, 7, 2, 4, 12, 14, 4, 2, 14, 12, 7], {
+        $("#sparkline8").sparkline(#{@daily_metrics.map{|o|o.to_a.last}.to_json}, {
             type: 'bar',
             barWidth: 8,
             height: '150px',

@@ -14,99 +14,99 @@
 ActiveRecord::Schema.define(version: 20150321205815) do
 
   create_table "chaskiq_attachments", force: :cascade do |t|
-    t.string   "image"
-    t.string   "content_type"
-    t.integer  "size"
-    t.string   "name"
-    t.integer  "campaign_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string   "image",        limit: 255
+    t.string   "content_type", limit: 255
+    t.integer  "size",         limit: 4
+    t.string   "name",         limit: 255
+    t.integer  "campaign_id",  limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
-  add_index "chaskiq_attachments", ["campaign_id"], name: "index_chaskiq_attachments_on_campaign_id"
+  add_index "chaskiq_attachments", ["campaign_id"], name: "index_chaskiq_attachments_on_campaign_id", using: :btree
 
   create_table "chaskiq_campaigns", force: :cascade do |t|
-    t.string   "subject"
-    t.string   "from_name"
-    t.string   "from_email"
-    t.string   "reply_email"
-    t.text     "plain_content"
-    t.text     "html_content"
-    t.text     "premailer"
-    t.text     "description"
-    t.string   "logo"
-    t.string   "name"
-    t.string   "query_string"
+    t.string   "subject",          limit: 255
+    t.string   "from_name",        limit: 255
+    t.string   "from_email",       limit: 255
+    t.string   "reply_email",      limit: 255
+    t.text     "plain_content",    limit: 65535
+    t.text     "html_content",     limit: 65535
+    t.text     "premailer",        limit: 65535
+    t.text     "description",      limit: 65535
+    t.string   "logo",             limit: 255
+    t.string   "name",             limit: 255
+    t.string   "query_string",     limit: 255
     t.datetime "scheduled_at"
-    t.string   "timezone"
-    t.string   "state"
-    t.integer  "recipients_count"
-    t.boolean  "sent"
-    t.integer  "opens_count"
-    t.integer  "clicks_count"
-    t.integer  "parent_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.integer  "list_id"
-    t.integer  "template_id"
+    t.string   "timezone",         limit: 255
+    t.string   "state",            limit: 255
+    t.integer  "recipients_count", limit: 4
+    t.boolean  "sent",             limit: 1
+    t.integer  "opens_count",      limit: 4
+    t.integer  "clicks_count",     limit: 4
+    t.integer  "parent_id",        limit: 4
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "list_id",          limit: 4
+    t.integer  "template_id",      limit: 4
   end
 
-  add_index "chaskiq_campaigns", ["list_id"], name: "index_chaskiq_campaigns_on_list_id"
-  add_index "chaskiq_campaigns", ["parent_id"], name: "index_chaskiq_campaigns_on_parent_id"
-  add_index "chaskiq_campaigns", ["template_id"], name: "index_chaskiq_campaigns_on_template_id"
+  add_index "chaskiq_campaigns", ["list_id"], name: "index_chaskiq_campaigns_on_list_id", using: :btree
+  add_index "chaskiq_campaigns", ["parent_id"], name: "index_chaskiq_campaigns_on_parent_id", using: :btree
+  add_index "chaskiq_campaigns", ["template_id"], name: "index_chaskiq_campaigns_on_template_id", using: :btree
 
   create_table "chaskiq_lists", force: :cascade do |t|
-    t.string   "name"
-    t.string   "state"
-    t.integer  "unsubscribe_count"
-    t.integer  "bounced"
-    t.integer  "active_count"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.string   "name",              limit: 255
+    t.string   "state",             limit: 255
+    t.integer  "unsubscribe_count", limit: 4
+    t.integer  "bounced",           limit: 4
+    t.integer  "active_count",      limit: 4
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "chaskiq_metrics", force: :cascade do |t|
-    t.integer  "trackable_id",   null: false
-    t.string   "trackable_type", null: false
-    t.integer  "campaign_id"
-    t.string   "action"
-    t.string   "host"
-    t.string   "data"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.integer  "trackable_id",   limit: 4,   null: false
+    t.string   "trackable_type", limit: 255, null: false
+    t.integer  "campaign_id",    limit: 4
+    t.string   "action",         limit: 255
+    t.string   "host",           limit: 255
+    t.string   "data",           limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
-  add_index "chaskiq_metrics", ["campaign_id"], name: "index_chaskiq_metrics_on_campaign_id"
-  add_index "chaskiq_metrics", ["trackable_type", "trackable_id"], name: "index_chaskiq_metrics_on_trackable_type_and_trackable_id"
+  add_index "chaskiq_metrics", ["campaign_id"], name: "index_chaskiq_metrics_on_campaign_id", using: :btree
+  add_index "chaskiq_metrics", ["trackable_type", "trackable_id"], name: "index_chaskiq_metrics_on_trackable_type_and_trackable_id", using: :btree
 
   create_table "chaskiq_settings", force: :cascade do |t|
-    t.text     "config"
-    t.integer  "campaign_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.text     "config",      limit: 65535
+    t.integer  "campaign_id", limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
-  add_index "chaskiq_settings", ["campaign_id"], name: "index_chaskiq_settings_on_campaign_id"
+  add_index "chaskiq_settings", ["campaign_id"], name: "index_chaskiq_settings_on_campaign_id", using: :btree
 
   create_table "chaskiq_subscribers", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "state"
-    t.string   "last_name"
-    t.integer  "list_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",       limit: 255
+    t.string   "email",      limit: 255
+    t.string   "state",      limit: 255
+    t.string   "last_name",  limit: 255
+    t.integer  "list_id",    limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  add_index "chaskiq_subscribers", ["list_id"], name: "index_chaskiq_subscribers_on_list_id"
+  add_index "chaskiq_subscribers", ["list_id"], name: "index_chaskiq_subscribers_on_list_id", using: :btree
 
   create_table "chaskiq_templates", force: :cascade do |t|
-    t.string   "name"
-    t.text     "body"
-    t.text     "html_content"
-    t.string   "screenshot"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string   "name",         limit: 255
+    t.text     "body",         limit: 65535
+    t.text     "html_content", limit: 65535
+    t.string   "screenshot",   limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
 end

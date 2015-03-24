@@ -10,6 +10,6 @@ class CreateChaskiqSubscribers < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_foreign_key :chaskiq_subscribers, :lists
+    #add_foreign_key :chaskiq_subscribers, :chaskiq_lists
   end
 end

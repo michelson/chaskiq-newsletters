@@ -25,7 +25,7 @@ class CreateChaskiqCampaigns < ActiveRecord::Migration
     end
     add_reference :chaskiq_campaigns, :list, index: true
     add_reference :chaskiq_campaigns, :template, index: true
-    add_foreign_key :chaskiq_campaigns, :templates
-    add_foreign_key :chaskiq_campaigns, :parents
+    #add_foreign_key :chaskiq_campaigns, :chaskiq_templates
+    #add_foreign_key :chaskiq_campaigns, :parents
   end
 end

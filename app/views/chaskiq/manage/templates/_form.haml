@@ -10,7 +10,7 @@
 
           = simple_form_for ["manage", @template] do |f|
             = f.input :name
-            = f.input :body
+            = f.input :body, required: false
             = f.submit "crear"
 
 

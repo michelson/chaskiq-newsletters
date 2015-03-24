@@ -8,6 +8,6 @@ class CreateChaskiqMetrics < ActiveRecord::Migration
       t.string :data
       t.timestamps null: false
     end
-    add_foreign_key :chaskiq_metrics, :trackables
+    #add_foreign_key :chaskiq_metrics, :trackable
   end
 end
