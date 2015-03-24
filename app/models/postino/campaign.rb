@@ -62,7 +62,12 @@ module Postino
     #deliver email + create metric
     def push_notification(subscriber)
       self.metrics.create(trackable: subscriber, action: "deliver")
-      Postino::CampaignMailer.newsletter(self, subscriber).deliver_now #deliver_later
+      mailer = Postino::CampaignMailer.newsletter(self, subscriber) #deliver_later
+      if Rails.env.production?
+        mailer.deliver_later
+      else
+        mailer.deliver_now
+      end
     end
 
     def copy_template
