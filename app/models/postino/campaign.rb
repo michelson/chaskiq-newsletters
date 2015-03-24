@@ -1,16 +1,16 @@
 require 'net/http'
 
-module Postino
+module Chaskiq
   class Campaign < ActiveRecord::Base
 
-    belongs_to :parent, class_name: "Postino::Campaign"
+    belongs_to :parent, class_name: "Chaskiq::Campaign"
     belongs_to :list
     has_many :subscribers, through: :list
     has_many :attachments
     has_many :metrics
     #has_one :campaign_template
     #has_one :template, through: :campaign_template
-    belongs_to :template, class_name: "Postino::Template"
+    belongs_to :template, class_name: "Chaskiq::Template"
     #accepts_nested_attributes_for :template, :campaign_template
 
     attr_accessor :step
@@ -41,7 +41,7 @@ module Postino
 
     def send_newsletter
       #with custom
-      #Postino::CampaignMailer.my_email.delivery_method.settings.merge!(SMTP_SETTINGS)
+      #Chaskiq::CampaignMailer.my_email.delivery_method.settings.merge!(SMTP_SETTINGS)
       #send newsletter here
       self.apply_premailer
       self.subscribers.each do |s|
@@ -50,7 +50,7 @@ module Postino
     end
 
     def test_newsletter
-      Postino::CampaignMailer.test(self).deliver_later
+      Chaskiq::CampaignMailer.test(self).deliver_later
     end
 
     def detect_changed_template
@@ -62,7 +62,7 @@ module Postino
     #deliver email + create metric
     def push_notification(subscriber)
       self.metrics.create(trackable: subscriber, action: "deliver")
-      mailer = Postino::CampaignMailer.newsletter(self, subscriber) #deliver_later
+      mailer = Chaskiq::CampaignMailer.newsletter(self, subscriber) #deliver_later
       if Rails.env.production?
         mailer.deliver_later
       else
@@ -108,7 +108,7 @@ module Postino
     def mustache_template_for(subscriber)
 
       link_prefix = host + "/campaigns/#{self.id}/tracks/#{subscriber.encoded_id}?r="
-      html = Postino::LinkRenamer.convert(premailer, link_prefix)
+      html = Chaskiq::LinkRenamer.convert(premailer, link_prefix)
 
       Mustache.render(html, subscriber.attributes.merge(attributes_for_mailer(subscriber)) )
     end

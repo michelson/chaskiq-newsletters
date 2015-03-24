@@ -1,4 +1,4 @@
-module Postino
+module Chaskiq
   module SubscribersHelper
   end
 end

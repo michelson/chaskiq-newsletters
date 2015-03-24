@@ -2,12 +2,12 @@
   !!!
   %html
     %head
-      %title Postino
+      %title Chaskiq
       = stylesheet_link_tag "//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
       = javascript_include_tag "//code.jquery.com/jquery-git2.min.js"
       = javascript_include_tag "//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"
-      = stylesheet_link_tag "postino/application", media: "all"
-      = javascript_include_tag "postino/application"
+      = stylesheet_link_tag "chaskiq/application", media: "all"
+      = javascript_include_tag "chaskiq/application"
       = csrf_meta_tags
       / HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
       /[if lt IE 9]
@@ -37,9 +37,9 @@
     / Include style per-controller - vendor plugins
     -#= stylesheet_link_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.css")
     / Main css styles
-    = stylesheet_link_tag    'postino/application', media: 'all', 'data-turbolinks-track' => true
+    = stylesheet_link_tag    'chaskiq/application', media: 'all', 'data-turbolinks-track' => true
     / Main javascript files
-    = javascript_include_tag 'postino/application', 'data-turbolinks-track' => true
+    = javascript_include_tag 'chaskiq/application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
     / Skin configuration box
@@ -47,15 +47,15 @@
     / Wrapper
     #wrapper{:class => "#{params[:controller]}.#{params[:action]}"}
       / Navigation
-      = render 'layouts/postino/navigation'
+      = render 'layouts/chaskiq/navigation'
       / Page wraper
       #page-wrapper{:class => "gray-bg #{@extra_class}"}
         / Page wrapper
-        = render 'layouts/postino/topnavbar'
+        = render 'layouts/chaskiq/topnavbar'
         / Main view
         = yield
         / Footer
-        = render 'layouts/postino/footer'
+        = render 'layouts/chaskiq/footer'
       / End page wrapper
     / End wrapper
     / Include javascript per-controller - vendor plugins

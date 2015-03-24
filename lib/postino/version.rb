@@ -1,3 +1,3 @@
-module Postino
+module Chaskiq
   VERSION = "0.0.1"
 end

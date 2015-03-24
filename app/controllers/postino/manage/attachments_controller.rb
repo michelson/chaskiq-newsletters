@@ -1,6 +1,6 @@
-require_dependency "postino/application_controller"
+require_dependency "chaskiq/application_controller"
 
-module Postino
+module Chaskiq
   class Manage::AttachmentsController < ApplicationController
 
     before_filter :authentication_method
@@ -33,7 +33,7 @@ module Postino
   protected
 
     def find_campaign
-      @campaign = Postino::Campaign.find(params[:campaign_id])
+      @campaign = Chaskiq::Campaign.find(params[:campaign_id])
     end
 
     def resource_params

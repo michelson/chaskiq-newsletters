@@ -1,9 +1,9 @@
-require_dependency "postino/application_controller"
+require_dependency "chaskiq/application_controller"
 
-module Postino
+module Chaskiq
   class CampaignsController < ApplicationController
 
-    layout "postino/empty"
+    layout "chaskiq/empty"
 
     before_filter :find_campaign
 
@@ -11,7 +11,7 @@ module Postino
     end
 
     def find_campaign
-      @campaign  = Postino::Campaign.find(params[:id])
+      @campaign  = Chaskiq::Campaign.find(params[:id])
     end
 
   end

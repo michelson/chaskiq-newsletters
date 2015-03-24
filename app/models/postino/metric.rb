@@ -1,4 +1,4 @@
-module Postino
+module Chaskiq
   class Metric < ActiveRecord::Base
     belongs_to :trackable, polymorphic: true, required: true
 

@@ -1,4 +1,4 @@
-module Postino
+module Chaskiq
   module Manage::CampainWizardHelper
   end
 end

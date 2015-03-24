@@ -3,13 +3,13 @@
   %head
     %meta{:charset => "utf-8"}/
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
-    %title Postino
+    %title Chaskiq
     / Include style per-controller - vendor plugins
     -#= stylesheet_link_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.css")
     / Main css styles
-    = stylesheet_link_tag    'postino/application', media: 'all', 'data-turbolinks-track' => true
+    = stylesheet_link_tag    'chaskiq/application', media: 'all', 'data-turbolinks-track' => true
     / Main javascript files
-    = javascript_include_tag 'postino/application', 'data-turbolinks-track' => true
+    = javascript_include_tag 'chaskiq/application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body.gray-bg
     / Main view

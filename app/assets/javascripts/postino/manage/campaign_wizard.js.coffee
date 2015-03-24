@@ -465,7 +465,7 @@ class window.Editor extends Backbone.View
       url: $("#editor-container").data("attachments-path")
       dataType: "json"
       success: (data)=>
-        Postino.Helpers.showModal(@templateForAttachments(data), "dsdsda")
+        Chaskiq.Helpers.showModal(@templateForAttachments(data), "dsdsda")
         _this = this
         $('.image-selector').on "click", ()->
           html = placeholder.parents(".mcpreview-image-uploader")
@@ -478,7 +478,7 @@ class window.Editor extends Backbone.View
 
   replaceImagePreview: (html_to_replace, url)->
     html_to_replace.replaceWith( "<img src='#{url}'/>" );
-    Postino.Helpers.hideModal()
+    Chaskiq.Helpers.hideModal()
     @copyToTextArea()
 
   templateForAttachments: (data)->

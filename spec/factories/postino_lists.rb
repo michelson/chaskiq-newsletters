@@ -1,7 +1,7 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :postino_list, :class => 'Postino::List' do
+  factory :chaskiq_list, :class => 'Chaskiq::List' do
     name "MyString"
     #state "MyString"
     #unsubscribe_count 1

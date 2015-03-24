@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-module Postino
+module Chaskiq
   RSpec.describe CsvImporter, type: :model do
 
 
-    let(:importer){  Postino::CsvImporter.new }
+    let(:importer){  Chaskiq::CsvImporter.new }
 
     it "will initialize" do
-      expect(importer).to be_an_instance_of Postino::CsvImporter
+      expect(importer).to be_an_instance_of Chaskiq::CsvImporter
     end
 
     it "will import data" do

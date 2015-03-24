@@ -1,4 +1,4 @@
-Postino::Engine.routes.draw do
+Chaskiq::Engine.routes.draw do
 
   root 'dashboard#show'
 

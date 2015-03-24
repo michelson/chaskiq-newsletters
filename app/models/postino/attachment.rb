@@ -1,4 +1,4 @@
-module Postino
+module Chaskiq
   class Attachment < ActiveRecord::Base
     belongs_to :campaign
 

@@ -1,6 +1,6 @@
 require "nokogiri"
 
-module Postino
+module Chaskiq
   class LinkRenamer
 
     def self.convert(html, url_prefix="")

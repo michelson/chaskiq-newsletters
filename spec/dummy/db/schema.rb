@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20150321205815) do
 
-  create_table "postino_attachments", force: :cascade do |t|
+  create_table "chaskiq_attachments", force: :cascade do |t|
     t.string   "image"
     t.string   "content_type"
     t.integer  "size"
@@ -23,9 +23,9 @@ ActiveRecord::Schema.define(version: 20150321205815) do
     t.datetime "updated_at",   null: false
   end
 
-  add_index "postino_attachments", ["campaign_id"], name: "index_postino_attachments_on_campaign_id"
+  add_index "chaskiq_attachments", ["campaign_id"], name: "index_chaskiq_attachments_on_campaign_id"
 
-  create_table "postino_campaigns", force: :cascade do |t|
+  create_table "chaskiq_campaigns", force: :cascade do |t|
     t.string   "subject"
     t.string   "from_name"
     t.string   "from_email"
@@ -51,11 +51,11 @@ ActiveRecord::Schema.define(version: 20150321205815) do
     t.integer  "template_id"
   end
 
-  add_index "postino_campaigns", ["list_id"], name: "index_postino_campaigns_on_list_id"
-  add_index "postino_campaigns", ["parent_id"], name: "index_postino_campaigns_on_parent_id"
-  add_index "postino_campaigns", ["template_id"], name: "index_postino_campaigns_on_template_id"
+  add_index "chaskiq_campaigns", ["list_id"], name: "index_chaskiq_campaigns_on_list_id"
+  add_index "chaskiq_campaigns", ["parent_id"], name: "index_chaskiq_campaigns_on_parent_id"
+  add_index "chaskiq_campaigns", ["template_id"], name: "index_chaskiq_campaigns_on_template_id"
 
-  create_table "postino_lists", force: :cascade do |t|
+  create_table "chaskiq_lists", force: :cascade do |t|
     t.string   "name"
     t.string   "state"
     t.integer  "unsubscribe_count"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20150321205815) do
     t.datetime "updated_at",        null: false
   end
 
-  create_table "postino_metrics", force: :cascade do |t|
+  create_table "chaskiq_metrics", force: :cascade do |t|
     t.integer  "trackable_id",   null: false
     t.string   "trackable_type", null: false
     t.integer  "campaign_id"
@@ -76,19 +76,19 @@ ActiveRecord::Schema.define(version: 20150321205815) do
     t.datetime "updated_at",     null: false
   end
 
-  add_index "postino_metrics", ["campaign_id"], name: "index_postino_metrics_on_campaign_id"
-  add_index "postino_metrics", ["trackable_type", "trackable_id"], name: "index_postino_metrics_on_trackable_type_and_trackable_id"
+  add_index "chaskiq_metrics", ["campaign_id"], name: "index_chaskiq_metrics_on_campaign_id"
+  add_index "chaskiq_metrics", ["trackable_type", "trackable_id"], name: "index_chaskiq_metrics_on_trackable_type_and_trackable_id"
 
-  create_table "postino_settings", force: :cascade do |t|
+  create_table "chaskiq_settings", force: :cascade do |t|
     t.text     "config"
     t.integer  "campaign_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
-  add_index "postino_settings", ["campaign_id"], name: "index_postino_settings_on_campaign_id"
+  add_index "chaskiq_settings", ["campaign_id"], name: "index_chaskiq_settings_on_campaign_id"
 
-  create_table "postino_subscribers", force: :cascade do |t|
+  create_table "chaskiq_subscribers", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.string   "state"
@@ -98,9 +98,9 @@ ActiveRecord::Schema.define(version: 20150321205815) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "postino_subscribers", ["list_id"], name: "index_postino_subscribers_on_list_id"
+  add_index "chaskiq_subscribers", ["list_id"], name: "index_chaskiq_subscribers_on_list_id"
 
-  create_table "postino_templates", force: :cascade do |t|
+  create_table "chaskiq_templates", force: :cascade do |t|
     t.string   "name"
     t.text     "body"
     t.text     "html_content"

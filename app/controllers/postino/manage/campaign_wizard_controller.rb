@@ -1,6 +1,6 @@
-require_dependency "postino/application_controller"
+require_dependency "chaskiq/application_controller"
 
-module Postino
+module Chaskiq
   class Manage::CampaignWizardController < ApplicationController
 
     before_filter :authentication_method
@@ -10,24 +10,24 @@ module Postino
     steps :list, :setup, :template, :design, :confirm
 
     def show
-      @campaign = Postino::Campaign.find(params[:campaign_id])
+      @campaign = Chaskiq::Campaign.find(params[:campaign_id])
       render_wizard
     end
 
     def design
-      @campaign = Postino::Campaign.find(params[:campaign_id])
+      @campaign = Chaskiq::Campaign.find(params[:campaign_id])
       render_wizard
       render :show , layout: false
     end
 
     def update
-      @campaign = Postino::Campaign.find(params[:campaign_id])
+      @campaign = Chaskiq::Campaign.find(params[:campaign_id])
       @campaign.update_attributes(resource_params)
       render_wizard @campaign
     end
 
     def create
-      @campaign = Postino::Campaign.create(resource_params)
+      @campaign = Chaskiq::Campaign.create(resource_params)
       redirect_to manage_wizard_path(steps.first, :campaign_id => @campaign.id)
     end
 

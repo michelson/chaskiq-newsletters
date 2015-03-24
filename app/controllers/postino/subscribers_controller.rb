@@ -1,11 +1,11 @@
-require_dependency "postino/application_controller"
+require_dependency "chaskiq/application_controller"
 
-module Postino
+module Chaskiq
   class SubscribersController < ApplicationController
 
     before_filter :find_base_models
 
-    layout "postino/empty"
+    layout "chaskiq/empty"
 
     def show
       #TODO, we should obfustate code
@@ -67,7 +67,7 @@ module Postino
     end
 
     def find_base_models
-      @campaign = Postino::Campaign.find(params[:campaign_id])
+      @campaign = Chaskiq::Campaign.find(params[:campaign_id])
       @list = @campaign.list
     end
 

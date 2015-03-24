@@ -1,4 +1,4 @@
-module Postino
+module Chaskiq
   class List < ActiveRecord::Base
     has_many :subscribers
     has_many :campaigns
@@ -21,7 +21,7 @@ module Postino
     end
 
     def csv_importer
-      @importer ||= Postino::CsvImporter.new
+      @importer ||= Chaskiq::CsvImporter.new
     end
 
   end

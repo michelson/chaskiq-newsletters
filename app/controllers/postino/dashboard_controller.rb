@@ -1,7 +1,7 @@
-require_dependency "postino/application_controller"
+require_dependency "chaskiq/application_controller"
 
-module Postino
-  class DashboardController < Postino::ApplicationController
+module Chaskiq
+  class DashboardController < Chaskiq::ApplicationController
     before_filter :authentication_method
 
     def show

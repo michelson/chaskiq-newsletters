@@ -1,5 +1,5 @@
 # encoding: utf-8
-module Postino
+module Chaskiq
   class CampaignLogoUploader < CarrierWave::Uploader::Base
 
     # Include RMagick or MiniMagick support:

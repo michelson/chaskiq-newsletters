@@ -1,29 +1,29 @@
-require_dependency "postino/application_controller"
+require_dependency "chaskiq/application_controller"
 
-module Postino
+module Chaskiq
   class Manage::ListsController < ApplicationController
 
     before_filter :authentication_method
 
     def index
-      @lists = Postino::List.page(params[:page]).per(50)
+      @lists = Chaskiq::List.page(params[:page]).per(50)
     end
 
     def show
-      @list =  Postino::List.find(params[:id])
+      @list =  Chaskiq::List.find(params[:id])
       @subscribers = @list.subscribers.page(params[:page]).per(50)
     end
 
     def new
-      @list =  Postino::List.new
+      @list =  Chaskiq::List.new
     end
 
     def edit
-      @list =  Postino::List.find(params[:id])
+      @list =  Chaskiq::List.find(params[:id])
     end
 
     def update
-      @list =  Postino::List.find(params[:id])
+      @list =  Chaskiq::List.find(params[:id])
       if @list.update_attributes(resource_params)
         redirect_to manage_lists_path
       else
@@ -32,7 +32,7 @@ module Postino
     end
 
     def create
-      if @list =  Postino::List.create(resource_params)
+      if @list =  Chaskiq::List.create(resource_params)
         redirect_to manage_lists_path
       else
         render "new"

@@ -1,4 +1,4 @@
-window.Postino = {
+window.Chaskiq = {
   Helpers: {}
 }
 // Custom scripts

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    postino (0.0.1)
+    chaskiq (0.0.1)
       aasm
       bootstrap-sass
       carrierwave
@@ -341,7 +341,7 @@ DEPENDENCIES
   eventmachine
   factory_girl
   factory_girl_rails
-  postino!
+  chaskiq!
   pry
   rainbows
   rspec

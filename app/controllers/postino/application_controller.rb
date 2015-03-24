@@ -1,6 +1,6 @@
 require "wicked"
 
-module Postino
+module Chaskiq
   class ApplicationController < ActionController::Base
 
     def get_referrer
@@ -9,7 +9,7 @@ module Postino
     end
 
     def authentication_method
-      if meth = Postino::Config.authentication_method
+      if meth = Chaskiq::Config.authentication_method
         self.send meth
       end
     end

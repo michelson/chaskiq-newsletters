@@ -1,6 +1,6 @@
 require "csv"
 
-module Postino
+module Chaskiq
   class CsvImporter
 
     def import(file_path)

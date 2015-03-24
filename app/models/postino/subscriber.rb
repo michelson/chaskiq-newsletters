@@ -1,11 +1,11 @@
 require "aasm"
 
-module Postino
+module Chaskiq
   class Subscriber < ActiveRecord::Base
 
     belongs_to :list
     has_many :metrics , as: :trackable
-    has_one :campaign , through: :list , class_name: "Postino::Campaign"
+    has_one :campaign , through: :list , class_name: "Chaskiq::Campaign"
 
     validates :email , presence: true
     validates :name , presence: true

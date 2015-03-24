@@ -1,17 +1,17 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
-require "postino/version"
+require "chaskiq/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "postino"
-  s.version     = Postino::VERSION
+  s.name        = "chaskiq"
+  s.version     = Chaskiq::VERSION
   s.authors     = ["miguel michelson"]
   s.email       = ["miguelmichelson@gmail.com"]
   s.homepage    = "http://chaski.herokuap.com"
   s.summary     = "Send newslerroeo"
-  s.description = "Postino."
+  s.description = "Chaskiq."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]

@@ -1,6 +1,6 @@
-class CreatePostinoCampaigns < ActiveRecord::Migration
+class CreateChaskiqCampaigns < ActiveRecord::Migration
   def change
-    create_table :postino_campaigns do |t|
+    create_table :chaskiq_campaigns do |t|
       t.string :subject
       t.string :from_name
       t.string :from_email
@@ -23,9 +23,9 @@ class CreatePostinoCampaigns < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_reference :postino_campaigns, :list, index: true
-    add_reference :postino_campaigns, :template, index: true
-    add_foreign_key :postino_campaigns, :templates
-    add_foreign_key :postino_campaigns, :parents
+    add_reference :chaskiq_campaigns, :list, index: true
+    add_reference :chaskiq_campaigns, :template, index: true
+    add_foreign_key :chaskiq_campaigns, :templates
+    add_foreign_key :chaskiq_campaigns, :parents
   end
 end

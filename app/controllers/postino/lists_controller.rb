@@ -1,6 +1,6 @@
-require_dependency "postino/application_controller"
+require_dependency "chaskiq/application_controller"
 
-module Postino
+module Chaskiq
   class ListsController < ApplicationController
 
   protected

@@ -1,6 +1,6 @@
 # encoding: utf-8
 # encoding: utf-8
-module Postino
+module Chaskiq
   class ImageUploader < CarrierWave::Uploader::Base
 
     # Include RMagick or MiniMagick support:

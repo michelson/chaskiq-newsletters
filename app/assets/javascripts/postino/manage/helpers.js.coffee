@@ -1,5 +1,5 @@
-Postino.Helpers.showModal = (body, header, opts={}) ->
-  window.Postino.Helpers.cleanModal()
+Chaskiq.Helpers.showModal = (body, header, opts={}) ->
+  window.Chaskiq.Helpers.cleanModal()
   body   ?= ""
   header ?= ""
   @myModal     = $("#myModal")
@@ -19,12 +19,12 @@ Postino.Helpers.showModal = (body, header, opts={}) ->
   @modalHeader.find('h4').html header unless header.length == 0
   return @myModal
 
-Postino.Helpers.cleanModal = () ->
+Chaskiq.Helpers.cleanModal = () ->
   self = $("#modal")
   haveModalName = self.attr("data-modal-name")
   self.attr("data-modal-name","")  if typeof haveModalName isnt "undefined" and haveModalName isnt false # 1
   self.find(".modal-dialog").removeClass().addClass("modal-dialog")
   self.find(".modal-container, .modal-title").html('')
 
-Postino.Helpers.hideModal = ()->
+Chaskiq.Helpers.hideModal = ()->
   $('#myModal').modal('hide');

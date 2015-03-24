@@ -1,4 +1,4 @@
-# Postino // Bonobo
+# Chaskiq // Bonobo
 
 This project rocks and uses MIT-LICENSE.
 

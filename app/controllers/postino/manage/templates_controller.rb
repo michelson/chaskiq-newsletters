@@ -1,28 +1,28 @@
-require_dependency "postino/application_controller"
+require_dependency "chaskiq/application_controller"
 
-module Postino
+module Chaskiq
   class Manage::TemplatesController < ApplicationController
 
     before_filter :authentication_method
 
     def index
-      @templates = Postino::Template.all
+      @templates = Chaskiq::Template.all
     end
 
     def show
-      @template =  Postino::Template.find(params[:id])
+      @template =  Chaskiq::Template.find(params[:id])
     end
 
     def new
-      @template =  Postino::Template.new
+      @template =  Chaskiq::Template.new
     end
 
     def edit
-      @template =  Postino::Template.find(params[:id])
+      @template =  Chaskiq::Template.find(params[:id])
     end
 
     def update
-      @template =  Postino::Template.find(params[:id])
+      @template =  Chaskiq::Template.find(params[:id])
       if @template.update_attributes(resource_params)
         redirect_to manage_templates_path
       else
@@ -31,7 +31,7 @@ module Postino
     end
 
     def create
-      @template =  Postino::Template.create(resource_params)
+      @template =  Chaskiq::Template.create(resource_params)
       if @template.errors.blank?
         redirect_to manage_templates_path
       else

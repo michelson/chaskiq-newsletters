@@ -1,6 +1,6 @@
-module Postino
+module Chaskiq
   class Engine < ::Rails::Engine
-    isolate_namespace Postino
+    isolate_namespace Chaskiq
 
     config.generators do |g|
       g.test_framework  :rspec

@@ -1,6 +1,6 @@
-class CreatePostinoAttachments < ActiveRecord::Migration
+class CreateChaskiqAttachments < ActiveRecord::Migration
   def change
-    create_table :postino_attachments do |t|
+    create_table :chaskiq_attachments do |t|
       t.string :image
       t.string :content_type
       t.integer :size
@@ -9,6 +9,6 @@ class CreatePostinoAttachments < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_foreign_key :postino_attachments, :campaigns
+    add_foreign_key :chaskiq_attachments, :campaigns
   end
 end
