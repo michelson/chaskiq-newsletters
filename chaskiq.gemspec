@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.version     = Chaskiq::VERSION
   s.authors     = ["miguel michelson"]
   s.email       = ["miguelmichelson@gmail.com"]
-  s.homepage    = "http://chaski.herokuap.com"
-  s.summary     = "Send newslerroeo"
+  s.homepage    = "http://chaskiq.herokuapp.com"
+  s.summary     = "A newsletter service for rails"
   s.description = "Chaskiq."
   s.license     = "MIT"
 

@@ -1,8 +1,7 @@
-# Chaskiq // Bonobo
+# Chaskiq
 
 This project rocks and uses MIT-LICENSE.
 
-http://sendy.co/
 
 ### testing
 
@@ -16,6 +15,9 @@ rake server
 
 
 #refs
+
+
+http://sendy.co/
 
 http://stackoverflow.com/questions/973143/tracking-email-bounces-opens-clicks
 
