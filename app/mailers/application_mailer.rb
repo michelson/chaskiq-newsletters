@@ -1,13 +1,8 @@
 require 'mustache'
 
 class ApplicationMailer < ActionMailer::Base
-  #default  from: "Artenlinea.com <messages@artenlinea.com>", #"Artenlinea.com <#{self.smtp_settings[:user_name]}>"
-  #         sent_on:       Time.now,
-  #         content_type:  "text/html"
 
   layout 'mailer'
-
-  #default_url_options[:host] = "artenlinea.com"
 
   def newsletter(campaign, subscriber)
 
