@@ -24,7 +24,8 @@ class ApplicationMailer < ActionMailer::Base
     mail( from: "#{campaign.from_name}<#{campaign.from_email}>",
           to: subscriber.email,
           subject: campaign.subject,
-          content_type: content_type )
+          content_type: content_type,
+          return_path: campaign.reply_email )
   end
 
   def test(campaign)
