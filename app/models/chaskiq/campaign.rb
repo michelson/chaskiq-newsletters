@@ -62,12 +62,16 @@ module Chaskiq
     #deliver email + create metric
     def push_notification(subscriber)
       self.metrics.create(trackable: subscriber, action: "deliver")
-      mailer = Chaskiq::CampaignMailer.newsletter(self, subscriber) #deliver_later
+      mailer = prepare_mail_to(subscriber) #deliver_later
       #if Rails.env.production?
-        mailer.deliver_later
+      mailer.deliver_later
       #else
       #  mailer.deliver_now
       #end
+    end
+
+    def prepare_mail_to(subscriber)
+      Chaskiq::CampaignMailer.newsletter(self, subscriber)
     end
 
     def copy_template

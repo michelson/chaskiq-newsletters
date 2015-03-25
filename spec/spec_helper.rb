@@ -35,6 +35,9 @@ require 'pry'
 RSpec.configure do |config|
   config.mock_with :rspec
 
+  ActiveJob::Base.queue_adapter = :test
+
+
   #config.use_transactional_fixtures = true
   #config.infer_base_class_for_anonymous_controllers = false
   config.order = "random"

@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'active_job/test_helper'
 
 module Chaskiq
   RSpec.describe Campaign, type: :model do
@@ -56,11 +57,20 @@ module Chaskiq
 
       end
 
+      it "will prepare mail to" do
+        expect(@c.prepare_mail_to(subscriber)).to be_an_instance_of(ActionMailer::MessageDelivery)
+      end
+
+      it "will prepare mail to can send inline" do
+        @c.prepare_mail_to(subscriber).deliver_now
+        expect(ActionMailer::Base.deliveries.size).to be 1
+      end
+
       it "will send newsletter & create deliver metrics" do
-        allow_any_instance_of(ActionMailer::MessageDelivery).to receive(:deliver_now).and_return(true)
-        expect(Chaskiq::CampaignMailer).to receive(:newsletter).exactly(10).times.and_return(ActionMailer::MessageDelivery.new(1,2))
+        expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq 0
         @c.send_newsletter
         expect(@c.metrics.deliveries.size).to be == 10
+        expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq 10
       end
 
     end
