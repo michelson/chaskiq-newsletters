@@ -125,5 +125,13 @@ module Chaskiq
       Rails.application.routes.default_url_options[:host] || "http://localhost:3000"
     end
 
+
+    ## CHART STUFF
+
+    def sparklines_by_day(opts={})
+      range = opts[:range] ||= 2.weeks.ago.midnight..Time.now
+      self.metrics.group_by_day(:created_at, range: range ).count.map{|o| o.to_a.last}
+    end
+
   end
 end

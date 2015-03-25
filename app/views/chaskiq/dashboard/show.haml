@@ -2,7 +2,7 @@
 
 
 .row.border-bottom.white-bg.dashboard-header
-  .col-sm-3
+  .col-sm-4
     %h2 Welcome To Chaskiq
     %small You have #{@campaigns_count} campaigns and #{@sends_count} sended messages.
     %ul.list-group.clear-list.m-t
@@ -15,10 +15,10 @@
             = c.metrics.deliveries.size
           = c.name
 
-  .col-sm-9
+  .col-sm-8
     .flot-chart.dashboard-chart
       -##flot-dashboard-chart.flot-chart-content
-      = line_chart( @daily_metrics, height: "200px", width: "500px")
+      = column_chart( @daily_metrics, height: "200px", width: "500px",  format: "%l %P")
 
     -#
       .row.text-left
@@ -50,305 +50,35 @@
         .m-t
           %small Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 
-
-
-
 .row
   .col-lg-12
     .wrapper.wrapper-content
       .row
-        .col-lg-4
+        .col-lg-12
           .ibox.float-e-margins
             .ibox-title
-              %h5 New data for the report
-              %span.label.label-primary CHASKIQ
-              .ibox-tools
-                %a.collapse-link
-                  %i.fa.fa-chevron-up
-                %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                  %i.fa.fa-wrench
-                %ul.dropdown-menu.dropdown-user
-                  %li
-                    %a{:href => "#"} Config option 1
-                  %li
-                    %a{:href => "#"} Config option 2
-                %a.close-link
-                  %i.fa.fa-times
+              %h5 Latests Campaigns
+              -#%span.label.label-primary CHASKIQ
+
             .ibox-content
-              %div
-                .pull-right.text-right
-                  %span.bar_dashboard 5,3,9,6,5,9,7,3,5,2,4,7,3,2,7,9,6,4,5,7,3,2,1,0,9,5,6,8,3,2,1
-                  %br/
-                  %small.font-bold $ 20 054.43
-                %h4
-                  NYS report new data!
-                  %br/
-                  %small.m-r
-                    %a{:href => ""} Check the stock price!
-          .ibox.float-e-margins
-            .ibox-title
-              %h5 Read below comments and tweets
-              .ibox-tools
-                %a.collapse-link
-                  %i.fa.fa-chevron-up
-                %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                  %i.fa.fa-wrench
-                %ul.dropdown-menu.dropdown-user
-                  %li
-                    %a{:href => "#"} Config option 1
-                  %li
-                    %a{:href => "#"} Config option 2
-                %a.close-link
-                  %i.fa.fa-times
-            .ibox-content.no-padding
-              %ul.list-group
-                %li.list-group-item
-                  %p
-                    %a.text-info{:href => "#"} Alan Marry
-                    I belive that. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                  %small.block.text-muted
-                    %i.fa.fa-clock-o
-                    1 minuts ago
-                %li.list-group-item
-                  %p
-                    %a.text-info{:href => "#"} Stock Man
-                    Check this stock chart. This price is crazy!
-                  .text-center.m
-                    %span#sparkline8
-                  %small.block.text-muted
-                    %i.fa.fa-clock-o
-                    2 hours ago
-                %li.list-group-item
-                  %p
-                    %a.text-info{:href => "#"} Kevin Smith
-                    Lorem ipsum unknown printer took a galley
-                  %small.block.text-muted
-                    %i.fa.fa-clock-o
-                    2 minuts ago
-                %li.list-group-item
-                  %p
-                    %a.text-info{:href => "#"} Jonathan Febrick
-                    The standard chunk of Lorem Ipsum
-                  %small.block.text-muted
-                    %i.fa.fa-clock-o
-                    1 hour ago
-                %li.list-group-item
-                  %p
-                    %a.text-info{:href => "#"} Alan Marry
-                    I belive that. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                  %small.block.text-muted
-                    %i.fa.fa-clock-o
-                    1 minuts ago
-                %li.list-group-item
-                  %p
-                    %a.text-info{:href => "#"} Kevin Smith
-                    Lorem ipsum unknown printer took a galley
-                  %small.block.text-muted
-                    %i.fa.fa-clock-o
-                    2 minuts ago
-        .col-lg-4
-          .ibox.float-e-margins
-            .ibox-title
-              %h5 Your daily feed
-              .ibox-tools
-                %span.label.label-warning-light 10 Messages
-            .ibox-content
-              %div
-                .feed-activity-list
-                  .feed-element
-                    %a.pull-left{:href => ""}
-                      %img.img-circle{:alt => "image", :src => image_url( 'profile.jpg')}/
-                    .media-body
-                      %small.pull-right 5m ago
-                      %strong Monica Smith
-                      posted a new blog.
-                      %br/
-                      %small.text-muted Today 5:60 pm - 12.06.2014
-                  .feed-element
-                    %a.pull-left{:href => ""}
-                      %img.img-circle{:alt => "image", :src => "assets/a2.jpg"}/
-                    .media-body
-                      %small.pull-right 2h ago
-                      %strong Mark Johnson
-                      posted message on
-                      %strong Monica Smith
-                      site.
-                      %br/
-                      %small.text-muted Today 2:10 pm - 12.06.2014
-                  .feed-element
-                    %a.pull-left{:href => ""}
-                      %img.img-circle{:alt => "image", :src => "assets/a3.jpg"}/
-                    .media-body
-                      %small.pull-right 2h ago
-                      %strong Janet Rosowski
-                      add 1 photo on
-                      %strong Monica Smith
-                      %br/
-                      %small.text-muted 2 days ago at 8:30am
-                  .feed-element
-                    %a.pull-left{:href => ""}
-                      %img.img-circle{:alt => "image", :src => "assets/a4.jpg"}/
-                    .media-body
-                      %small.pull-right.text-navy 5h ago
-                      %strong Chris Johnatan Overtunk
-                      started following
-                      %strong Monica Smith
-                      %br/
-                      %small.text-muted Yesterday 1:21 pm - 11.06.2014
-                      .actions
-                        %a.btn.btn-xs.btn-white
-                          %i.fa.fa-thumbs-up
-                          Like
-                        %a.btn.btn-xs.btn-white
-                          %i.fa.fa-heart
-                          Love
-                  .feed-element
-                    %a.pull-left{:href => ""}
-                      %img.img-circle{:alt => "image", :src => "assets/a5.jpg"}/
-                    .media-body
-                      %small.pull-right 2h ago
-                      %strong Kim Smith
-                      posted message on
-                      %strong Monica Smith
-                      site.
-                      %br/
-                      %small.text-muted Yesterday 5:20 pm - 12.06.2014
-                      .well
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-                        Over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                      .pull-right
-                        %a.btn.btn-xs.btn-white
-                          %i.fa.fa-thumbs-up
-                          Like
-                  .feed-element
-                    %a.pull-left{:href => ""}
-                      %img.img-circle{:alt => "image", :src => "assets/profile.jpg"}/
-                    .media-body
-                      %small.pull-right 23h ago
-                      %strong Monica Smith
-                      love
-                      %strong Kim Smith
-                      %br/
-                      %small.text-muted 2 days ago at 2:30 am - 11.06.2014
-                  .feed-element
-                    %a.pull-left{:href => ""}
-                      %img.img-circle{:alt => "image", :src => "assets/a7.jpg"}/
-                    .media-body
-                      %small.pull-right 46h ago
-                      %strong Mike Loreipsum
-                      started following
-                      %strong Monica Smith
-                      %br/
-                      %small.text-muted 3 days ago at 7:58 pm - 10.06.2014
-                %button.btn.btn-primary.btn-block.m-t
-                  %i.fa.fa-arrow-down
-                  Show More
-        .col-lg-4
-          .ibox.float-e-margins
-            .ibox-title
-              %h5 Alpha project
-              .ibox-tools
-                %a.collapse-link
-                  %i.fa.fa-chevron-up
-                %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                  %i.fa.fa-wrench
-                %ul.dropdown-menu.dropdown-user
-                  %li
-                    %a{:href => "#"} Config option 1
-                  %li
-                    %a{:href => "#"} Config option 2
-                %a.close-link
-                  %i.fa.fa-times
-            .ibox-content.ibox-heading
-              %h3 You have meeting today!
-              %small
-                %i.fa.fa-map-marker
-                Meeting is on 6:00am. Check your schedule to see detail.
-            .ibox-content.chaskiq-timeline
-              .timeline-item
-                .row
-                  .col-xs-3.date
-                    %i.fa.fa-briefcase
-                    6:00 am
-                    %br/
-                    %small.text-navy 2 hour ago
-                  .col-xs-7.content.no-top-border
-                    %p.m-b-xs
-                      %strong Meeting
-                    %p
-                      Conference on the sales results for the previous year. Monica please examine sales trends in marketing and products. Below please find the current status of the
-                      sale.
-                    %p
-                      %span.updating-chart{"data-diameter" => "40"} 5,3,9,6,5,9,7,3,5,2,5,3,9,6,5,9,4,7,3,2,9,8,7,4,5,1,2,9,5,4,7,2,7,7,3,5,2
-              .timeline-item
-                .row
-                  .col-xs-3.date
-                    %i.fa.fa-file-text
-                    7:00 am
-                    %br/
-                    %small.text-navy 3 hour ago
-                  .col-xs-7.content
-                    %p.m-b-xs
-                      %strong Send documents to Mike
-                    %p Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.
-              .timeline-item
-                .row
-                  .col-xs-3.date
-                    %i.fa.fa-coffee
-                    8:00 am
-                    %br/
-                  .col-xs-7.content
-                    %p.m-b-xs
-                      %strong Coffee Break
-                    %p
-                      Go to shop and find some products.
-                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.
-              .timeline-item
-                .row
-                  .col-xs-3.date
-                    %i.fa.fa-phone
-                    11:00 am
-                    %br/
-                    %small.text-navy 21 hour ago
-                  .col-xs-7.content
-                    %p.m-b-xs
-                      %strong Phone with Jeronimo
-                    %p
-                      Lorem Ipsum has been the industry's standard dummy text ever since.
-              .timeline-item
-                .row
-                  .col-xs-3.date
-                    %i.fa.fa-user-md
-                    09:00 pm
-                    %br/
-                    %small 21 hour ago
-                  .col-xs-7.content
-                    %p.m-b-xs
-                      %strong Go to the doctor dr Smith
-                    %p
-                      Find some issue and go to doctor.
-              .timeline-item
-                .row
-                  .col-xs-3.date
-                    %i.fa.fa-comments
-                    12:50 pm
-                    %br/
-                    %small.text-navy 48 hour ago
-                  .col-xs-7.content
-                    %p.m-b-xs
-                      %strong Chat with Monica and Sandra
-                    %p
-                      Web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-    .footer
-      .pull-right
-        10GB of
-        %strong 250GB
-        Free.
-      %div
-        %strong Copyright
-        Example Company &#169; 2014-2015
+              - Chaskiq::Campaign.order("updated_at desc").limit(5).each do |c|
+                %div
+                  .pull-right.text-right
+                    .label.label-primary
+                      %i.fa.fa-paper-plane
+                      = c.metrics.deliveries.size
+
+                    %span.bar_dashboard
+                      = c.sparklines_by_day().join(", ")
 
 
+
+                  %h4
+                    = c.name
+                    %br/
+                    %small.m-r
+                      %a{:href => manage_campaign_path(c)} view campaign
+                %hr
 
 - content_for :javascript do
   :javascript
