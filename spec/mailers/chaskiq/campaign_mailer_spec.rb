@@ -34,7 +34,7 @@ module Chaskiq
       expect(last_email.body).to include(at[:track_image_url])
     end
 
-    it "should deliver with open.git" do
+    it "should deliver with open.gif" do
       expect(last_email.body).to include("open.gif")
     end
 
