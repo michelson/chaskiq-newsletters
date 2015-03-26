@@ -20,7 +20,7 @@ module Chaskiq
       when "deliver"
         "plain"
       when "open"
-        "information"
+        "info"
       when "click"
         "primary"
       when "spam"
