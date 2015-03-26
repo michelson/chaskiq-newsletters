@@ -11,7 +11,7 @@ module Chaskiq
 
     def show
       @campaign  = Chaskiq::Campaign.find(params[:id])
-      @metrics = @campaign.metrics.page(params[:page]).per(50)
+      @metrics = @campaign.metrics.order("id desc").page(params[:page]).per(10)
     end
 
     def new

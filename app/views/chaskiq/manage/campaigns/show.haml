@@ -209,22 +209,22 @@
                           %td
                             %p.small
                               Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
-                    - @metrics.each do |m|
-                      %tr
-                        %td
-                          %span.label{class: m.style_class}
-                            %i.fa.fa-check
-                            = m.action
-                        %td
-                          = m.trackable.try(:name)
-                        %td
-                          = m.created_at
-                        %td
-                          %p.small
-                            = m.host
-                            = m.data
-
-                    = paginate @metrics
+                      - @metrics.each do |m|
+                        %tr
+                          %td
+                            %span.label{class: m.style_class}
+                              %i.fa.fa-check
+                              = m.action
+                          %td
+                            = m.trackable.try(:name)
+                          %td
+                            = m.created_at
+                          %td
+                            %p.small
+                              = m.host
+                              = m.data
+                  .clearfix
+                  = paginate @metrics
 
   .col-lg-3
     .wrapper.wrapper-content.project-manager
