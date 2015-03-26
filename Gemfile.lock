@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    chaskiq (0.0.3)
+    chaskiq (0.0.4)
       aasm
       bootstrap-sass
       carrierwave

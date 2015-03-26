@@ -94,37 +94,31 @@ module Chaskiq
     def attributes_for_mailer(subscriber)
 
       subscriber_url = "#{campaign_url}/subscribers/#{subscriber.encoded_id}"
+      track_image    = "#{campaign_url}/tracks/#{subscriber.encoded_id}/open.gif"
 
-=begin
-        { campaign_url: "<a href='#{campaign_url}' class='utilityLink'>#{self.name}</a>".html_safe,
-        campaign_unsubscribe: "<a href='#{subscriber_url}/delete' class='utilityLink'>Unsubscribe</a>".html_safe,
-        campaign_subscribe: "<a href='#{campaign_url}/subscribers/new' class='utilityLink'>Subscribe</a>".html_safe,
-        campaign_description: "#{self.description}" ,
-      }
-=end
-      { campaign_url: "#{campaign_url}",
+      { campaign_url: campaign_url,
         campaign_unsubscribe: "#{subscriber_url}/delete",
         campaign_subscribe: "#{campaign_url}/subscribers/new",
-        campaign_description: "#{self.description}" ,
+        campaign_description: "#{self.description}",
+        track_image_url: track_image
       }
     end
 
     def mustache_template_for(subscriber)
 
-      link_prefix = host + "/campaigns/#{self.id}/tracks/#{subscriber.encoded_id}?r="
+      link_prefix = host + "/campaigns/#{self.id}/tracks/#{subscriber.encoded_id}/click?r="
       html = Chaskiq::LinkRenamer.convert(premailer, link_prefix)
 
       Mustache.render(html, subscriber.attributes.merge(attributes_for_mailer(subscriber)) )
     end
 
     def compiled_template_for(subscriber)
-      mustache_template_for(subscriber)
+      html = mustache_template_for(subscriber)
     end
 
     def host
       Rails.application.routes.default_url_options[:host] || "http://localhost:3000"
     end
-
 
     ## CHART STUFF
 

@@ -33,32 +33,12 @@ module Chaskiq
     end
 
     def preview
-
-
       @campaign  = Chaskiq::Campaign.find(params[:id])
       @campaign.apply_premailer
-
-=begin
-      out = Sanitize.fragment(@campaign.html_content, :elements => ['img', 'table', 'tbody', 'td', 'th', 'p', 'span', 'ul', 'li'],
-        :attributes => {
-          :all=>['class', 'id', 'style', 'valign', 'align'],
-          'a'=> ['href', 'title'],'span' => ['class'],
-          'tbody'=>["class", "id", "style"],
-          'table'=>['width','height', 'cellspacing', 'cellpadding', 'border', 'cellspacing', 'cellpadding', 'border', 'align', 'id', 'class', 'style' ],
-          'td'=>['id', 'class', 'style', 'valign', 'align'],
-          'css' => {:properties => ['color', 'border', 'background',       'padding-top', 'padding-right', 'padding-bottom', 'padding-left']},
-          'remove_contents' => ['script', 'style', 'object', 'iframe', 'embed']
-
-          })
-
-
-      @template = out.html_safe
-=end
       render layout: false
     end
 
     def premailer_preview
-
       @campaign  = Chaskiq::Campaign.find(params[:id])
       render layout: false
     end
