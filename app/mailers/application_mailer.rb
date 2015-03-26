@@ -30,7 +30,7 @@ class ApplicationMailer < ActionMailer::Base
     mail( from: "#{campaign.from_name}<#{campaign.from_email}>",
           to: "miguelmichelson@gmail.com",
           subject: campaign.subject,
-          body: campaign.html_content,
+          body: campaign.reply_email,
           content_type: content_type )
   end
 

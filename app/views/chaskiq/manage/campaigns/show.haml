@@ -16,8 +16,8 @@
               .m-b-md
                 .pull-right
                   %a.btn.btn-white.btn-xs{:href => manage_campaign_wizard_path(@campaign, "setup")}
-                    %i.fa.fa-edit
-                    Edit project
+                    %i.fa.fa-cog
+                    Configure
 
                   %a.btn.btn-info.btn-xs{:href => preview_manage_campaign_path(@campaign), target: :blank}
                     %i.fa.fa-eye
@@ -209,7 +209,7 @@
                           %td
                             %p.small
                               Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
-                    - @campaign.metrics.each do |m|
+                    - @metrics.each do |m|
                       %tr
                         %td
                           %span.label{class: m.style_class}
@@ -223,6 +223,8 @@
                           %p.small
                             = m.host
                             = m.data
+
+                    = paginate @metrics
 
   .col-lg-3
     .wrapper.wrapper-content.project-manager

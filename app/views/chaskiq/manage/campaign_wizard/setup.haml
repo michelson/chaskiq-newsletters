@@ -13,7 +13,8 @@
 
 
           = render partial: "wizard_steps"
-          = simple_form_for @campaign, url: wizard_path do |f|
+
+          = simple_form_for @campaign, url: wizard_path, html: {class: "wizard-big wizard clearfix"}  do |f|
 
             .col-lg-6
               = f.input :name

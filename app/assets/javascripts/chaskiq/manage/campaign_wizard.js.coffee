@@ -1,19 +1,9 @@
-###
-window.SetContentTo =  function(id, content){
-  $(id).val(content);
-}
-
-window.GetContent =  function(id){
-  $(id).val(content);
-}
-###
-
 
 class window.Editor extends Backbone.View
   el: '#editor-container'
 
   events: ->
-    'keypress .note-editable': 'copyToFocusedElement'
+    'keyup .note-editable': 'copyToFocusedElement'
     #'keypress #mail-editor': 'copyToTextArea'
     'drag .blocks li a' : 'drag'
 
@@ -34,7 +24,7 @@ class window.Editor extends Backbone.View
     "drop #templateFooter" : "drop"
 
     "click .tpl-block": "setFocus"
-    "click #editor-controls #save" : "displayBlockButtons"
+    "click #editor-controls #save" : "saveAndClose"
     "click .imagePlaceholder .button-small" : "displayUploaderList"
     "click .tpl-block-delete": "deleteBloc"
 
@@ -106,6 +96,11 @@ class window.Editor extends Backbone.View
   displayBlockButtons: ->
     $('.block-settings').hide()
     $('.main-settings').show()
+    false
+
+  saveAndClose: ->
+    @copyToTextArea()
+    @displayBlockButtons()
     false
 
   currentFocused: ()->

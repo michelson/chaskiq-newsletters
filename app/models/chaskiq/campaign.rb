@@ -29,6 +29,7 @@ module Chaskiq
     def delivery_progress
       return 0 if metrics.deliveries.size.zero?
       subscribers.size.to_f / metrics.deliveries.size.to_f * 100.0
+
     end
 
     def step_1?

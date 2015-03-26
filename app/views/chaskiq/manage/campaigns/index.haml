@@ -43,7 +43,7 @@
                     %br/
                     %small= campaign.created_at
                   %td.project-completion
-                    %small Completion with: #{campaign.delivery_progress}%
+                    %small Completion with: #{number_to_percentage(campaign.delivery_progress, precision: 0)}
                     .progress.progress-mini
                       .progress-bar{:style => "width: #{campaign.delivery_progress}%;"}
 

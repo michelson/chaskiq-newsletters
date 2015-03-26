@@ -11,17 +11,47 @@
               Create new Template
         .ibox-content
 
-
           = render partial: "wizard_steps"
-          .col-lg-12
-            = link_to "preview", preview_manage_campaign_path(@campaign), class: "btn btn-w-m btn-white"
 
-            = link_to "test", test_manage_campaign_path(@campaign), class: "btn btn-w-m btn-white"
+          .widget.navy-bg.p-xl
+            .col-lg-6
+              %h2
+                %i.fa.fa-thumbs-up.fa
+                All set up:
+              %p Just to confirm, check the details of <strong>#{@campaign.name}</strong>"
 
-            = link_to "send", deliver_manage_campaign_path(@campaign), class: "btn btn-w-m btn-white"
+              = link_to preview_manage_campaign_path(@campaign), class: "btn btn-primary", target: :blank do
+                %i.fa.fa-eye
+                  preview
 
-            = link_to " view reports", "#", class: "btn btn-w-m btn-white"
+              = link_to test_manage_campaign_path(@campaign), class: "btn btn-default" do
+                %i.fa.fa-heartbeat
+                  test
 
-          .clearfix
+              = link_to deliver_manage_campaign_path(@campaign), class: "btn btn-danger" do
+                %i.fa.fa-paper-plane
+                  send
+
+            .col-lg-6
+              %ul.list-unstyled.m-t-md
+                %li
+                  = image_tag(@campaign.logo)
+                %li
+                  %strong Subject:
+                  =" #{@campaign.subject}"
+                %li
+                  %strong from name:
+                  =" #{@campaign.from_name}"
+                %li
+                  %strong From email:
+                  =" #{@campaign.from_email}"
+                %li
+                  %strong Reply email:
+                  =" #{@campaign.reply_email}"
+                %li
+                  %strong Description:
+                  =" #{@campaign.description}"
+
+            .clearfix
 
           = render partial: "wizard_nav"
