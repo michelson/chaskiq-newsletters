@@ -66,7 +66,7 @@
                             Test
 
                         %li
-                          = link_to deliver_manage_campaign_path(campaign), data:{ method: :delete}  do
+                          = link_to deliver_manage_campaign_path(campaign), data: { confirm: "Are you sure?" } do
                             %i.fa.fa-paper-plane
                             Send
 
