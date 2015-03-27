@@ -39,6 +39,14 @@ module Chaskiq
       end
     end
 
+    def destroy
+      @list =  Chaskiq::List.find(params[:id])
+      if @list.destroy
+        flash[:notice] = "Destroyed succesfully"
+        redirect_to manage_lists_path
+      end
+    end
+
   protected
 
     def resource_params
