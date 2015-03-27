@@ -28,7 +28,7 @@
                 %i.fa.fa-heartbeat
                   test
 
-              = link_to deliver_manage_campaign_path(@campaign), class: "btn btn-danger" do
+              = link_to deliver_manage_campaign_path(@campaign), class: "btn btn-danger", data: {confirm: "Sure?"} do
                 %i.fa.fa-paper-plane
                   send
 
