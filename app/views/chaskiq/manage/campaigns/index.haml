@@ -86,7 +86,7 @@
                             Attachments
 
                         %li
-                          = link_to manage_campaign_path(campaign), method: :delete do
+                          = link_to manage_campaign_path(campaign), method: :delete, data: { confirm: "Are you sure?" } do
                             %i.fa.fa-times
                             Remove
 

@@ -22,6 +22,8 @@
 //= require cocoon
 //= require summernote/summernote.min.js
 
+//= require jquery_ujs
+
 // DASHBOARD
 //= require flot/jquery.flot.js
 //= require flot/jquery.flot.tooltip.min.js

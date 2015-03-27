@@ -27,7 +27,7 @@
                     %a.btn.btn-primary{:href => edit_manage_template_path(template), :role => "button"}
                       %i.fa.fa-edit
                       Edit
-                    %a.btn.btn-default{:href => manage_template_path(template), :role => "button"}
+                    %a.btn.btn-default{:href => manage_template_path(template), :role => "button", method: :delete, data: { confirm: "Are you sure?" }}
                       %i.fa.fa-times
                       Remove
 

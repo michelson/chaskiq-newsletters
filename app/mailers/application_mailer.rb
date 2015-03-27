@@ -27,13 +27,11 @@ class ApplicationMailer < ActionMailer::Base
 
     content_type  = "text/html"
 
-    attrs = subscriber.attributes
-
     @campaign = campaign
 
     @subscriber = {name: "Test Name", last_name: "Test Last Name", email: "test@test.com"}
 
-    @body = campaign.compiled_template_for(subscriber).html_safe
+    @body = campaign.compiled_template_for(@subscriber).html_safe
 
     content_type  = "text/html"
 
