@@ -165,7 +165,7 @@ window.InitSummernote = function(){
       toolbar: [
         ['style', ['bold', 'italic', 'underline']],
         ['font', ['strikethrough']],
-        ['insert', ['picture']],
+        ['insert', ['picture', 'link']],
         ['fontsize', ['fontsize']],
         ['para', ['ul', 'ol', 'paragraph']],
       ]
