@@ -84,10 +84,14 @@ class window.Editor extends Backbone.View
     ev.preventDefault()
 
   setDraggedEl: (e)->
-    #debugger
     crt = $(e.currentTarget).parents(".tpl-block")[0].cloneNode(true) #.clone()
-    crt.style.backgroundColor = "red";
-    crt.style.position = "absolute"; crt.style.top = "0px"; crt.style.right = "0px";
+    crt.style.backgroundColor = "white";
+    crt.style.position = "absolute";
+    crt.style.border = "1px solid #666";
+    crt.style.boxShadow = "1px 2px 2px #adadad"
+    crt.style.top = "0px";
+    crt.style.right = "0px";
+    crt.style.opacity = 0.9;
     document.body.appendChild(crt);
     e.dataTransfer = e.originalEvent.dataTransfer;
     e.dataTransfer.setDragImage(crt, 0, 0);
@@ -106,7 +110,6 @@ class window.Editor extends Backbone.View
     _.each $('.tpl-container'), (n)->
       $(n).find(".legend").remove()
 
-
   drag: (ev)->
     #console.log(ev.currentTarget)
     @dragged = $(ev.currentTarget)
@@ -114,6 +117,14 @@ class window.Editor extends Backbone.View
   allowDrop: (ev)->
     #console.log("allos drop")
     ev.preventDefault()
+
+  displayEmptyBlocks: ->
+    _.each $('.tpl-container'), (container)->
+      empty_message = $(container).find('.mojoMcContainerEmptyMessage')
+      if $(container).find(".tpl-block").length > 0
+        empty_message.hide()
+      else
+        empty_message.show()
 
   drop: (ev)->
     ev.preventDefault()
@@ -124,7 +135,6 @@ class window.Editor extends Backbone.View
     #ev.target.appendChild(data);
     container = $(ev.currentTarget)
 
-    #debugger
     if @dragged.attr('data-block')
       tmpl = @handleBlock @dragged.data('block')
       @dropBlock(container, tmpl)
@@ -136,13 +146,16 @@ class window.Editor extends Backbone.View
 
     @releaseBeforeItem()
 
+    @displayEmptyBlocks()
+
   dropBlock: (container, tmpl)->
     #drop on before item or in tpl-container
     if $(".tpl-block.dojoDndItemBefore").length > 0
       container.find(".tpl-block.dojoDndItemBefore").before(tmpl)
+      container.find('.mojoMcContainerEmptyMessage').hide()
     else
       container.find(".tpl-container").append(tmpl)
-      container.find('.mojoMcContainerEmptyMessage').hide()
+      #container.find('.mojoMcContainerEmptyMessage').hide()
 
   releaseBeforeItem: ()->
     $(".tpl-block").removeClass("dojoDndItemBefore")
