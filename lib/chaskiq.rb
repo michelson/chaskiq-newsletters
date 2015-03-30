@@ -14,6 +14,7 @@ require 'coffee-rails'
 require 'premailer'
 require 'groupdate'
 require 'chartkick'
+require 'jquery-rails'
 
 Dotenv.load
 

@@ -84,12 +84,26 @@ ul.blocks{
 }
 
 
+.tpl-container.default {
+  border: 3px solid grey;
+  position:relative;
+}
+
 .tpl-container.over {
   border: 3px solid green;
   position:relative;
 }
+
+
 .tpl-container .legend{
-  background: none repeat scroll 0 0 green;
+  &.default{
+    background: none repeat scroll 0 0 grey;
+  }
+
+  &.over{
+    background: none repeat scroll 0 0 green;
+  }
+
   color: white;
   height: 26px;
   padding: 4px;
@@ -143,7 +157,7 @@ ul.blocks{
     position: absolute;
     top: 0;
     width: 100%;
-    z-index: 5;
+    z-index: 900;
 }
 .tpl-block-controls a {
     border-right: 1px solid #8c8c8c;
@@ -151,7 +165,7 @@ ul.blocks{
     display: block;
     height: 36px;
     line-height: 36px;
-    overflow: hidden;
+    //overflow: hidden;
     position: absolute;
     text-align: center;
     text-decoration: none;
@@ -177,10 +191,10 @@ ul.blocks{
     color: #e6e6e6;
     cursor: move;
     left: 5px;
-    position: absolute;
+    //position: absolute;
     top: 12px;
+    //z-index:902;
 }
-
 
 .mojoImageUploader .imagePlaceholder {
     padding: 15px 0;
@@ -202,4 +216,45 @@ ul.blocks{
 .mojoImageUploader {
     font-size: 12px;
     text-align: center;
+}
+
+
+
+
+
+.dojoDndItemBefore::before,
+.dojoDndItemAfter + .dojoDndItem::before,
+.dojoDndItemAfter + .dojoDndItemAnchor + .dojoDndItem::before,
+.dojoDndItemAfter + .dojoDndItemAnchor:last-child::before,
+.dojoDndItemAfter:last-child::after {
+    background: none repeat scroll 0 0 #e3f3f5;
+    color: #005664;
+    content: "Drop block here.";
+    display: block;
+    font-family: "Helvetica Neue",Helvetica,Arial,Verdana,sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    height: 18px;
+    outline: 2px solid #45bcd2;
+    overflow: hidden;
+    padding: 12px 0;
+    text-align: center;
+}
+body:not(.neapolitan) .dojoDndItemOver {
+    cursor: auto;
+}
+.dojoDndItemBefore, .dojoDndItemAfter {
+    border: medium none;
+}
+.dojoDndItem {
+    cursor: default;
+}
+.tpl-block {
+    cursor: pointer;
+    position: relative;
+}
+.dojoDndItemOver {
+  cursor: grab;
+}
+.dojoDndItem {
 }

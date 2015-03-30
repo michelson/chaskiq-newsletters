@@ -48,7 +48,7 @@
                       %i.fa.fa-edit
                       Edit
 
-                    = link_to manage_list_path(list), class: "btn btn-white btn-sm", data:{ method: :delete} do
+                    = link_to manage_list_path(list), class: "btn btn-white btn-sm", data:{ method: :delete, confirm: "sure?"} do
                       %i.fa.fa-times
                       Destroy
 

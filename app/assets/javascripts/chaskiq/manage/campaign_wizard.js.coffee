@@ -1,4 +1,6 @@
 
+#http://www.kryogenix.org/code/browser/custom-drag-image.html
+#http://www.html5rocks.com/en/tutorials/dnd/basics/#toc-examples
 class window.Editor extends Backbone.View
   el: '#editor-container'
 
@@ -7,15 +9,23 @@ class window.Editor extends Backbone.View
     #'keypress #mail-editor': 'copyToTextArea'
     'drag .blocks li a' : 'drag'
 
-    "dragover #bodyTable" : "displaySections"
+    'drag .tpl-block-controls a' : 'drag'
+    'dragstart .tpl-block-controls a': 'setDraggedEl'
+
+    #"dragover #bodyTable" : "displaySections"
     "dragleave #bodyTable" : "hideSections"
     "drop #bodyTable" : "hideSections"
+    #"dragover .tpl-container" : "displaySections"
+    "dragover .tpl-block" : "displayItemOver"
+    "dragover .mojoMcContainerEmptyMessage": "displayItemOver"
 
-    "dragover #templateBody" : "allowDrop"
-    "dragover #templatePreheader" : "allowDrop"
-    "dragover #templateHeader" : "allowDrop"
-    "dragover #templateBody" : "allowDrop"
-    "dragover #templateFooter" : "allowDrop"
+    #"dragover .tpl-container" : "allowDrop"
+
+    #"dragover #templateBody" : "allowDrop"
+    #"dragover #templatePreheader" : "allowDrop"
+    #"dragover #templateHeader" : "allowDrop"
+    #"dragover #templateBody" : "allowDrop"
+    #"dragover #templateFooter" : "allowDrop"
 
     'drop #templateBody': "drop"
     'drop #templatePreheader': "drop"
@@ -44,7 +54,6 @@ class window.Editor extends Backbone.View
     , 0
 
   copyToFocusedElement: (ev)->
-    console.log "soji"
     @currentFocused().find('.mcnTextContent').html($(ev.currentTarget).html())
     @copyToTextArea()
 
@@ -53,39 +62,90 @@ class window.Editor extends Backbone.View
 
   render: ->
     #$(@el).find('#mail-editor').html(@template())
-    $(@el).find('#mail-editor').html(@textarea.val()); #init from saved content
-    #$(@el).find('#mail-editor').html(@baseTemplate()) #init from base js tamplarte
+    #$(@el).find('#mail-editor').html(@textarea.val()); #init from saved content
+    $(@el).find('#mail-editor').html(@baseTemplate()) #init from base js tamplarte
 
-  displaySections: ()->
-    $('.tpl-container').addClass("over")
+  displaySections: (ev)->
+
+    #console.log($(ev.currentTarget))
+    #console.log($(ev.currentTarget).hasClass("tpl-container"))
+    container = $(ev.currentTarget).parent(".tpl-container")
+
     _.each $('.tpl-container'), (n)->
       return if $(n).find(".legend").length > 0
-      $(n).append("<div class='legend'>#{$(n).attr("mc:container")}</div>")
+      $(n).append("<div class='legend default'>#{$(n).attr("mc:container")}</div>")
+
+    container.addClass("default")
+
+    if container.hasClass("tpl-container")
+      container.addClass("over").removeClass("default")
+      container.find(".legend").addClass("over").removeClass("default")
+
+    ev.preventDefault()
+
+  setDraggedEl: (e)->
+    #debugger
+    crt = $(e.currentTarget).parents(".tpl-block")[0].cloneNode(true) #.clone()
+    crt.style.backgroundColor = "red";
+    crt.style.position = "absolute"; crt.style.top = "0px"; crt.style.right = "0px";
+    document.body.appendChild(crt);
+    e.dataTransfer = e.originalEvent.dataTransfer;
+    e.dataTransfer.setDragImage(crt, 0, 0);
+
+  displayItemOver: (ev)->
+    @displaySections(ev)
+
+    $('.tpl-block').removeClass("dojoDndItemBefore")
+    if $(ev.currentTarget).hasClass("tpl-block")
+      $(ev.currentTarget).addClass("dojoDndItemBefore")
+
+    ev.preventDefault()
 
   hideSections: ()->
-    $('.tpl-container').removeClass("over")
+    $('.tpl-container').removeClass("default").removeClass("over")
     _.each $('.tpl-container'), (n)->
       $(n).find(".legend").remove()
 
+
   drag: (ev)->
-    #console.log(ev)
+    #console.log(ev.currentTarget)
     @dragged = $(ev.currentTarget)
 
   allowDrop: (ev)->
-    console.log("allos drop")
+    #console.log("allos drop")
     ev.preventDefault()
 
   drop: (ev)->
     ev.preventDefault()
     #console.log($(ev.dataTransfer.getData("text")))
-    console.log(@dragged.data('block'), ev.target.id)
+    #console.log(@dragged.data('block'))
+    console.log ev.target.id
     #data = $(ev.dataTransfer.getData("text"));
     #ev.target.appendChild(data);
     container = $(ev.currentTarget)
-    tmpl = @handleBlock @dragged.data('block')
-    container.find(".tpl-container").append(tmpl)
-    $(container).find('.mojoMcContainerEmptyMessage').hide()
+
+    #debugger
+    if @dragged.attr('data-block')
+      tmpl = @handleBlock @dragged.data('block')
+      @dropBlock(container, tmpl)
+    else
+      to_drop = this.dragged.parents(".tpl-block")
+      @dropBlock(container, to_drop)
+
     @copyToTextArea()
+
+    @releaseBeforeItem()
+
+  dropBlock: (container, tmpl)->
+    #drop on before item or in tpl-container
+    if $(".tpl-block.dojoDndItemBefore").length > 0
+      container.find(".tpl-block.dojoDndItemBefore").before(tmpl)
+    else
+      container.find(".tpl-container").append(tmpl)
+      container.find('.mojoMcContainerEmptyMessage').hide()
+
+  releaseBeforeItem: ()->
+    $(".tpl-block").removeClass("dojoDndItemBefore")
 
   displayWysiwyg: ->
     $('.block-settings').show()
@@ -119,7 +179,6 @@ class window.Editor extends Backbone.View
 
     #edit = ()->
     #  $('.click2edit').summernote({ focus: true });
-
 
   handleBlock: (block_type)->
     html = ""
@@ -160,7 +219,9 @@ class window.Editor extends Backbone.View
 
   templateBlockControls: ->
     "<div class='tpl-block-controls'>
-      <span class='tpl-block-drag dojoDndHandle freddicon vellip-square' title='Drag to Reorder'></span>
+      <a class='tpl-block-drag dojoDndHandle freddicon vellip-square' title='Drag to Reorder'>
+          <i class='fa fa-arrows'></i>
+      </a>
       <a data-dojo-attach-point='editBtn' class='tpl-block-edit' href='#' title='Edit Block'><i class='fa fa-edit'></i></a>
       <a data-dojo-attach-point='cloneBtn' class='tpl-block-clone' href='#' title='Duplicate Block'><i class='fa fa-files-o'></i></a>
       <a data-dojo-attach-point='deleteBtn' class='tpl-block-delete' href='#' title='Delete Block'><i class='fa fa-trash'></i></a>
