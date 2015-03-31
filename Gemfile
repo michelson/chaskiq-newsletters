@@ -18,5 +18,6 @@ gem "rainbows"
 gem 'wicked', require: true
 gem 'sinatra', :require => nil
 gem "mysql2"
+gem "web-console"
 
 #gem 'premailer', github: 'premailer/premailer'

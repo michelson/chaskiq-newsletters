@@ -11,6 +11,7 @@
           = simple_form_for ["manage", @template] do |f|
             = f.input :name
             = f.input :body, required: false
+            = f.input :css, required: false
             = f.submit "crear"
 
 
@@ -22,6 +23,13 @@
     $(function() {
 
         var editor_one = CodeMirror.fromTextArea(document.getElementById("template_body"), {
+            lineNumbers: true,
+            matchBrackets: true,
+            styleActiveLine: true,
+            theme: "elegant"
+        });
+
+        var editor_two = CodeMirror.fromTextArea(document.getElementById("template_css"), {
             lineNumbers: true,
             matchBrackets: true,
             styleActiveLine: true,

@@ -68,7 +68,6 @@ class window.Editor extends Backbone.View
     $("#campaign_css").val(rules.join(" "))
 
   submitEditor: (ev)->
-    console.log("oli")
     @copyToTextArea()
     @copyCssRulesToTextArea()
     $(ev.currentTarget).submit()
@@ -253,9 +252,7 @@ class window.Editor extends Backbone.View
 
   templateBlockControls: ->
     "<div class='tpl-block-controls'>
-      <a class='tpl-block-drag dojoDndHandle freddicon vellip-square' title='Drag to Reorder'>
-          <i class='fa fa-arrows'></i>
-      </a>
+
       <a data-dojo-attach-point='editBtn' class='tpl-block-edit' href='#' title='Edit Block'><i class='fa fa-edit'></i></a>
       <a data-dojo-attach-point='cloneBtn' class='tpl-block-clone' href='#' title='Duplicate Block'><i class='fa fa-files-o'></i></a>
       <a data-dojo-attach-point='deleteBtn' class='tpl-block-delete' href='#' title='Delete Block'><i class='fa fa-trash'></i></a>

@@ -163,7 +163,7 @@ sendFile = function(file, callback) {
 window.InitSummernote = function(){
     $('.summernote').summernote({
       toolbar: [
-        ['style', ['bold', 'italic', 'underline']],
+        ['style', ['color', 'bold', 'italic', 'underline', 'fontsize', 'fontname']],
         ['font', ['strikethrough']],
         ['insert', ['picture', 'link']],
         ['fontsize', ['fontsize']],

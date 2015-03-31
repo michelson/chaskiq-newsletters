@@ -6,6 +6,7 @@ module Chaskiq
     def self.convert(html, url_prefix="")
       content = Nokogiri::HTML(html)
       content.css("a").each do |link|
+        next if link.attr("class").include?("tpl-block")
         val = link.attributes["href"].value
         link.attributes["href"].value = self.rename_link(val, url_prefix)
       end
