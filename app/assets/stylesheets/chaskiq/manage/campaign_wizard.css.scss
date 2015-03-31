@@ -83,6 +83,11 @@ ul.blocks{
     text-align: center;
 }
 
+.panel-collapse fieldset{
+  height: 200px;
+  overflow: scroll;
+  width: 100%;
+}
 
 .tpl-container.default {
   border: 3px solid grey;

@@ -6,26 +6,14 @@ class window.Editor extends Backbone.View
 
   events: ->
     'keyup .note-editable': 'copyToFocusedElement'
-    #'keypress #mail-editor': 'copyToTextArea'
-    'drag .blocks li a' : 'drag'
 
+    'drag .blocks li a' : 'drag'
     'drag .tpl-block-controls a' : 'drag'
     'dragstart .tpl-block-controls a': 'setDraggedEl'
-
-    #"dragover #bodyTable" : "displaySections"
     "dragleave #bodyTable" : "hideSections"
     "drop #bodyTable" : "hideSections"
-    #"dragover .tpl-container" : "displaySections"
     "dragover .tpl-block" : "displayItemOver"
     "dragover .mojoMcContainerEmptyMessage": "displayItemOver"
-
-    #"dragover .tpl-container" : "allowDrop"
-
-    #"dragover #templateBody" : "allowDrop"
-    #"dragover #templatePreheader" : "allowDrop"
-    #"dragover #templateHeader" : "allowDrop"
-    #"dragover #templateBody" : "allowDrop"
-    #"dragover #templateFooter" : "allowDrop"
 
     'drop #templateBody': "drop"
     'drop #templatePreheader': "drop"
@@ -38,7 +26,13 @@ class window.Editor extends Backbone.View
     "click .imagePlaceholder .button-small" : "displayUploaderList"
     "click .tpl-block-delete": "deleteBloc"
 
-    "changeColor.colorpicker .colorpicker": "colorChange"
+    #propery changer
+    "changeColor.colorpicker .colorpicker": "changeColor"
+    "change .text-size-picker": "changeProperty"
+    "change .font-picker": "changeProperty"
+    "change .font-weight": "changeProperty"
+    "change .font-spacing": "changeProperty"
+    "change .font-align": "changeProperty"
 
     "submit form" : "submitEditor"
 
@@ -83,7 +77,6 @@ class window.Editor extends Backbone.View
     $("#tab-2").html(@baseStylesTemplate())
 
     $('.colorpicker').colorpicker();
-
 
   displaySections: (ev)->
 
@@ -252,7 +245,6 @@ class window.Editor extends Backbone.View
 
   templateBlockControls: ->
     "<div class='tpl-block-controls'>
-
       <a data-dojo-attach-point='editBtn' class='tpl-block-edit' href='#' title='Edit Block'><i class='fa fa-edit'></i></a>
       <a data-dojo-attach-point='cloneBtn' class='tpl-block-clone' href='#' title='Duplicate Block'><i class='fa fa-files-o'></i></a>
       <a data-dojo-attach-point='deleteBtn' class='tpl-block-delete' href='#' title='Delete Block'><i class='fa fa-trash'></i></a>
@@ -614,11 +606,28 @@ class window.Editor extends Backbone.View
 
   definitionsForEditor: ->
     [
-      {name: "page", targets: [{selector: "#bodyTable", template: "background"} ]}
-      {name: "preheader", targets: [{selector: "#templatePreheader", template: "background"}, {selector: "#bodyTable h1, #bodyTable h2", template: "typography"}]}
-      {name: "header", targets: [{selector: "#templateHeader", template: "background"} ]}
-      {name: "body", targets: [{selector: "#templateBody", template: "background"} ]}
-      {name: "footer", targets: [{selector: "#templateFooter", template: "background"} ]}
+      {name: "page", targets:
+        [{name: "background page", selector: "#bodyTable", template: "background"},
+        {name: "heading 1", selector: "#bodyTable h1", template: "typography"} ,
+        {name: "heading 2", selector: "#bodyTable h2", template: "typography"} ,
+        {name: "page links", selector: "#bodyTable a", template: "typography"} ]}
+
+      {name: "preheader", targets:
+        [{name: "background pre header", selector: "#templatePreheader", template: "background"},
+        {name: "headings", selector: "#templatePreHeader h1", template: "typography"},
+        {name: "headings", selector: "#templatePreHeader h2", template: "typography"}]}
+
+      {name: "header", targets:
+        [{name: "header background", selector: "#templateHeader", template: "background"} ]}
+
+      {name: "body", targets:
+        [{name: "body background", selector: "#templateBody", template: "background"} ,
+        {name: "body content text", selector: ".bodyContainer .mcnTextContent, .bodyContainer .mcnTextContent p", template: "typography"} ]}
+
+      {name: "footer", targets:
+        [{name: "footer background",selector: "#templateFooter", template: "background"},
+        {name: "footer content text", selector: ".footerContainer .mcnTextContent, .footerContainer .mcnTextContent p", template: "typography"} ]}
+
       {name: "columns", targets: []}
     ]
 
@@ -656,7 +665,7 @@ class window.Editor extends Backbone.View
     "<fieldset>#{tpl.join(" ")}</fieldset>"
 
   templateToolsFor: (n)->
-    title = "<h3>#{n.template}</h3>"
+    title = "<h3>#{n.name}</h3><hr>"
     tools = ""
     switch n.template
       when "background"
@@ -666,33 +675,43 @@ class window.Editor extends Backbone.View
 
     [title, tools].join(" ")
 
-  colorChange: (ev)->
+  changeColor: (ev)->
     css = $(ev.currentTarget).data('css')
-    @modifyRule(css, $(ev.currentTarget).data('css-property'), ev.color.toString())
+    property = $(ev.currentTarget).data('css-property')
+    value = ev.color.toString()
+    console.log "changing from #{css}, #{property} #{value}"
+    @modifyRule(css, property, value)
+
+  changeProperty: (ev)->
+    css = $(ev.currentTarget).data('css')
+    property = $(ev.currentTarget).data('css-property')
+    value = $(ev.currentTarget).val()
+    console.log "changing from #{css}, #{property} #{value}"
+    @modifyRule(css, property, value)
 
   backgroundFieldsFor: (target)->
-    ["<input class='colorpicker' data-css='#{target.selector}' data-css-property='background-color' type='text' autocomplete='off' tabindex='0' value='0'>",
-    "<input class='colorpicker' data-css='#{target.selector}' data-property='color' type='text' autocomplete='off' tabindex='0' value='0'>"].join(" ")
+    ["<input class='colorpicker' data-css='#{target.selector}' data-css-property='background-color' type='text' autocomplete='off' tabindex='0' value='0'>"].join(" ")
+
+  arrayGen: (n)->
+    Array.apply(null, length: n).map Number.call, Number
 
   #border style, width, color
   TypoFieldsFor: (target)->
-    color = "<input class='colorpicker' data-css='#{target.selector}' data-property='color' type='text' autocomplete='off' tabindex='0' value='0'>"
+    color = "<label>Font color</label><input class='colorpicker' data-css='#{target.selector}' data-css-property='color' type='text' autocomplete='off' tabindex='0' value='0'>"
 
-    sizeFont = "<select name='text-size-picker' id=''>
-    <option value='10px'>10px</option>
-    <option value='13px'>13px</option>
-    <option value='16px'>16px</option>
-    <option value='25px'>25px</option>
-    </select>"
+    sizeFont = "<label>font Size</label><select class='text-size-picker' id='' data-css='#{target.selector}' data-css-property='font-size'>"
+    _.each @arrayGen(30), (n)->
+      sizeFont += "<option value='#{n}px'>#{n}px</option>"
+    sizeFont += "</select>"
 
-    familyFont = "<select name='font-picker' id=''>
+    familyFont = "<label>Font Family</label><select class='font-picker' data-css='#{target.selector}' data-css-property='font-family'>
       <option value='Helvetica'>Helvetica</option>
       <option value='Arial'>Arial</option>
       <option value='Georgia'>Georgia</option>
       <option value='Verdana'>Verdana</option>
       </select>"
 
-    weight = "<select name='font-weight' id=''>
+    weight = "<label>Font Weight</label><select class='font-weight' data-css='#{target.selector}' data-css-property='font-weight'>
       <option value='normal'>normal</option>
       <option value='bold'>bold</option>
       </select>"
@@ -700,14 +719,25 @@ class window.Editor extends Backbone.View
     #styleFont
     #weightline
     #heightletter
-    spacingtext = "<select name='font-spacing' id=''>
+    spacingtext = "<label>Spacing text</label><select class='font-spacing' data-css='#{target.selector}' data-css-property='letter-spacing'>
+          <option value='-5px'>-5px</option>
+          <option value='-4px'>-4px</option>
           <option value='-3px'>-3px</option>
-          <option value='-2px'>-3px</option>
+          <option value='-2px'>-2px</option>
+          <option value='-1px'>-1px</option>
+          <option value='normal'>-normal</option>
+          <option value='-1px'>-1px</option>
+          <option value='-2px'>-2px</option>
+          <option value='-3px'>-3px</option>
+          <option value='-4px'>-4px</option>
+          <option value='-5px'>-5px</option>
           </select>"
-    align = "<select name='font-align' id=''>
+
+    align = "<label>Text Align</label><select class='font-align' data-css='#{target.selector}' data-css-property='text-align'>
           <option value='center'>center</option>
           <option value='left'>left</option>
           <option value='right'>right</option>
+          <option value='justify'>justify</option>
           </select>"
 
-    [color,sizeFont,familyFont,weight,spacingtext,align].join(" ")
+    [color, sizeFont, familyFont, weight, spacingtext, align].join("<hr>")

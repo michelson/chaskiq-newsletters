@@ -4,14 +4,9 @@
     %meta{:charset => "utf-8"}/
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
     %title Chaskiq
-    / Include style per-controller - vendor plugins
-    -#= stylesheet_link_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.css")
-    / Main css styles
+
     %style
       = @campaign.css
-
-
-
 
   %body
     = h @campaign.html_content.html_safe
