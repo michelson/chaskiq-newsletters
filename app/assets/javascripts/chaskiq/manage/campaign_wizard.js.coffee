@@ -74,7 +74,7 @@ class window.Editor extends Backbone.View
     #$(@el).find('#mail-editor').html(@template())
     $(@el).find('#mail-editor').html(@textarea.val()); #init from saved content
     #$(@el).find('#mail-editor').html(@baseTemplate()) #init from base js tamplarte
-    $("#tab-2").html(@baseStylesTemplate())
+    $("#tab-2").html(@baseStylesTemplate("accordeon", @definitionsForEditor()))
 
     $('.colorpicker').colorpicker();
 
@@ -196,6 +196,7 @@ class window.Editor extends Backbone.View
     $(".tpl-block").removeClass("focus")
     $(ev.currentTarget).addClass("focus")
     @displayWysiwyg()
+    @renderBlockDesignSettings()
     false
 
   initWysiwyg: ->
@@ -570,7 +571,6 @@ class window.Editor extends Backbone.View
 
     html += "</ul>"
 
-
   ### Style Handling ###
 
   #http://www.w3.org/wiki/Dynamic_style_-_manipulating_CSS_with_JavaScript
@@ -631,21 +631,50 @@ class window.Editor extends Backbone.View
       {name: "columns", targets: []}
     ]
 
+  definitionsForBlocks: ->
+    [
+      {name: "mcnBaseTemplate", targets: []}
+      {name: "mcnBoxedText", targets: []}
+      {name: "mcnText", targets: [
+        {name: "background page", selector: "", template: "background"},
+        {name: "heading 1", selector: "", template: "typography"} ,
+        {name: "heading 2", selector: "", template: "typography"} ,
+        {name: "page links", selector: "", template: "typography"} ]}
+
+      {name: "mcnDivider", targets: []}
+      {name: "mcnImage", targets: []}
+      {name: "mcnImageGroup", targets: []}
+      {name: "mcnImageCard", targets: []}
+      {name: "mcnSubscription", targets: []}
+    ]
+
+  renderBlockDesignSettings: ->
+    focused = this.currentFocused().find("table:first").attr("class")
+    section = _.find editor.definitionsForBlocks(), (n)=>
+      "#{n.name}Block" == focused
+
+    console.log("section #{focused}" )
+    if section
+      console.log("display for #{focused}")
+      @current_section = section
+      html = @buildDesignToolForTarget(section)
+      $("#tab-4").html(html)
+
+      $('.colorpicker').colorpicker();
+
   #size, align, fonttype, color, weight, line heigh, letter spacing
-  baseStylesTemplate: ->
-    "<div class='panel-group' id='accordion'>
+  baseStylesTemplate: (id, definitions)->
+    "<div class='panel-group' id='#{id}'>
       <div class='panel panel-default'>
-        #{@colapsiblePanelsFor()}
+        #{@colapsiblePanelsFor( id, definitions )}
       </div>
     </div>"
 
-  colapsiblePanelsFor: ()->
-    style_types = @definitionsForEditor()
-
+  colapsiblePanelsFor: (id, style_types)->
     tpl = _.map style_types, (n)=>
       "<div class='panel-heading'>
         <h4 class='panel-title'>
-          <a data-toggle='collapse' data-parent='#accordion' href='#collapse#{n.name}'>
+          <a data-toggle='collapse' data-parent='##{id}' href='#collapse#{n.name}'>
           #{n.name}
           </a>
         </h4>
@@ -675,19 +704,36 @@ class window.Editor extends Backbone.View
 
     [title, tools].join(" ")
 
+  #dry this
   changeColor: (ev)->
     css = $(ev.currentTarget).data('css')
     property = $(ev.currentTarget).data('css-property')
     value = ev.color.toString()
     console.log "changing from #{css}, #{property} #{value}"
-    @modifyRule(css, property, value)
+
+    if css.length > 0
+      @modifyRule(css, property, value)
+    else
+      editor.currentFocused()
+      .find("table:first")
+      .find(".#{@current_section.name}Content")
+      .css(property, value)
 
   changeProperty: (ev)->
     css = $(ev.currentTarget).data('css')
     property = $(ev.currentTarget).data('css-property')
     value = $(ev.currentTarget).val()
     console.log "changing from #{css}, #{property} #{value}"
-    @modifyRule(css, property, value)
+
+    if css.length > 0
+      @modifyRule(css, property, value)
+    else
+      editor.currentFocused()
+      .find("table:first")
+      .find(".#{@current_section.name}Content")
+      .css(property, value)
+
+
 
   backgroundFieldsFor: (target)->
     ["<input class='colorpicker' data-css='#{target.selector}' data-css-property='background-color' type='text' autocomplete='off' tabindex='0' value='0'>"].join(" ")
