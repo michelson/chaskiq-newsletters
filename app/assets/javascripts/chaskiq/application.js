@@ -19,8 +19,12 @@
 //= require chaskiq/chaskiq.js
 //= require chaskiq/manage/helpers.js
 //= require datapicker/bootstrap-datepicker.js
+//= require colorpicker/bootstrap-colorpicker.min.js
 //= require cocoon
 //= require summernote/summernote.min.js
+// require stylesheet/jquery.stylesheet.min.js
+//= require datapicker/bootstrap-datepicker.js
+
 
 //= require jquery_ujs
 

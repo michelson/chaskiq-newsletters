@@ -14,111 +14,110 @@
 
         .ibox-content
 
+          %style{:type => "text/css", id: "custom_style"}
+            = @campaign.css
+
+
           = render partial: "wizard_steps"
 
           -#%iframe{src: editor_manage_campaign_path(@campaign), width: "100%", height: "300px" }
+          #chaskiq-mail-editor
+            = simple_form_for @campaign, url: wizard_path do |f|
 
-          = simple_form_for @campaign, url: wizard_path do |f|
+              #editor-container{data: {"attachments-path"=> manage_campaign_attachments_path(@campaign)}}
+                .col-lg-8
+                  #mail-editor{contenteditable: "false", style:{ height: '227px'}}
+                .col-lg-4
 
-            #editor-container{data: {"attachments-path"=> manage_campaign_attachments_path(@campaign)}}
-              .col-lg-8
-                #mail-editor{contenteditable: "false", style:{ height: '227px'}}
-              .col-lg-4
+                  .main-settings
+                    .panel.blank-panel
+                      .panel-heading
+                        .panel-title.m-b-md
+                          %h4 Settings
+                        .panel-options
+                          %ul.nav.nav-tabs
 
-                .main-settings
-                  .panel.blank-panel
-                    .panel-heading
-                      .panel-title.m-b-md
-                        %h4 Settings
-                      .panel-options
-                        %ul.nav.nav-tabs
+                            %li.active
+                              %a{"data-toggle" => "tab", :href => "#tab-1"}
+                                %i.fa.fa-cubes
+                                Blocks
+                            %li
+                              %a{"data-toggle" => "tab", :href => "#tab-2"}
+                                %i.fa.fa-cubes
+                                Design
 
-                          %li.active
-                            %a{"data-toggle" => "tab", :href => "#tab-1"}
-                              %i.fa.fa-cubes
-                              Blocks
-                          %li
-                            %a{"data-toggle" => "tab", :href => "#tab-2"}
-                              %i.fa.fa-cubes
-                              Design
+                      .panel-body{style: "padding:0px"}
+                        .tab-content
+                          #tab-1.tab-pane.active
 
-                    .panel-body{style: "padding:0px"}
-                      .tab-content
-                        #tab-1.tab-pane.active
+                            .block-buttons
+                              %ul.blocks
+                                %li.imageIcon
+                                  %a.mc-text{data: {block: "text"}, href:"#"}
+                                    Text
+                                %li.imageIcon
+                                  %a.mc-separator{data: {block: "separator"}, href:"#"}
+                                    Separator
+                                %li.imageIcon
+                                  %a.mc-boxed{data: {block: "boxed"}, href:"#"}
+                                    Boxed
+                                %li.imageIcon
+                                  %a.mc-image{data: {block: "image"}, href:"#"}
+                                    image
+                                %li.imageIcon
+                                  %a.mc-image-group{data: {block: "image_group"}, href:"#"}
+                                    image group
 
-                          .block-buttons
-                            %ul.blocks
-                              %li.imageIcon
-                                %a.mc-text{data: {block: "text"}, href:"#"}
-                                  Text
-                              %li.imageIcon
-                                %a.mc-separator{data: {block: "separator"}, href:"#"}
-                                  Separator
-                              %li.imageIcon
-                                %a.mc-boxed{data: {block: "boxed"}, href:"#"}
-                                  Boxed
-                              %li.imageIcon
-                                %a.mc-image{data: {block: "image"}, href:"#"}
-                                  image
-                              %li.imageIcon
-                                %a.mc-image-group{data: {block: "image_group"}, href:"#"}
-                                  image group
+                                %li.imageIcon
+                                  %a.mc-image-card{data: {block: "image_card"}, href:"#"}
+                                    image card
 
-                              %li.imageIcon
-                                %a.mc-image-card{data: {block: "image_card"}, href:"#"}
-                                  image card
+                          #tab-2.tab-pane
 
-                        #tab-2.tab-pane
-                          soon!
-                          %ul.list-group
-                            %li.list-group-item Page
-                            %li.list-group-item Preheader
-                            %li.list-group-item Header
-                            %li.list-group-item Body
-                            %li.list-group-item Footer
 
-                .block-settings{style:"display: none;"}
+                  .block-settings{style:"display: none;"}
 
-                  .panel.blank-panel
-                    .panel-heading
-                      .panel-title.m-b-md
-                        %h4 Block Settings
-                      .panel-options
-                        %ul.nav.nav-tabs
-                          %li.active
-                            %a{"data-toggle" => "tab", :href => "#tab-3"}
-                              %i.fa.fa-align-left
-                              Content
-                          %li
-                            %a{"data-toggle" => "tab", :href => "#tab-4"}
-                              %i.fa.fa-cubes
-                              Design
+                    .panel.blank-panel
+                      .panel-heading
+                        .panel-title.m-b-md
+                          %h4 Block Settings
+                        .panel-options
+                          %ul.nav.nav-tabs
+                            %li.active
+                              %a{"data-toggle" => "tab", :href => "#tab-3"}
+                                %i.fa.fa-align-left
+                                Content
+                            %li
+                              %a{"data-toggle" => "tab", :href => "#tab-4"}
+                                %i.fa.fa-cubes
+                                Design
 
-                    .panel-body
-                      .tab-content
-                        #tab-3.tab-pane.active
+                      .panel-body
+                        .tab-content
+                          #tab-3.tab-pane.active
 
-                          .wysiwyg
-                            .summernote.wrapper.p-md{data:{ upload_path: manage_campaign_attachments_path(@campaign, format: :json) }}
+                            .wysiwyg
+                              .summernote.wrapper.p-md{data:{ upload_path: manage_campaign_attachments_path(@campaign, format: :json) }}
 
-                        #tab-4.tab-pane
-                          soon!
-                          %ul.list-group
-                            %li.list-group-item Page
-                            %li.list-group-item Preheader
-                            %li.list-group-item Header
-                            %li.list-group-item Body
-                            %li.list-group-item Footer
+                          #tab-4.tab-pane
+                            soon!
+                            %ul.list-group
+                              %li.list-group-item Page
+                              %li.list-group-item Preheader
+                              %li.list-group-item Header
+                              %li.list-group-item Body
+                              %li.list-group-item Footer
 
-                      #editor-controls
-                        %a#save.btn.btn-default{href:""} Save & Close
+                        #editor-controls
+                          %a#save.btn.btn-default{href:""} Save & Close
 
-                .hidden= f.input :html_content
+                  .hidden= f.input :html_content
+                  = f.input :css
 
-              .clearfix
+                .clearfix
 
-              .col-ls-12
-                = f.submit class: "btn btn-primary"
+                .col-ls-12
+                  = f.submit class: "btn btn-primary"
 
           = render partial: "wizard_nav"
 

@@ -77,6 +77,7 @@ module Chaskiq
 
     def copy_template
       self.html_content = self.template.body
+      self.css = self.template.css
     end
 
     def campaign_url

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150321205815) do
+ActiveRecord::Schema.define(version: 20150331025829) do
 
   create_table "chaskiq_attachments", force: :cascade do |t|
     t.string   "image",        limit: 255
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20150321205815) do
     t.datetime "updated_at",                     null: false
     t.integer  "list_id",          limit: 4
     t.integer  "template_id",      limit: 4
+    t.text     "css",              limit: 65535
   end
 
   add_index "chaskiq_campaigns", ["list_id"], name: "index_chaskiq_campaigns_on_list_id", using: :btree
@@ -107,6 +108,7 @@ ActiveRecord::Schema.define(version: 20150321205815) do
     t.string   "screenshot",   limit: 255
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.text     "css",          limit: 65535
   end
 
 end

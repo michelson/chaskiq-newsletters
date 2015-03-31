@@ -17,5 +17,8 @@
  *= require toastr/toastr.css
  *= require codemirror/elegant.css
  *= require codemirror/codemirror.css
+ *= require colorpicker/css/bootstrap-colorpicker.min.css
+
  *= require chaskiq/manage/campaign_wizard.css
+
  */

@@ -2,7 +2,7 @@
 #http://www.kryogenix.org/code/browser/custom-drag-image.html
 #http://www.html5rocks.com/en/tutorials/dnd/basics/#toc-examples
 class window.Editor extends Backbone.View
-  el: '#editor-container'
+  el: '#chaskiq-mail-editor'
 
   events: ->
     'keyup .note-editable': 'copyToFocusedElement'
@@ -38,8 +38,13 @@ class window.Editor extends Backbone.View
     "click .imagePlaceholder .button-small" : "displayUploaderList"
     "click .tpl-block-delete": "deleteBloc"
 
+    "changeColor.colorpicker .colorpicker": "colorChange"
+
+    "submit form" : "submitEditor"
+
   initialize: ->
     @textarea = $(@el).find('#campaign_html_content')
+    @css = $(@el).find('#campaign_css')
 
   copyToEditor: (ev)->
     $this = $(ev.currentTarget);
@@ -48,22 +53,38 @@ class window.Editor extends Backbone.View
     , 0
 
   copyToTextArea: ()->
-    $this = $("#mail-editor");
+    $this = $("#mail-editor")
     window.setTimeout ()=>
-      $(@el).find('textarea').val($this.html());
+      $(@el).find('#campaign_html_content').val($this.html());
     , 0
 
   copyToFocusedElement: (ev)->
     @currentFocused().find('.mcnTextContent').html($(ev.currentTarget).html())
     @copyToTextArea()
 
+  copyCssRulesToTextArea: ()->
+    rules = _.map @style().cssRules , (rule)->
+      rule.cssText
+    $("#campaign_css").val(rules.join(" "))
+
+  submitEditor: (ev)->
+    console.log("oli")
+    @copyToTextArea()
+    @copyCssRulesToTextArea()
+    $(ev.currentTarget).submit()
+    false
+
   template: ->
     '<p>dsfsd</p>'
 
   render: ->
     #$(@el).find('#mail-editor').html(@template())
-    #$(@el).find('#mail-editor').html(@textarea.val()); #init from saved content
-    $(@el).find('#mail-editor').html(@baseTemplate()) #init from base js tamplarte
+    $(@el).find('#mail-editor').html(@textarea.val()); #init from saved content
+    #$(@el).find('#mail-editor').html(@baseTemplate()) #init from base js tamplarte
+    $("#tab-2").html(@baseStylesTemplate())
+
+    $('.colorpicker').colorpicker();
+
 
   displaySections: (ev)->
 
@@ -561,4 +582,135 @@ class window.Editor extends Backbone.View
     html += "</ul>"
 
 
+  ### Style Handling ###
 
+  #http://www.w3.org/wiki/Dynamic_style_-_manipulating_CSS_with_JavaScript
+
+  findStyleSheet: ()->
+    _.find document.styleSheets, (n)->
+      n.ownerNode.id == "custom_style"
+
+  findRule: (name, sheet=@defaultStyleSheet())->
+    _.find sheet.cssRules, (n)->
+      n.selectorText == name
+
+  findRuleIndex: (sheet, name)->
+    indexes = _.map sheet.cssRules, (n, i)->
+      i if n.selectorText == name
+    indexes[0]
+
+  defaultStyleSheet: ->
+    @findStyleSheet()
+
+  style: ->
+    @defaultStyleSheet()
+
+  modifyRule: (selector, property, value)->
+
+    rule = @findRule(selector)
+    s = @style()
+
+    if _.isUndefined(rule)
+      s.insertRule("#{selector} { property: #{value};}", s.cssRules.length);
+    else
+      @findRule(selector).style[property] = value
+
+  definitionsForEditor: ->
+    [
+      {name: "page", targets: [{selector: "#bodyTable", template: "background"} ]}
+      {name: "preheader", targets: [{selector: "#templatePreheader", template: "background"}, {selector: "#bodyTable h1, #bodyTable h2", template: "typography"}]}
+      {name: "header", targets: [{selector: "#templateHeader", template: "background"} ]}
+      {name: "body", targets: [{selector: "#templateBody", template: "background"} ]}
+      {name: "footer", targets: [{selector: "#templateFooter", template: "background"} ]}
+      {name: "columns", targets: []}
+    ]
+
+  #size, align, fonttype, color, weight, line heigh, letter spacing
+  baseStylesTemplate: ->
+    "<div class='panel-group' id='accordion'>
+      <div class='panel panel-default'>
+        #{@colapsiblePanelsFor()}
+      </div>
+    </div>"
+
+  colapsiblePanelsFor: ()->
+    style_types = @definitionsForEditor()
+
+    tpl = _.map style_types, (n)=>
+      "<div class='panel-heading'>
+        <h4 class='panel-title'>
+          <a data-toggle='collapse' data-parent='#accordion' href='#collapse#{n.name}'>
+          #{n.name}
+          </a>
+        </h4>
+      </div>
+
+      <div id='collapse#{n.name}' class='panel-collapse collapse'>
+        <div class='panel-body'>
+            <p>#{@buildDesignToolForTarget(n)}</p>
+        </div>
+      </div>"
+    tpl.join(" ")
+
+  buildDesignToolForTarget: (section)->
+    tpl = _.map section.targets, (n)=>
+      @templateToolsFor(n)
+
+    "<fieldset>#{tpl.join(" ")}</fieldset>"
+
+  templateToolsFor: (n)->
+    title = "<h3>#{n.template}</h3>"
+    tools = ""
+    switch n.template
+      when "background"
+        tools = @backgroundFieldsFor(n)
+      when "typography"
+        tools = @TypoFieldsFor(n)
+
+    [title, tools].join(" ")
+
+  colorChange: (ev)->
+    css = $(ev.currentTarget).data('css')
+    @modifyRule(css, $(ev.currentTarget).data('css-property'), ev.color.toString())
+
+  backgroundFieldsFor: (target)->
+    ["<input class='colorpicker' data-css='#{target.selector}' data-css-property='background-color' type='text' autocomplete='off' tabindex='0' value='0'>",
+    "<input class='colorpicker' data-css='#{target.selector}' data-property='color' type='text' autocomplete='off' tabindex='0' value='0'>"].join(" ")
+
+  #border style, width, color
+  TypoFieldsFor: (target)->
+    color = "<input class='colorpicker' data-css='#{target.selector}' data-property='color' type='text' autocomplete='off' tabindex='0' value='0'>"
+
+    sizeFont = "<select name='text-size-picker' id=''>
+    <option value='10px'>10px</option>
+    <option value='13px'>13px</option>
+    <option value='16px'>16px</option>
+    <option value='25px'>25px</option>
+    </select>"
+
+    familyFont = "<select name='font-picker' id=''>
+      <option value='Helvetica'>Helvetica</option>
+      <option value='Arial'>Arial</option>
+      <option value='Georgia'>Georgia</option>
+      <option value='Verdana'>Verdana</option>
+      </select>"
+
+    weight = "<select name='font-weight' id=''>
+      <option value='normal'>normal</option>
+      <option value='bold'>bold</option>
+      </select>"
+
+    #styleFont
+    #weightline
+    #heightletter
+    spacingtext = "<select name='font-spacing' id=''>
+          <option value='-3px'>-3px</option>
+          <option value='-2px'>-3px</option>
+          </select>"
+    align = "<select name='font-align' id=''>
+          <option value='center'>center</option>
+          <option value='left'>left</option>
+          <option value='right'>right</option>
+          </select>"
+
+    [color,sizeFont,familyFont,weight,spacingtext,align].join(" ")
