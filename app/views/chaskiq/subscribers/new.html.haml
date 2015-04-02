@@ -8,9 +8,9 @@
     %p
       = @campaign.try(:tagline)
 
-    %p Don't miss our next post!
+    %p Suscribete a nuestro newsletter
 
-    Subscribe to our newsletter! We include fresh content, articles from our community and events we attend.
+    = @campaign.description
 
     = simple_form_for(@subscriber, :url => campaign_subscribers_path(@campaign), html: {class: 'm-t', role: "form" }, :defaults => { :input_html => { :class => "form-control" } }) do |f|
 

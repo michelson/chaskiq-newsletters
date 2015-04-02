@@ -31,19 +31,12 @@
           .row
             .col-lg-5
               %dl.dl-horizontal
-                -#%dt Created by:
-                -#%dd Alex Smith
                 %dt Deliveries:
                 %dd= @campaign.metrics.deliveries.size
                 %dt Clicks:
                 %dd= @campaign.metrics.clicks.size
                 %dt Opens:
                 %dd= @campaign.metrics.opens.size
-                -#%dt Client:
-                -#%dd
-                -#  %a.text-navy{:href => "#"} Zender Company
-                -#%dt Version:
-                -#%dd v1.4.2
             #cluster_info.col-lg-7
               %dl.dl-horizontal
                 %dt Last Updated:
@@ -91,8 +84,11 @@
                               = m.action
                           %td
                             = m.trackable.try(:name)
+                            = m.trackable.try(:last_name)
+                            .small
+                              = m.trackable.try(:email)
                           %td
-                            = m.created_at
+                            = l m.created_at, format: :long
                           %td
                             %p.small
                               = m.host
