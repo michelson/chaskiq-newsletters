@@ -9,8 +9,23 @@
 // Variables, Mixins
 @import "base/variables";
 @import "base/mixins";
+@import "new";
+
+//@import "base/buttons";
+//@import "base/badgets_labels";
+//@import "base/elements";
+
+
+//@import "base/navigation";
+//@import "base/typography";
+
+
+//@import "base/media";
+//@import "base/base";
+
 
 // Theme Elements
+/*
 @import "base/typography";
 @import "base/navigation";
 @import "base/top_navigation";
@@ -20,22 +35,7 @@
 @import "base/sidebar";
 @import "base/base";
 @import "base/pages";
-
-// RTL Support
-//@import "base/rtl";
-
-// For demo only - config box style
-//@import "base/theme-config";
-
-// Skins
-//@import "base/skins";
-
-// Media query style
 @import "base/media";
-
-// Custom style
-// Your custom style to override base style
-//@import "base/custom";
-
+*/
 
 

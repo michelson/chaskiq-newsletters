@@ -2,7 +2,7 @@
 
 .row
   .col-lg-12
-    .wrapper.wrapper-content.animated.fadeInUp
+    .wrapper.wrapper-content
       .ibox
         .ibox-title
           %h5 All Lists
@@ -11,16 +11,7 @@
               %i.fa.fa-plus
               Create new List
         .ibox-content
-          .row.m-b-sm.m-t-sm
-            .col-md-1
-              %button#loading-example-btn.btn.btn-white.btn-sm{:type => "button"}
-                %i.fa.fa-refresh
-                Refresh
-            .col-md-11
-              .input-group
-                %input.input-sm.form-control{:placeholder => "Search", :type => "text"}/
-                %span.input-group-btn
-                  %button.btn.btn-sm.btn-primary{:type => "button"} Go!
+
           .project-list
             %table.table.table-hover
               %tbody
@@ -51,13 +42,4 @@
                     = link_to manage_list_path(list), class: "btn btn-white btn-sm", data:{ method: :delete, confirm: "sure?"} do
                       %i.fa.fa-times
                       Destroy
-
-
-
-
-
-
-
-
-
 

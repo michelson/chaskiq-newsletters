@@ -1,4 +1,4 @@
-%nav.navbar-default.navbar-static-side{:role => "navigation"}
+%nav.navbar-default{:role => "navigation"}
   .sidebar-collapse
     %ul#side-menu.nav
       %li.nav-header
@@ -20,8 +20,6 @@
               %a{:href => ""} Logout
         .logo-element
           CHASKIQ
-
-
       %li
         %a{:href => "/"}
           %i.fa.fa-home
@@ -34,7 +32,6 @@
         %ul{:class => "nav nav-second-level"}
           %li= link_to "View all campaigns", manage_campaigns_path
           %li= link_to "New campaigns", new_manage_campaign_path
-
       %li
         %a{:href => ""}
           %i.fa.fa-list-ol
@@ -43,8 +40,6 @@
         %ul{:class => "nav nav-second-level"}
           %li= link_to "View all lists", manage_lists_path
           %li= link_to "Create new list", new_manage_list_path
-
-
       %li
         %a{:href => ""}
           %i.fa.fa-newspaper-o

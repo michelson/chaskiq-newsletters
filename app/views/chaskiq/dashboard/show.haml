@@ -1,54 +1,24 @@
--#= render "shared/account_stats"
 
-
-.row.border-bottom.white-bg.dashboard-header
+.row
   .col-sm-4
-    %h2 Welcome To Chaskiq
+    %h1 Welcome To Chaskiq
     %small You have #{@campaigns_count} campaigns and #{@sends_count} sended messages.
-    %ul.list-group.clear-list.m-t
+    %ul.list-group
       - Chaskiq::Campaign.order('updated_at desc').limit(3).each do |c|
-        %li.list-group-item.fist-item
+        %li.list-group-item
           %span.pull-right
             = l(c.updated_at, format: :short)
           %span.label.label-success
             %i.fa.fa-paper-plane
             = c.metrics.deliveries.size
           = c.name
+    .clearfix
 
   .col-sm-8
     .flot-chart.dashboard-chart
       -##flot-dashboard-chart.flot-chart-content
       = column_chart( @daily_metrics, height: "200px", width: "500px",  format: "%l %P")
 
-    -#
-      .row.text-left
-        .col-xs-4
-          .m-l-md
-            %span.h4.font-bold.m-t.block $ 406,100
-            %small.text-muted.m-b.block Sales marketing report
-        .col-xs-4
-          %span.h4.font-bold.m-t.block $ 150,401
-          %small.text-muted.m-b.block Annual sales revenue
-        .col-xs-4
-          %span.h4.font-bold.m-t.block $ 16,822
-          %small.text-muted.m-b.block Half-year revenue margin
-
-  -#
-    .col-sm-3
-      .statistic-box
-        %h4
-          Project Beta progress
-        %p
-          You have two project with not compleated task.
-        .row.text-center
-          .col-lg-6
-            %canvas#polarChart{:height => "80", :width => "80"}
-            %h5 Kolter
-          .col-lg-6
-            %canvas#doughnutChart{:height => "78", :width => "78"}
-            %h5 Maxtor
-        .m-t
-          %small Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 
 .row
   .col-lg-12
@@ -71,8 +41,6 @@
                     %span.bar_dashboard
                       = c.sparklines_by_day().join(", ")
 
-
-
                   %h4
                     = c.name
                     %br/
@@ -83,17 +51,6 @@
 - content_for :javascript do
   :javascript
     $(function() {
-
-        setTimeout(function() {
-            toastr.options = {
-                closeButton: true,
-                progressBar: true,
-                showMethod: 'slideDown',
-                timeOut: 4000
-            };
-            toastr.success('Welcome to Chaskiq Web Panel');
-
-        }, 1300);
 
         $(".bar_dashboard").peity("bar", {
             fill: ["#1ab394", "#d7d7d7"],
@@ -108,25 +65,6 @@
             negBarColor: '#c6c6c6'
         });
 
-        var updatingChart = $(".updating-chart").peity("line", { fill: '#1ab394', stroke: '#169c81', width: 64 })
-
-        setInterval(function () {
-            var random = Math.round(Math.random() * 10)
-            var values = updatingChart.text().split(",")
-            values.shift()
-            values.push(random)
-
-            updatingChart
-                    .text(values.join(","))
-                    .change()
-        }, 1000);
-
-        var data1 = [
-            [0, 4], [1, 8], [2, 5], [3, 10], [4, 4], [5, 16], [6, 5], [7, 11], [8, 6], [9, 11], [10, 30], [11, 10], [12, 13], [13, 4], [14, 3], [15, 3], [16, 6]
-        ];
-        var data2 = [
-            [0, 1], [1, 0], [2, 2], [3, 0], [4, 1], [5, 3], [6, 1], [7, 5], [8, 2], [9, 3], [10, 2], [11, 1], [12, 0], [13, 2], [14, 8], [15, 0], [16, 0]
-        ];
         $("#flot-dashboard-chart").length && $.plot($("#flot-dashboard-chart"), [
             data1, data2
         ],
@@ -164,79 +102,5 @@
                     tooltip: false
                 }
         );
-
-        var doughnutData = [
-            {
-                value: 300,
-                color: "#a3e1d4",
-                highlight: "#1ab394",
-                label: "App"
-            },
-            {
-                value: 50,
-                color: "#dedede",
-                highlight: "#1ab394",
-                label: "Software"
-            },
-            {
-                value: 100,
-                color: "#b5b8cf",
-                highlight: "#1ab394",
-                label: "Laptop"
-            }
-        ];
-
-        var doughnutOptions = {
-            segmentShowStroke: true,
-            segmentStrokeColor: "#fff",
-            segmentStrokeWidth: 2,
-            percentageInnerCutout: 45, // This is 0 for Pie charts
-            animationSteps: 100,
-            animationEasing: "easeOutBounce",
-            animateRotate: true,
-            animateScale: false,
-        };
-
-        var ctx = document.getElementById("doughnutChart").getContext("2d");
-        var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
-
-        var polarData = [
-            {
-                value: 300,
-                color: "#a3e1d4",
-                highlight: "#1ab394",
-                label: "App"
-            },
-            {
-                value: 140,
-                color: "#dedede",
-                highlight: "#1ab394",
-                label: "Software"
-            },
-            {
-                value: 200,
-                color: "#b5b8cf",
-                highlight: "#1ab394",
-                label: "Laptop"
-            }
-        ];
-
-        var polarOptions = {
-            scaleShowLabelBackdrop: true,
-            scaleBackdropColor: "rgba(255,255,255,0.75)",
-            scaleBeginAtZero: true,
-            scaleBackdropPaddingY: 1,
-            scaleBackdropPaddingX: 1,
-            scaleShowLine: true,
-            segmentShowStroke: true,
-            segmentStrokeColor: "#fff",
-            segmentStrokeWidth: 2,
-            animationSteps: 100,
-            animationEasing: "easeOutBounce",
-            animateRotate: true,
-            animateScale: false,
-        };
-        var ctx = document.getElementById("polarChart").getContext("2d");
-        var Polarchart = new Chart(ctx).PolarArea(polarData, polarOptions);
 
     });

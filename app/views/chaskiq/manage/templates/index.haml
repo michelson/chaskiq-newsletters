@@ -3,7 +3,7 @@
 
 .row
   .col-lg-12
-    .wrapper.wrapper-content.animated.fadeInUp
+    .wrapper.wrapper-content
       .ibox
         .ibox-title
           %h5 All Templates
@@ -12,9 +12,7 @@
               %i.fa.fa-plus
               Create new Template
         .ibox-content
-
           - @templates.each do |template|
-
             .col-sm-6.col-md-4
               .thumbnail
                 %img{:alt => "300%x300", "data-holder-rendered" => "true",  :src => "http://placehold.it/300x300"}

@@ -13,31 +13,45 @@
     = javascript_include_tag "//www.google.com/jsapi", "chartkick"
 
     = csrf_meta_tags
-  %body
-    / Skin configuration box
-    -#= render 'layouts/skinconfig'
-    / Wrapper
-    #wrapper{:class => "#{params[:controller]}.#{params[:action]}"}
-      / Navigation
-      = render 'layouts/chaskiq/navigation'
-      / Page wraper
-      #page-wrapper{:class => "gray-bg #{@extra_class}"}
-        / Page wrapper
-        = render 'layouts/chaskiq/topnavbar'
-        / Main view
+  %body.gray-bg
+
+    = render 'layouts/chaskiq/topnavbar'
+
+    / /cont
+    .container
+      .row
         = yield
-        / Footer
-        = render 'layouts/chaskiq/footer'
-      / End page wrapper
-    / End wrapper
-    / Include javascript per-controller - vendor plugins
-    -#= javascript_include_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.js")
-    / Include javascript per-view
-    / For demo purpose we include javascript in view but you can easily start SeedProject and organize it with Rails asset pipeline as you want
+
+    #footer.container
+      .row
+        .col.col-sm-12
+
+    %footer
+      .container
+        .row
+          = render 'layouts/chaskiq/footer'
 
     = render "shared/modal"
 
     = yield :javascript
     = yield :charts_js
+
+    -#
+      #wrapper{:class => "#{params[:controller]}.#{params[:action]}"}
+        / Navigation
+        = render 'layouts/chaskiq/navigation'
+        / Page wraper
+        #page-wrapper{:class => "gray-bg #{@extra_class}"}
+          / Page wrapper
+          = render 'layouts/chaskiq/topnavbar'
+          / Main view
+          = yield
+          / Footer
+          = render 'layouts/chaskiq/footer'
+
+      = render "shared/modal"
+
+      = yield :javascript
+      = yield :charts_js
 
 

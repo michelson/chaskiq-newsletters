@@ -1,99 +1,28 @@
-.row.border-bottom
-  %nav.navbar.navbar-static-top{:role => "navigation", :style => "margin-bottom: 0"}
-    .navbar-header
-      %a.navbar-minimalize.minimalize-styl-2.btn.btn-primary{:href => "#"}
-        %i.fa.fa-bars
-      -#
-        %form.navbar-form-custom{:action => "", :method => "post", :role => "search"}
-          .form-group
-            %input#top-search.form-control{:name => "top-search", :placeholder => "Search for something...", :type => "text"}/
 
-    %ul.nav.navbar-top-links.navbar-right
-      %li
-        %span.m-r-sm.text-muted.welcome-message
-          Welcome to Chaskiq Admin.
-      -#
+%header.navbar.navbar-default.navbar-fixed-top{:role => "banner"}
+  .container
+    .navbar-header
+      %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{:href => "/"} CHASKIQ
+    %nav.collapse.navbar-collapse{:role => "navigation"}
+      %ul.nav.navbar-nav
+        %li
+          = link_to "Campaigns", manage_campaigns_path
+        %li
+          = link_to "Lists", manage_lists_path
+        %li
+          = link_to "Templates", manage_templates_path
+
+      %ul.nav.navbar-right.navbar-nav
         %li.dropdown
-          %a.dropdown-toggle.count-info{"data-toggle" => "dropdown", :href => "#"}
-            %i.fa.fa-envelope
-            %span.label.label-warning 16
-          %ul.dropdown-menu.dropdown-messages
+          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+            %i.glyphicon.glyphicon-search
+          %ul.dropdown-menu
             %li
-              .dropdown-messages-box
-                %a.pull-left{:href => "#"}
-                  %img.img-circle{:alt => "image", :src => image_path('a7.jpg')}/
-                .media-body
-                  %small.pull-right 46h ago
-                  %strong Mike Loreipsum
-                  started following
-                  = succeed "." do
-                    %strong Monica Smith
-                  %br/
-                  %small.text-muted 3 days ago at 7:58 pm - 10.06.2014
-            %li.divider
-            %li
-              .dropdown-messages-box
-                %a.pull-left{:href => "#"}
-                  %img.img-circle{:alt => "image", :src => image_path('a4.jpg')}/
-                .media-body
-                  %small.pull-right.text-navy 5h ago
-                  %strong Chris Johnatan Overtunk
-                  started following
-                  = succeed "." do
-                    %strong Monica Smith
-                  %br/
-                  %small.text-muted Yesterday 1:21 pm - 11.06.2014
-            %li.divider
-            %li
-              .dropdown-messages-box
-                %a.pull-left{:href => "#"}
-                  %img.img-circle{:alt => "image", :src => image_path('profile.jpg')}/
-                .media-body
-                  %small.pull-right 23h ago
-                  %strong Monica Smith
-                  love
-                  = succeed "." do
-                    %strong Kim Smith
-                  %br/
-                  %small.text-muted 2 days ago at 2:30 am - 11.06.2014
-            %li.divider
-            %li
-              .text-center.link-block
-                %a{:href => "#"}
-                  %i.fa.fa-envelope
-                  %strong Read All Messages
-        %li.dropdown
-          %a.dropdown-toggle.count-info{"data-toggle" => "dropdown", :href => "#"}
-            %i.fa.fa-bell
-            %span.label.label-primary 8
-          %ul.dropdown-menu.dropdown-alerts
-            %li
-              %a{:href => "#"}
-                %div
-                  %i.fa.fa-envelope.fa-fw
-                  You have 16 messages
-                  %span.pull-right.text-muted.small 4 minutes ago
-            %li.divider
-            %li
-              %a{:href => "#"}
-                %div
-                  %i.fa.fa-twitter.fa-fw
-                  3 New Followers
-                  %span.pull-right.text-muted.small 12 minutes ago
-            %li.divider
-            %li
-              %a{:href => "#"}
-                %div
-                  %i.fa.fa-upload.fa-fw
-                  Server Rebooted
-                  %span.pull-right.text-muted.small 4 minutes ago
-            %li.divider
-            %li
-              .text-center.link-block
-                %a{:href => "#"}
-                  %strong See All Alerts
-                  %i.fa.fa-angle-right
-      %li
-        %a{href: ""}
-          %i.fa.fa-sign-out
-          Log out
+              %a{href: ""}
+                %i.fa.fa-sign-out
+                Log out
