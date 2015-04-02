@@ -16,6 +16,8 @@ module Chaskiq
       state :passive, :initial => true
       state :subscribed, :after_enter => :notify_subscription
       state :unsubscribed, :after_enter => :notify_unsubscription
+      #state :bounced, :after_enter => :make_bounced
+      #state :complained, :after_enter => :make_complained
 
       event :suscribe do
         transitions :from => [:passive, :unsubscribed], :to => :subscribed
@@ -31,6 +33,7 @@ module Chaskiq
     end
 
     def notify_subscription
+      #we should only unsubscribe when process is made from interface, not from sns notification
       puts "Pending"
     end
 

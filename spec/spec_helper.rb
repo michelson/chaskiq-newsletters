@@ -21,6 +21,7 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'factory_girl_rails'
 require 'shoulda/matchers'
+require 'database_cleaner'
 require 'pry'
 
   def last_email
@@ -37,6 +38,17 @@ RSpec.configure do |config|
 
   ActiveJob::Base.queue_adapter = :test
 
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
 
   #config.use_transactional_fixtures = true
   #config.infer_base_class_for_anonymous_controllers = false
