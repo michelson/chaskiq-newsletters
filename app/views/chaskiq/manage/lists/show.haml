@@ -16,18 +16,26 @@
               %th Email
               %th First Name
               %th Last Name
+              %th
+              %th
           %tbody
             - @subscribers.each do |sub|
               %tr
-                %th{:scope => "row"}
+                %td{:scope => "row"}
                   = sub.id
-                %th
+                %td
                   %span.label{class: sub.style_class}
                     %i.fa.fa-check
                     = sub.state
                 %td=sub.email
                 %td=sub.name
                 %td=sub.last_name
+                %td
+                  = link_to edit_manage_list_subscriber_path(@list, sub) do
+                    %i.fa.fa-edit
+                %td
+                  = link_to manage_list_subscriber_path(@list, sub), method: :delete, confirm: "sure?" do
+                    %i.fa.fa-times
 
   .pagination
     = paginate @subscribers
