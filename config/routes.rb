@@ -46,4 +46,9 @@ Chaskiq::Engine.routes.draw do
     resources :templates, controller: 'manage/templates'
   end
 
+  resources :hooks do
+    collection do
+    end
+  end
+
 end

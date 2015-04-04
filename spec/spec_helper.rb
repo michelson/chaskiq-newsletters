@@ -21,15 +21,20 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'factory_girl_rails'
 require 'shoulda/matchers'
+require 'database_cleaner'
+require 'active_job/test_helper'
+
+#require 'sidekiq/testing'
+#Sidekiq::Testing.fake! # fake is the default mode
 require 'pry'
 
-  def last_email
-    ActionMailer::Base.deliveries.last
-  end
+def last_email
+  ActionMailer::Base.deliveries.last
+end
 
-  def reset_email
-    ActionMailer::Base.deliveries = []
-  end
+def reset_email
+  ActionMailer::Base.deliveries = []
+end
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
@@ -37,6 +42,22 @@ RSpec.configure do |config|
 
   ActiveJob::Base.queue_adapter = :test
 
+  # clean out the queue after each spec
+  config.before(:each) do
+    ActiveJob::Base.queue_adapter.enqueued_jobs = []
+    ActiveJob::Base.queue_adapter.performed_jobs = []
+  end
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
 
   #config.use_transactional_fixtures = true
   #config.infer_base_class_for_anonymous_controllers = false

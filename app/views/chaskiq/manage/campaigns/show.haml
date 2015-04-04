@@ -1,4 +1,4 @@
-.row.wrapper.border-bottom.white-bg.page-heading
+.row.wrapper.white-bg.page-heading
   .col-sm-4
     %h2 Campaign #{@campaign.name}
     %ol.breadcrumb
@@ -24,26 +24,26 @@
                     Preview
 
                 %h2= @campaign.name
-              %dl.dl-horizontal
-                %dt Status:
-                %dd
-                  %span.label.label-primary= @campaign.state
+              -#
+                %dl.dl-horizontal
+                  %dt Status:
+                  %dd
+                    %span.label.label-primary= @campaign.state
           .row
             .col-lg-5
               %dl.dl-horizontal
-                -#%dt Created by:
-                -#%dd Alex Smith
                 %dt Deliveries:
                 %dd= @campaign.metrics.deliveries.size
                 %dt Clicks:
                 %dd= @campaign.metrics.clicks.size
                 %dt Opens:
                 %dd= @campaign.metrics.opens.size
-                -#%dt Client:
-                -#%dd
-                -#  %a.text-navy{:href => "#"} Zender Company
-                -#%dt Version:
-                -#%dd v1.4.2
+
+                %dt Bounces:
+                %dd= @campaign.metrics.bounces.size
+                %dt Spams:
+                %dd= @campaign.metrics.spams.size
+
             #cluster_info.col-lg-7
               %dl.dl-horizontal
                 %dt Last Updated:
@@ -52,14 +52,14 @@
                 %dd= l @campaign.created_at, format: :long
                 %dt Mail list:
                 %dd.project-people
-                  = link_to @campaign.list.name, manage_list_path(@campaign.list.name)
+                  = link_to @campaign.list.name, manage_list_path(@campaign.list)
 
           .row
             .col-lg-12
               %dl.dl-horizontal
                 %dt Completed:
                 %dd
-                  .progress.progress-striped.active.m-b-sm
+                  .progress.active.m-b-sm
                     .progress-bar{:style => "width: #{@campaign.delivery_progress}%;"}
                   %small
                     Deliveries completed in
@@ -74,6 +74,18 @@
 
                 .panel-body
 
+                  .row.m-b-sm.m-t-sm
+                    .col-md-1
+                      %button#loading-example-btn.btn.btn-white.btn-sm{:type => "button"}
+                        %i.fa.fa-refresh
+                        Refresh
+
+                    .col-md-11
+                      .input-group
+                        %input.input-sm.form-control{:placeholder => "Search", :type => "text"}/
+                        %span.input-group-btn
+                          %button.btn.btn-sm.btn-primary{:type => "button"} Go!
+
                   %table.table.table-striped
                     %thead
                       %tr
@@ -86,13 +98,16 @@
                       - @metrics.each do |m|
                         %tr
                           %td
-                            %span.label{class: "label-#{m.style_class}"}
-                              %i.fa.fa-check
+                            %span.label{class: "label-#{metric_action_class(m)}"}
+                              %i.fa{class: "fa-#{metric_icon_action_class(m)}"}
                               = m.action
                           %td
                             = m.trackable.try(:name)
+                            = m.trackable.try(:last_name)
+                            .small
+                              = m.trackable.try(:email)
                           %td
-                            = m.created_at
+                            = l m.created_at, format: :long
                           %td
                             %p.small
                               = m.host

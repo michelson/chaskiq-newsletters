@@ -4,6 +4,7 @@ module Chaskiq
   class Manage::CampaignsController < ApplicationController
 
     before_filter :authentication_method, except: [:preview, :premailer_preview]
+    helper Chaskiq::Manage::CampaignsHelper
 
     def index
       @campaigns = Chaskiq::Campaign.all

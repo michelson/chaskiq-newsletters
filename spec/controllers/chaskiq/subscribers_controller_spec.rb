@@ -5,7 +5,9 @@ module Chaskiq
     render_views
     routes { Chaskiq::Engine.routes }
     let(:list){ FactoryGirl.create(:chaskiq_list) }
-    let(:subscriber){ FactoryGirl.create(:chaskiq_subscriber, list: list) }
+    let(:subscriber){
+      list.create_subscriber FactoryGirl.attributes_for(:chaskiq_subscriber)
+    }
     let(:campaign){ FactoryGirl.create(:chaskiq_campaign, list: list) }
 
     it "will show subscriber!" do
@@ -19,15 +21,15 @@ module Chaskiq
       campaign
       response = post("create", campaign_id: campaign.id, subscriber: {name: "some subscriber", last_name: "subscriberson", email: "some@email.com"})
       expect(response.status).to be == 302
-      expect(campaign.subscribers.size).to be == 1
+      expect(campaign.subscriptions.subscribed.size).to be == 1
     end
 
-    it "will unsubscribe subscribe!" do
+    it "will unsubscribe unsubscribe!" do
       campaign
       subscriber
       response = delete("destroy", campaign_id: campaign.id, id: subscriber.encoded_id )
       expect(response.status).to be == 302
-      expect(campaign.subscribers.where(state: 'unsubscribed').size).to be == 1
+      expect(list.subscriptions.unsubscribed.size).to be == 1
     end
 
     it "will update subscriber" do

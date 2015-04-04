@@ -1,11 +1,16 @@
-.middle-box.text-center.loginscreen.animated.fadeInDown
+.middle-box.text-center.loginscreen
   %div
     %div
-      %h1.logo-name
-        +
+      .logo-name
+        = image_tag @campaign.logo, with: 200
+
     %h3= @campaign.name
     %p
       = @campaign.try(:tagline)
+
+    %p Suscribete a nuestro newsletter
+
+    = @campaign.description
     %p
       = render "shared/flashes"
 

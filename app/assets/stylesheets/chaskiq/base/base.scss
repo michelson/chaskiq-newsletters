@@ -1,6 +1,6 @@
 body {
   font-family: $font-stack;
-  background-color: #2f4050;
+  background-color: $nav-bg;
   font-size: 13px;
   color: $text-color;
   overflow-x: hidden;
@@ -11,7 +11,7 @@ body.boxed-layout {
 }
 
 body.boxed-layout #wrapper {
-  background-color: #2f4050;
+  background-color: $nav-bg;
   max-width: $boxed-width;
   margin: 0 auto;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
@@ -75,22 +75,6 @@ a:hover, a:focus {
   border-style: solid !important;
   margin-top: 15px;
   margin-bottom: 15px;
-}
-
-video {
-  width: 100% !important;
-  height: auto !important;
-}
-
-/* GALLERY */
-.gallery > .row > div {
-  margin-bottom: 15px;
-}
-
-.fancybox img {
-  margin-bottom: 5px;
-  /* Only for demo */
-  width: 24%;
 }
 
 /* Summernote text editor  */
@@ -197,7 +181,7 @@ ul.unstyled, ol.unstyled {
 }
 
 /* FOOTER */
-
+/*
 .footer {
   background: none repeat scroll 0 0 white;
   border-top: 1px solid $border-color;
@@ -242,7 +226,7 @@ body.fixed-sidebar.body-small.mini-navbar .footer.fixed {
 body.body-small .footer.fixed {
   margin-left: 0px;
 }
-
+*/
 /* PANELS */
 
 .page-heading {
@@ -755,26 +739,7 @@ table.table-mail tr td {
   box-shadow: 0px 0px 3px 0px rgba(145,145,145,1);
 }
 
-/* For handle diferent bg color in AngularJS version */
-.dashboards\.dashboard_2 nav.navbar,
-.dashboards\.dashboard_3 nav.navbar,
-.mailbox\.inbox nav.navbar,
-.mailbox\.email_view nav.navbar,
-.mailbox\.email_compose nav.navbar,
-.dashboards\.dashboard_4_1 nav.navbar
-{
-  background: #fff;
-}
 
-/* For handle diferent bg color in MVC version */
-.Dashboard_2 .navbar.navbar-static-top,
-.Dashboard_3 .navbar.navbar-static-top,
-.Dashboard_4_1 .navbar.navbar-static-top,
-.ComposeEmail .navbar.navbar-static-top,
-.EmailView .navbar.navbar-static-top,
-.Inbox .navbar.navbar-static-top {
-  background: #fff;
-}
 
 /* MARGINS & PADDINGS */
 
@@ -1096,9 +1061,71 @@ body.modal-open {
   padding-right: inherit !important;
 }
 
-/* Style correction for Vector Map */
-.jvectormap-zoomin, .jvectormap-zoomout {
-  width: 15px;
-  height: 15px;
-  background: #1ab394;
-}
+
+.label {
+  background-color: $light-gray;
+  color: $label-badget-color;
+  font-family: "Open Sans";
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  text-shadow: none;
+  }
+
+.badge {
+  background-color: $light-gray;
+  color: $label-badget-color;
+  font-family: "Open Sans";
+  font-size: 11px;
+  font-weight: 600;
+  padding-bottom: 4px;
+  padding-left: 6px;
+  padding-right: 6px;
+  text-shadow: none;
+  }
+
+.label-primary, .badge-primary {
+  background-color: $navy;
+  color: white;
+  }
+
+.label-success, .badge-success {
+  background-color: $blue;
+  color: white;
+  }
+
+.label-warning, .badge-warning {
+  background-color: $yellow;
+  color: white;
+  }
+
+.label-warning-light, .badge-warning-light {
+  background-color: $yellow;
+  color: white;
+  }
+
+.label-danger, .badge-danger {
+  background-color: $red;
+  color: white;
+  }
+
+.label-info, .badge-info {
+  background-color: $lazur;
+  color: white;
+  }
+
+.label-inverse, .badge-inverse {
+  background-color: #262626;
+  color: white;
+  }
+
+.label-white, .badge-white {
+  background-color: white;
+  color: #5e5e5e;
+  }
+
+.label-white, .badge-disable {
+  background-color: #2a2e36;
+  color: #8b91a0;
+  }
+

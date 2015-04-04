@@ -6,7 +6,9 @@ module Chaskiq
     render_views
     routes { Chaskiq::Engine.routes }
     let(:list){ FactoryGirl.create(:chaskiq_list) }
-    let(:subscriber){ FactoryGirl.create(:chaskiq_subscriber, list: list) }
+    let(:subscriber){
+      list.create_subscriber FactoryGirl.attributes_for(:chaskiq_subscriber)
+    }
     let(:campaign){ FactoryGirl.create(:chaskiq_campaign, list: list) }
 
 

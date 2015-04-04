@@ -6,10 +6,9 @@ module Chaskiq
     belongs_to :parent, class_name: "Chaskiq::Campaign"
     belongs_to :list
     has_many :subscribers, through: :list
+    has_many :subscriptions, through: :subscribers
     has_many :attachments
     has_many :metrics
-    #has_one :campaign_template
-    #has_one :template, through: :campaign_template
     belongs_to :template, class_name: "Chaskiq::Template"
     #accepts_nested_attributes_for :template, :campaign_template
 
@@ -28,8 +27,11 @@ module Chaskiq
 
     def delivery_progress
       return 0 if metrics.deliveries.size.zero?
-      subscribers.size.to_f / metrics.deliveries.size.to_f * 100.0
+      subscriptions.availables.size.to_f / metrics.deliveries.size.to_f * 100.0
+    end
 
+    def subscriber_status_for(subscriber)
+      binding.pry
     end
 
     def step_1?
@@ -41,13 +43,7 @@ module Chaskiq
     end
 
     def send_newsletter
-      #with custom
-      #Chaskiq::CampaignMailer.my_email.delivery_method.settings.merge!(SMTP_SETTINGS)
-      #send newsletter here
-      self.apply_premailer
-      self.subscribers.each do |s|
-        push_notification(s)
-      end
+      Chaskiq::MailSenderJob.perform_later(self)
     end
 
     def test_newsletter
@@ -62,13 +58,9 @@ module Chaskiq
 
     #deliver email + create metric
     def push_notification(subscriber)
-      self.metrics.create(trackable: subscriber, action: "deliver")
-      mailer = prepare_mail_to(subscriber) #deliver_later
-      #if Rails.env.production?
+      metrics.create(trackable: subscriber, action: "deliver")
+      mailer = prepare_mail_to(subscriber)
       mailer.deliver_later
-      #else
-      #  mailer.deliver_now
-      #end
     end
 
     def prepare_mail_to(subscriber)
@@ -123,7 +115,6 @@ module Chaskiq
     end
 
     ## CHART STUFF
-
     def sparklines_by_day(opts={})
       range = opts[:range] ||= 2.weeks.ago.midnight..Time.now
       self.metrics.group_by_day(:created_at, range: range ).count.map{|o| o.to_a.last}

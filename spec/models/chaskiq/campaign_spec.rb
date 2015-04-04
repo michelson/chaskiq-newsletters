@@ -1,14 +1,16 @@
 require 'rails_helper'
-require 'active_job/test_helper'
 
 module Chaskiq
   RSpec.describe Campaign, type: :model do
+
+    include ActiveJob::TestHelper
 
     it{ should have_many :attachments }
     it{ should have_many :metrics }
     #it{ should have_one :campaign_template }
     #it{ should have_one(:template).through(:campaign_template) }
     it{ should belong_to :list }
+    it{ should have_many(:subscribers).through(:list) }
     it{ should belong_to :template }
 
     let(:html_content){
@@ -16,7 +18,10 @@ module Chaskiq
     }
     let(:template){ FactoryGirl.create(:chaskiq_template, body: html_content ) }
     let(:list){ FactoryGirl.create(:chaskiq_list) }
-    let(:subscriber){ FactoryGirl.create(:chaskiq_subscriber, list: list)}
+    let(:subscriber){
+      #list.create_subscriber(subscriber)
+      list.create_subscriber FactoryGirl.attributes_for(:chaskiq_subscriber)
+    }
     let(:campaign){ FactoryGirl.create(:chaskiq_campaign, template: template) }
     let(:premailer_template){"<p>{{name}} {{last_name}} {{email}} {{campaign_url}} {{campaign_subscribe}} {{campaign_unsubscribe}}this is the template</p>"}
 
@@ -45,16 +50,14 @@ module Chaskiq
     context "send newsletter" do
       before do
 
-
         10.times do
-          FactoryGirl.create(:chaskiq_subscriber, list: list)
+          list.create_subscriber FactoryGirl.attributes_for(:chaskiq_subscriber)
         end
 
         @c = FactoryGirl.create(:chaskiq_campaign, template: template, list: list)
 
         allow(@c).to receive(:premailer).and_return("<p>hi</p>")
         allow_any_instance_of(Chaskiq::Campaign).to receive(:apply_premailer).and_return(true)
-
       end
 
       it "will prepare mail to" do
@@ -62,15 +65,30 @@ module Chaskiq
       end
 
       it "will prepare mail to can send inline" do
+        reset_email
         @c.prepare_mail_to(subscriber).deliver_now
         expect(ActionMailer::Base.deliveries.size).to be 1
       end
 
-      it "will send newsletter & create deliver metrics" do
+      it "will send newsletter jobs for each subscriber" do
+        expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq 0
+        Chaskiq::MailSenderJob.perform_now(@c)
+        #expect(@c.metrics.deliveries.size).to be == 10
+        expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq 10
+      end
+
+      it "will send newsletter jobs for each subscriber" do
+        @c.subscriptions.first.unsubscribe!
+        expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq 0
+        Chaskiq::MailSenderJob.perform_now(@c)
+        expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq 9
+      end
+
+      it "will send newsletter for dispatch" do
+        @c.subscriptions.first.unsubscribe!
         expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq 0
         @c.send_newsletter
-        expect(@c.metrics.deliveries.size).to be == 10
-        expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq 10
+        expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq 1
       end
 
     end
