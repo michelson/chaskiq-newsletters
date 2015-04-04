@@ -9,6 +9,7 @@ module Chaskiq
     #it{ should have_one :campaign_template }
     #it{ should have_one(:template).through(:campaign_template) }
     it{ should belong_to :list }
+    it{ should have_many(:subscribers).through(:list) }
     it{ should belong_to :template }
 
     let(:html_content){
@@ -16,7 +17,10 @@ module Chaskiq
     }
     let(:template){ FactoryGirl.create(:chaskiq_template, body: html_content ) }
     let(:list){ FactoryGirl.create(:chaskiq_list) }
-    let(:subscriber){ FactoryGirl.create(:chaskiq_subscriber, list: list)}
+    let(:subscriber){
+      #list.create_subscriber(subscriber)
+      list.create_subscriber FactoryGirl.attributes_for(:chaskiq_subscriber)
+    }
     let(:campaign){ FactoryGirl.create(:chaskiq_campaign, template: template) }
     let(:premailer_template){"<p>{{name}} {{last_name}} {{email}} {{campaign_url}} {{campaign_subscribe}} {{campaign_unsubscribe}}this is the template</p>"}
 
@@ -44,17 +48,14 @@ module Chaskiq
 
     context "send newsletter" do
       before do
-
-
         10.times do
-          FactoryGirl.create(:chaskiq_subscriber, list: list)
+          list.create_subscriber FactoryGirl.attributes_for(:chaskiq_subscriber)
         end
 
         @c = FactoryGirl.create(:chaskiq_campaign, template: template, list: list)
 
         allow(@c).to receive(:premailer).and_return("<p>hi</p>")
         allow_any_instance_of(Chaskiq::Campaign).to receive(:apply_premailer).and_return(true)
-
       end
 
       it "will prepare mail to" do

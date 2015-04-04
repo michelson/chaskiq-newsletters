@@ -5,7 +5,9 @@ module Chaskiq
 
     let(:template){ FactoryGirl.create(:chaskiq_template) }
     let(:list){ FactoryGirl.create(:chaskiq_list) }
-    let(:subscriber){  FactoryGirl.create(:chaskiq_subscriber, list: list) }
+    let(:subscriber){
+      list.create_subscriber FactoryGirl.attributes_for(:chaskiq_subscriber)
+    }
     let(:campaign){ FactoryGirl.create(:chaskiq_campaign, template: template, list: list) }
     let(:template_html){ "<p>{{name}}</p>"}
     let(:premailer_template){"<p>

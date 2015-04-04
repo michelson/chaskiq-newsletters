@@ -15,6 +15,7 @@ module Chaskiq
       end
 
       it "will not save repeated data" do
+        Chaskiq::Subscriber.delete_all
         list.import_csv("spec/fixtures/csv_example.csv")
         list.import_csv("spec/fixtures/csv_example.csv")
         expect(list.subscribers.size).to be 3

@@ -2,9 +2,10 @@ require 'rails_helper'
 require 'urlcrypt'
 module Chaskiq
   RSpec.describe Subscriber, type: :model do
-    it{ should belong_to :list }
+    it{ should have_many :subscriptions }
+    it{ should have_many(:lists).through(:subscriptions) }
     it{ should have_many :metrics }
-    it{ should have_one :campaign }
+    it{ should have_many(:campaigns).through(:lists) }
 
 
     describe "states" do

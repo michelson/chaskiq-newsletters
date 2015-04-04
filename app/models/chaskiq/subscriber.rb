@@ -3,9 +3,10 @@ require "aasm"
 module Chaskiq
   class Subscriber < ActiveRecord::Base
 
-    belongs_to :list
+    has_many :subscriptions
+    has_many :lists, through: :subscriptions, class_name: "Chaskiq::List"
     has_many :metrics , as: :trackable
-    has_one :campaign , through: :list , class_name: "Chaskiq::Campaign"
+    has_many :campaigns, through: :lists, class_name: "Chaskiq::Campaign"
 
     validates :email , presence: true
     validates :name , presence: true
