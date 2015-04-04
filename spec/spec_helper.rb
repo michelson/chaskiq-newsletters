@@ -22,6 +22,8 @@ require 'rspec/autorun'
 require 'factory_girl_rails'
 require 'shoulda/matchers'
 require 'database_cleaner'
+require 'sidekiq/testing'
+#Sidekiq::Testing.fake! # fake is the default mode
 require 'pry'
 
   def last_email
@@ -38,6 +40,11 @@ RSpec.configure do |config|
 
   ActiveJob::Base.queue_adapter = :test
 
+  # clean out the queue after each spec
+  config.before(:each) do
+    ActiveJob::Base.queue_adapter.enqueued_jobs = []
+    ActiveJob::Base.queue_adapter.performed_jobs = []
+  end
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction

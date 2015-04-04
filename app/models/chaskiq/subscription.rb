@@ -6,6 +6,8 @@ module Chaskiq
     belongs_to :list
     has_many :campaigns, through: :list
 
+    scope :availables, ->{ where(["chaskiq_subscriptions.state =? or chaskiq_subscriptions.state=?", "passive", "subscribed"]) }
+
     include AASM
 
     aasm :column => :state do # default column: aasm_state

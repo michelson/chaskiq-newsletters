@@ -8,6 +8,8 @@ module Chaskiq
       g.integration_tool :rspec
     end
 
+    config.autoload_paths += Dir["#{config.root}/app/jobs"]
+
   end
 end
 

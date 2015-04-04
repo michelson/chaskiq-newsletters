@@ -10,34 +10,6 @@ module Chaskiq
     validates :email , presence: true
     validates :name , presence: true
 
-=begin
-    include AASM
-
-    aasm :column => :state do # default column: aasm_state
-      state :passive, :initial => true
-      state :subscribed, :after_enter => :notify_subscription
-      state :unsubscribed, :after_enter => :notify_unsubscription
-      #state :bounced, :after_enter => :make_bounced
-      #state :complained, :after_enter => :make_complained
-
-      event :suscribe do
-        transitions :from => [:passive, :unsubscribed], :to => :subscribed
-      end
-
-      event :unsuscribe do
-        transitions :from => [:subscribed, :passive], :to => :unsubscribed
-      end
-    end
-=end
-    def notify_unsubscription
-      puts "Pending"
-    end
-
-    def notify_subscription
-      #we should only unsubscribe when process is made from interface, not from sns notification
-      puts "Pending"
-    end
-
     %w[click open bounce spam].each do |action|
       define_method("track_#{action}") do |opts|
         m = self.metrics.new
@@ -54,7 +26,6 @@ module Chaskiq
     def decoded_id
       URLcrypt.decode(self.email)
     end
-
 
     def style_class
       case self.state

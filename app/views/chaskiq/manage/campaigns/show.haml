@@ -24,10 +24,11 @@
                     Preview
 
                 %h2= @campaign.name
-              %dl.dl-horizontal
-                %dt Status:
-                %dd
-                  %span.label.label-primary= @campaign.state
+              -#
+                %dl.dl-horizontal
+                  %dt Status:
+                  %dd
+                    %span.label.label-primary= @campaign.state
           .row
             .col-lg-5
               %dl.dl-horizontal
@@ -37,6 +38,12 @@
                 %dd= @campaign.metrics.clicks.size
                 %dt Opens:
                 %dd= @campaign.metrics.opens.size
+
+                %dt Bounces:
+                %dd= @campaign.metrics.bounces.size
+                %dt Spams:
+                %dd= @campaign.metrics.spams.size
+
             #cluster_info.col-lg-7
               %dl.dl-horizontal
                 %dt Last Updated:
@@ -45,14 +52,14 @@
                 %dd= l @campaign.created_at, format: :long
                 %dt Mail list:
                 %dd.project-people
-                  = link_to @campaign.list.name, manage_list_path(@campaign.list.name)
+                  = link_to @campaign.list.name, manage_list_path(@campaign.list)
 
           .row
             .col-lg-12
               %dl.dl-horizontal
                 %dt Completed:
                 %dd
-                  .progress.progress-striped.active.m-b-sm
+                  .progress.active.m-b-sm
                     .progress-bar{:style => "width: #{@campaign.delivery_progress}%;"}
                   %small
                     Deliveries completed in
@@ -66,6 +73,18 @@
                     %h3 Last activity
 
                 .panel-body
+
+                  .row.m-b-sm.m-t-sm
+                    .col-md-1
+                      %button#loading-example-btn.btn.btn-white.btn-sm{:type => "button"}
+                        %i.fa.fa-refresh
+                        Refresh
+
+                    .col-md-11
+                      .input-group
+                        %input.input-sm.form-control{:placeholder => "Search", :type => "text"}/
+                        %span.input-group-btn
+                          %button.btn.btn-sm.btn-primary{:type => "button"} Go!
 
                   %table.table.table-striped
                     %thead

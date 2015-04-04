@@ -4,6 +4,8 @@ require 'active_job/test_helper'
 module Chaskiq
   RSpec.describe Campaign, type: :model do
 
+    include ActiveJob::TestHelper
+
     it{ should have_many :attachments }
     it{ should have_many :metrics }
     #it{ should have_one :campaign_template }
@@ -48,6 +50,8 @@ module Chaskiq
 
     context "send newsletter" do
       before do
+        Sidekiq::Testing.inline!
+
         10.times do
           list.create_subscriber FactoryGirl.attributes_for(:chaskiq_subscriber)
         end
@@ -63,15 +67,30 @@ module Chaskiq
       end
 
       it "will prepare mail to can send inline" do
+        reset_email
         @c.prepare_mail_to(subscriber).deliver_now
         expect(ActionMailer::Base.deliveries.size).to be 1
       end
 
-      it "will send newsletter & create deliver metrics" do
+      it "will send newsletter jobs for each subscriber" do
+        expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq 0
+        Chaskiq::MailSenderJob.perform_now(@c)
+        #expect(@c.metrics.deliveries.size).to be == 10
+        expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq 10
+      end
+
+      it "will send newsletter jobs for each subscriber" do
+        @c.subscriptions.first.unsubscribe!
+        expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq 0
+        Chaskiq::MailSenderJob.perform_now(@c)
+        expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq 9
+      end
+
+      it "will send newsletter for dispatch" do
+        @c.subscriptions.first.unsubscribe!
         expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq 0
         @c.send_newsletter
-        expect(@c.metrics.deliveries.size).to be == 10
-        expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq 10
+        expect(ActiveJob::Base.queue_adapter.enqueued_jobs.size).to eq 1
       end
 
     end
