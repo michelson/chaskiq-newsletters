@@ -125,7 +125,6 @@ module Chaskiq
     }
     let(:campaign){ FactoryGirl.create(:chaskiq_campaign, list: list) }
 
-
     let(:bounce_sns){
        {"Message" => {
              "notificationType"=>"Bounce",
@@ -154,36 +153,37 @@ module Chaskiq
                    "recipient4@example.com"
                 ]
             }
-          }
+          }.to_json
         }
     }
 
     let(:complaint_sns){
       {"Message" => {
-        "notificationType"=>"Complaint",
-        "complaint"=>{
-           "complainedRecipients"=>[
-              {
-                 "emailAddress"=>"#{subscriber.email}"
-              }
-           ],
-           "timestamp"=>"2012-05-25T14:59:38.613-07:00",
-           "feedbackId"=>"0000013786031775-fea503bc-7497-49e1-881b-a0379bb037d3-000000"
-        },
-        "mail"=>{
-           "timestamp"=>"2012-05-25T14:59:38.613-07:00",
-           "messageId"=>"0000013786031775-163e3910-53eb-4c8e-a04a-f29debf88a84-000000",
-           "source"=>"#{campaign.from_email}",
-           "destination"=>[
-              "recipient1@example.com",
-              "recipient2@example.com",
-              "recipient3@example.com",
-              "recipient4@example.com"
-           ]
-        }
-        }
+          "notificationType"=>"Complaint",
+          "complaint"=>{
+             "complainedRecipients"=>[
+                {
+                   "emailAddress"=>"#{subscriber.email}"
+                }
+             ],
+             "timestamp"=>"2012-05-25T14:59:38.613-07:00",
+             "feedbackId"=>"0000013786031775-fea503bc-7497-49e1-881b-a0379bb037d3-000000"
+          },
+          "mail"=>{
+             "timestamp"=>"2012-05-25T14:59:38.613-07:00",
+             "messageId"=>"0000013786031775-163e3910-53eb-4c8e-a04a-f29debf88a84-000000",
+             "source"=>"#{campaign.from_email}",
+             "destination"=>[
+                "recipient1@example.com",
+                "recipient2@example.com",
+                "recipient3@example.com",
+                "recipient4@example.com"
+             ]
+          }
+        }.to_json
       }
     }
+
 
     it "will set a bounce" do
       campaign

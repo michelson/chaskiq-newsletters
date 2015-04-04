@@ -29,7 +29,7 @@ private
 
     def process_notification(request_body)
 
-      message = request_body["Message"]
+      message = parse_body_message(request_body["Message"])
 
       case message["notificationType"]
       when "Bounce"
@@ -37,6 +37,10 @@ private
       when "Complaint"
         process_complaint(message)
       end
+    end
+
+    def parse_body_message(body)
+      JSON.parse(body)
     end
 
     def process_bounce(m)

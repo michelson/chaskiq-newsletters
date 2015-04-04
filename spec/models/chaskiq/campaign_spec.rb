@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'active_job/test_helper'
 
 module Chaskiq
   RSpec.describe Campaign, type: :model do
@@ -50,7 +49,6 @@ module Chaskiq
 
     context "send newsletter" do
       before do
-        Sidekiq::Testing.inline!
 
         10.times do
           list.create_subscriber FactoryGirl.attributes_for(:chaskiq_subscriber)

@@ -22,17 +22,19 @@ require 'rspec/autorun'
 require 'factory_girl_rails'
 require 'shoulda/matchers'
 require 'database_cleaner'
-require 'sidekiq/testing'
+require 'active_job/test_helper'
+
+#require 'sidekiq/testing'
 #Sidekiq::Testing.fake! # fake is the default mode
 require 'pry'
 
-  def last_email
-    ActionMailer::Base.deliveries.last
-  end
+def last_email
+  ActionMailer::Base.deliveries.last
+end
 
-  def reset_email
-    ActionMailer::Base.deliveries = []
-  end
+def reset_email
+  ActionMailer::Base.deliveries = []
+end
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|

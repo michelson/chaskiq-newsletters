@@ -98,8 +98,8 @@
                       - @metrics.each do |m|
                         %tr
                           %td
-                            %span.label{class: "label-#{m.style_class}"}
-                              %i.fa.fa-check
+                            %span.label{class: "label-#{metric_action_class(m)}"}
+                              %i.fa{class: "fa-#{metric_icon_action_class(m)}"}
                               = m.action
                           %td
                             = m.trackable.try(:name)
