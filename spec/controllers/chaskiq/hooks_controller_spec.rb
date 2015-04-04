@@ -197,7 +197,7 @@ module Chaskiq
       response = send_data(complaint_sns)
       expect(response.status).to be == 200
       expect(campaign.metrics.spams.size).to be == 1
-      expect(subscriber.reload).to be_unsubscribed
+      expect(subscriber.subscriptions.first.reload).to be_unsubscribed
     end
 
   end

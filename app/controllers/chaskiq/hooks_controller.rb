@@ -53,12 +53,14 @@ private
 
     def track_message_for(track_type, emails, source)
       subscribers = Chaskiq::Subscriber.where(email: emails )
-      subscribers.each do |subscriber|
-        subscriber.unsuscribe! if track_type == "spam"
-        Chaskiq::Campaign.where(from_email: source).each do |c|
-          subscriber.send("track_#{track_type}".to_sym, { host: get_referrer, campaign_id: c.id })
-        end
+      campaign = Chaskiq::Campaign.find_by(from_email: source)
+      subscriptions = campaign.subscriptions.where(subscriber_id: subscribers.map(&:id) )
+
+      subscriptions.each do |s|
+        s.unsubscribe! if track_type == "spam"
+        s.subscriber.send("track_#{track_type}".to_sym, { host: get_referrer, campaign_id: campaign.id })
       end
+
     end
 
     def send_subscription_confirmation(request_body)

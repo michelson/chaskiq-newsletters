@@ -1,4 +1,3 @@
-require "aasm"
 
 module Chaskiq
   class Subscriber < ActiveRecord::Base
@@ -11,6 +10,7 @@ module Chaskiq
     validates :email , presence: true
     validates :name , presence: true
 
+=begin
     include AASM
 
     aasm :column => :state do # default column: aasm_state
@@ -28,7 +28,7 @@ module Chaskiq
         transitions :from => [:subscribed, :passive], :to => :unsubscribed
       end
     end
-
+=end
     def notify_unsubscription
       puts "Pending"
     end

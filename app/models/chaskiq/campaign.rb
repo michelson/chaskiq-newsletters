@@ -6,6 +6,7 @@ module Chaskiq
     belongs_to :parent, class_name: "Chaskiq::Campaign"
     belongs_to :list
     has_many :subscribers, through: :list
+    has_many :subscriptions, through: :subscribers
     has_many :attachments
     has_many :metrics
     #has_one :campaign_template
@@ -29,7 +30,10 @@ module Chaskiq
     def delivery_progress
       return 0 if metrics.deliveries.size.zero?
       subscribers.size.to_f / metrics.deliveries.size.to_f * 100.0
+    end
 
+    def subscriber_status_for(subscriber)
+      binding.pry
     end
 
     def step_1?
@@ -123,7 +127,6 @@ module Chaskiq
     end
 
     ## CHART STUFF
-
     def sparklines_by_day(opts={})
       range = opts[:range] ||= 2.weeks.ago.midnight..Time.now
       self.metrics.group_by_day(:created_at, range: range ).count.map{|o| o.to_a.last}

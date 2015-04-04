@@ -14,7 +14,7 @@ module Chaskiq
     end
 
     def new
-      @subscriber = @campaign.list.subscribers.new
+      @subscriber = @campaign.subscribers.new
     end
 
     def edit
@@ -25,7 +25,7 @@ module Chaskiq
       find_subscriber
       if @subscriber.update_attributes(resource_params) && @subscriber.errors.blank?
         flash[:notice] = "you did it!"
-        @subscriber.suscribe! unless @subscriber.subscribed?
+        @subscription.subscribe! unless @subscription.subscribed?
         redirect_to campaign_path(@campaign)
       else
         render "edit"
@@ -33,8 +33,10 @@ module Chaskiq
     end
 
     def create
-      @subscriber = @campaign.list.subscribers.create(resource_params)
+      @subscriber = @campaign.list.create_subscriber(resource_params)
       if @subscriber.errors.blank?
+        @subscription = @campaign.subscriptions.find_by(subscriber: @subscriber)
+        @subscription.subscribe! unless @subscription.subscribed?
         flash[:notice] = "you did it!"
         redirect_to campaign_path(@campaign)
       else
@@ -49,7 +51,7 @@ module Chaskiq
     def destroy
       find_subscriber
       begin
-        if @subscriber.unsuscribe!
+        if @subscription.unsubscribe!
           flash[:notice] = "Thanks, you will not receive more emails from this newsletter!"
           redirect_to campaign_path(@campaign)
         end
@@ -64,6 +66,7 @@ module Chaskiq
 
     def find_subscriber
       @subscriber = @campaign.list.subscribers.find_by(email: URLcrypt.decode(params[:id]))
+      @subscription = @campaign.subscriptions.find_by(subscriber: @subscriber)
     end
 
     def find_base_models

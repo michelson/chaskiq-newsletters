@@ -29,6 +29,16 @@ module Chaskiq
       s.subscriber
     end
 
+    def unsubscribe(subscriber)
+      s = subscriptions.find_by(subscriber: subscriber)
+      s.unsubscribe!
+    end
+
+    def subscribe(subscriber)
+      s = subscriptions.find_by(subscriber: subscriber)
+      s.subscribe!
+    end
+
     def csv_importer
       @importer ||= Chaskiq::CsvImporter.new
     end
