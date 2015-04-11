@@ -107,4 +107,13 @@ end
 ```
 
 
+# TODO:
+
++ buscadores.
++ editor ta casi , pero cambiar nombres apretar estilos.
++ apretar estilos.
++ mas reportes.
+
+
+
 Miguel Michelson Martinez.
