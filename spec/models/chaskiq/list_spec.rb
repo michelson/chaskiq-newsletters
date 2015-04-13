@@ -10,6 +10,7 @@ module Chaskiq
       let(:list){FactoryGirl.create(:chaskiq_list)}
 
       it "will create a list" do
+        Chaskiq::Subscriber.delete_all
         data = list.import_csv("spec/fixtures/csv_example.csv")
         expect(list.subscribers.size).to be 3
       end

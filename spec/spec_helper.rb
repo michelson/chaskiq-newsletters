@@ -44,8 +44,10 @@ RSpec.configure do |config|
 
   # clean out the queue after each spec
   config.before(:each) do
-    ActiveJob::Base.queue_adapter.enqueued_jobs = []
-    ActiveJob::Base.queue_adapter.performed_jobs = []
+    unless ActiveJob::Base.queue_adapter.blank?
+      ActiveJob::Base.queue_adapter.enqueued_jobs = []
+      ActiveJob::Base.queue_adapter.performed_jobs = []
+    end
   end
 
   config.before(:suite) do
