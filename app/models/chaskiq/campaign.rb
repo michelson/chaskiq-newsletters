@@ -42,6 +42,10 @@ module Chaskiq
       self.step == "template"
     end
 
+    def purge_metrics
+      self.metrics.delete_all
+    end
+
     def send_newsletter
       Chaskiq::MailSenderJob.perform_later(self)
     end

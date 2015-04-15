@@ -49,49 +49,7 @@
 
                   %td.project-actions
 
-                    .btn-group
-                      %button.btn.btn-info.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown"}
-                        Actions
-                        %span.caret
-                      %ul.dropdown-menu
+                    = render "actions", campaign: campaign
 
-                        %li
-                          = link_to preview_manage_campaign_path(campaign) do
-                            %i.fa.fa-eye
-                            Preview
-
-                        %li
-                          = link_to test_manage_campaign_path(campaign) do
-                            %i.fa.fa-heartbeat
-                            Test
-
-                        %li
-                          = link_to deliver_manage_campaign_path(campaign), data: { confirm: "Are you sure?" } do
-                            %i.fa.fa-paper-plane
-                            Send
-
-                        %li
-                          = link_to clone_manage_campaign_path(campaign), data: { confirm: "Are you sure?" } do
-                            %i.fa.fa-copy
-                            clone
-
-                    .btn-group
-                      %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown"}
-                        Configuration
-                        %span.caret
-                      %ul.dropdown-menu
-                        %li
-                          = link_to manage_campaign_wizard_path(campaign, "setup") do
-                            %i.fa.fa-edit
-                            Setup
-
-                        %li
-                          = link_to manage_campaign_attachments_path(campaign) do
-                            %i.fa.fa-paperclip
-                            Attachments
-
-                        %li
-                          = link_to manage_campaign_path(campaign), method: :delete, data: { confirm: "Are you sure?" } do
-                            %i.fa.fa-times
-                            Remove
+                    = render "config_actions", campaign: campaign
 

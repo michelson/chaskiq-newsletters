@@ -1,0 +1,30 @@
+.btn-group
+  %button.btn.btn-info.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown"}
+    Actions
+    %span.caret
+  %ul.dropdown-menu
+
+    %li
+      = link_to preview_manage_campaign_path(campaign) do
+        %i.fa.fa-eye
+        Preview
+
+    %li
+      = link_to test_manage_campaign_path(campaign) do
+        %i.fa.fa-heartbeat
+        Test
+
+    %li
+      = link_to deliver_manage_campaign_path(campaign), data: { confirm: "Are you sure?" } do
+        %i.fa.fa-paper-plane
+        Send
+
+    %li
+      = link_to clone_manage_campaign_path(campaign), data: { confirm: "Are you sure?" } do
+        %i.fa.fa-copy
+        clone
+
+    %li
+      = link_to purge_manage_campaign_path(campaign), data: { confirm: "Are you sure?" } do
+        %i.fa.fa-trash
+        purge metrics

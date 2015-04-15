@@ -76,6 +76,13 @@ module Chaskiq
       end
     end
 
+    def purge
+      @campaign = Chaskiq::Campaign.find(params[:id])
+      @campaign.purge_metrics
+      flash[:notice] = "cleaned data!"
+      redirect_to manage_campaign_path(@campaign)
+    end
+
   protected
 
     def resource_params

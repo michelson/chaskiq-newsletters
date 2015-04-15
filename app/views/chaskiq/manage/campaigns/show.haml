@@ -15,13 +15,10 @@
             .col-lg-12
               .m-b-md
                 .pull-right
-                  %a.btn.btn-white.btn-xs{:href => manage_campaign_wizard_path(@campaign, "setup")}
-                    %i.fa.fa-cog
-                    Configure
 
-                  %a.btn.btn-info.btn-xs{:href => preview_manage_campaign_path(@campaign), target: :blank}
-                    %i.fa.fa-eye
-                    Preview
+                  = render "actions", campaign: @campaign
+
+                  = render "config_actions", campaign: @campaign
 
                 %h2= @campaign.name
               -#

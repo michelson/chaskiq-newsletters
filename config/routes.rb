@@ -37,6 +37,7 @@ Chaskiq::Engine.routes.draw do
         get :deliver
         get :clone
         get :editor
+        get :purge
       end
       resources :attachments, controller: 'manage/attachments'
     end
