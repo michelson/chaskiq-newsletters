@@ -1,5 +1,6 @@
 TODO: roadmap for 0.0.1
 
++ remove unused state on subscriber (we use subscription state now)
 + mailer connection config
 + uuid for subscribers & campaigns
 + api
