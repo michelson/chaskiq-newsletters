@@ -36,7 +36,7 @@ module Chaskiq
 
     def preview
       @campaign  = Chaskiq::Campaign.find(params[:id])
-      @campaign.apply_premailer
+      @campaign.apply_premailer(exclude_gif: true)
       render layout: false
     end
 

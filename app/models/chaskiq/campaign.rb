@@ -83,10 +83,11 @@ module Chaskiq
       campaign_url = "#{host}/campaigns/#{self.id}"
     end
 
-    def apply_premailer
+    def apply_premailer(opts)
       host = Rails.application.routes.default_url_options[:host]
-      url = URI.parse("#{host}/manage/campaigns/#{self.id}/premailer_preview")
-
+      skip_track_image = opts[:exclude_gif] ? "exclude_gif=true" : nil
+      premailer_url = ["#{host}/manage/campaigns/#{self.id}/premailer_preview", skip_track_image].join("?")
+      url = URI.parse(premailer_url)
       premailer = Premailer.new(url, :adapter => :nokogiri, :escape_url_attributes => false)
       self.update_column(:premailer, premailer.to_inline_css)
     end

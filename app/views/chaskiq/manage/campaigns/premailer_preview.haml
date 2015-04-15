@@ -11,4 +11,5 @@
   %body
     = h @campaign.html_content.html_safe
 
-    <img src='{{track_image_url}}' width='1' height='1'/>
+    - unless params[:exclude_gif]
+      <img src='{{track_image_url}}' width='1' height='1'/>
