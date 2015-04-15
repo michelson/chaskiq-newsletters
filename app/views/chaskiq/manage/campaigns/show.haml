@@ -59,11 +59,12 @@
               %dl.dl-horizontal
                 %dt Completed:
                 %dd
+
                   .progress.active.m-b-sm
                     .progress-bar{:style => "width: #{@campaign.delivery_progress}%;"}
                   %small
                     Deliveries completed in
-                    %strong "#{@campaign.delivery_progress}%"
+                    %strong=number_to_percentage(@campaign.delivery_progress, precision: 0)
           .row.m-t-sm
             .col-lg-12
               .panel.blank-panel
