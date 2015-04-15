@@ -87,7 +87,7 @@ module Chaskiq
       campaign_url = "#{host}/campaigns/#{self.id}"
     end
 
-    def apply_premailer(opts)
+    def apply_premailer(opts={})
       host = Rails.application.routes.default_url_options[:host]
       skip_track_image = opts[:exclude_gif] ? "exclude_gif=true" : nil
       premailer_url = ["#{host}/manage/campaigns/#{self.id}/premailer_preview", skip_track_image].join("?")
