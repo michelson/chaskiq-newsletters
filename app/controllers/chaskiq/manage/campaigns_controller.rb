@@ -64,6 +64,18 @@ module Chaskiq
       redirect_to manage_campaigns_path()
     end
 
+    def clone
+      @campaign  = Chaskiq::Campaign.find(params[:id])
+      new_campaign = @campaign.clone_newsletter
+      if new_campaign.save
+        flash[:notice] = "cloned"
+        redirect_to manage_campaign_path(new_campaign)
+      else
+        flash[:error] = "whoops!"
+        redirect_to manage_campaign_path(@campaign)
+      end
+    end
+
   protected
 
     def resource_params

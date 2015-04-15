@@ -15,6 +15,7 @@ require 'premailer'
 require 'groupdate'
 require 'chartkick'
 require 'jquery-rails'
+require 'deep_cloneable'
 
 Dotenv.load
 

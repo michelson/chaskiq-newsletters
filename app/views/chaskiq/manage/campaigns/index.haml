@@ -70,6 +70,11 @@
                             %i.fa.fa-paper-plane
                             Send
 
+                        %li
+                          = link_to clone_manage_campaign_path(campaign), data: { confirm: "Are you sure?" } do
+                            %i.fa.fa-copy
+                            clone
+
                     .btn-group
                       %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown"}
                         Configuration

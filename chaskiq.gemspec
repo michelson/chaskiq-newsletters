@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = Chaskiq::VERSION
   s.authors     = ["miguel michelson"]
   s.email       = ["miguelmichelson@gmail.com"]
-  s.homepage    = "http://chaskiq.herokuapp.com"
+  s.homepage    = "http://chaskiq.ws"
   s.summary     = "A newsletter service for rails"
   s.description = "Chaskiq."
   s.license     = "MIT"
@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
   s.add_dependency "groupdate"
   s.add_dependency "chartkick"
   s.add_dependency "jquery-rails"
+  s.add_dependency "deep_cloneable"
 
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "sqlite3"

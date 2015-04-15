@@ -113,5 +113,25 @@ module Chaskiq
 
     end
 
+
+    context "clone campaign" do
+      it "should clone record" do
+        c = campaign.clone_newsletter
+        c.save
+        expect(c.id).to_not be == campaign.id
+        expect(c.template).to be == campaign.template
+        expect(c.list).to be == campaign.list
+        expect(c.subscribers).to be == campaign.subscribers
+      end
+
+      it "rename" do
+        c = campaign.clone_newsletter
+        c.save
+        expect(c.name).to_not be == campaign.name
+        expect(c.name).to include("copy")
+      end
+
+    end
+
   end
 end

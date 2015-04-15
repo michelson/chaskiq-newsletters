@@ -50,6 +50,12 @@ module Chaskiq
       Chaskiq::CampaignMailer.test(self).deliver_later
     end
 
+    def clone_newsletter
+      cloned_record = self.deep_clone #(:include => :subscribers)
+      cloned_record.name = self.name + "-copy"
+      cloned_record
+    end
+
     def detect_changed_template
       if self.changes.include?("template_id")
         copy_template

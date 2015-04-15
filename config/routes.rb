@@ -35,6 +35,7 @@ Chaskiq::Engine.routes.draw do
         get :premailer_preview
         get :test
         get :deliver
+        get :clone
         get :editor
       end
       resources :attachments, controller: 'manage/attachments'
