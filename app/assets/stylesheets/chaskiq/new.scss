@@ -271,6 +271,19 @@ a,a:hover {
   right: 0;
 }
 
+.alert{
+  border-radius: 0px !important;
+}
+
+.alert-error{
+  @extend .alert-danger;
+
+}
+
+.alert-notice{
+  @extend .alert-info;
+}
+
 
 /* PROJECTS */
 .project-people, .project-actions {

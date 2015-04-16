@@ -15,6 +15,9 @@ Chaskiq.Helpers.showModal = (body, header, opts={}) ->
   @modalBody.html body
   @myModal.modal("show")
 
+  $("#myModal .modal-footer .btn-primary").on "click", ()->
+    $("#myModal form").submit()
+
   this.myModal[0].className = "modal fade in"
   @modalHeader.find('h4').html header unless header.length == 0
   return @myModal

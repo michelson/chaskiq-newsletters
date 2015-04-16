@@ -32,6 +32,16 @@ module Chaskiq
       else
         flash[:error] = "Whoops!"
       end
+      rescue
+        flash[:error] = "Whoops!"
+      redirect_to manage_list_path(@list)
+    end
+
+    def clear
+      @list =  Chaskiq::List.find(params[:id])
+      @list.subscriptions.delete_all
+      flash[:notice] = "We are importing in background, refresh after a while ;)"
+
       redirect_to manage_list_path(@list)
     end
 

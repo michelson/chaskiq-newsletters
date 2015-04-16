@@ -1,5 +1,5 @@
 - flash.each do |type, message|
-  %div.alert-fixed.fade.in{ :class => type }
+  %div.alert.alert-fixed.fade.in{ :class => "alert-#{type}" }
     %button.close{"data-dismiss" => "alert", :type => "button"} ×
     = message
 - flash.clear

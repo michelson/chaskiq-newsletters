@@ -16,8 +16,15 @@ $(document).ready(function () {
     $('.input-group.date').datepicker({
       todayBtn: "linked",
       keyboardNavigation: false,
-
     });
+
+    $("[data-modal]").on("click", function(){
+      console.log($(this).attr("data-modal"))
+      html = $($(this).attr("data-modal")).html();
+      Chaskiq.Helpers.showModal(html, "Upload CSV");
+      return false
+    })
+
 });
 
 

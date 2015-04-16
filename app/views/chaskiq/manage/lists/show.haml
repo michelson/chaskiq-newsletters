@@ -1,8 +1,8 @@
 
-.pull-right
+#upload-to-modal.hide
   = simple_form_for @list, url: upload_manage_list_path(@list) do |f|
     = f.input :upload_file, as: :file
-    = f.submit
+    -#= f.submit
 
 = render "menu"
 
@@ -11,37 +11,54 @@
   .col-lg-12
     .ibox.float-e-margins
       .ibox-title
-        %h5 Subscribers of "#{@list.name}" list
+        %h5 #{@list.subscribers.size} Subscribers in #{@list.name}'s list
 
-      .ibox-content
-        %table.table
-          %thead
+        .pull-right
+          .btn-group
+            %button.btn.btn-info.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown"}
+              Actions
+              %span.caret
+            %ul.dropdown-menu
+              %li
+                %a{href: "#", 'data-modal'=> "#upload-to-modal"}
+                  %i.fa.fa-upload
+                  Upload csv
+              %li
+                = link_to clear_manage_list_path(@list), confirm: "sure?" do
+                  %i.fa.fa-trash
+                  Clear list
+
+
+
+    .ibox-content
+      %table.table
+        %thead
+          %tr
+            %th #
+            %th State
+            %th Email
+            %th First Name
+            %th Last Name
+            %th
+            %th
+        %tbody
+          - @subscribers.each do |sub|
             %tr
-              %th #
-              %th State
-              %th Email
-              %th First Name
-              %th Last Name
-              %th
-              %th
-          %tbody
-            - @subscribers.each do |sub|
-              %tr
-                %td{:scope => "row"}
-                  = sub.id
-                %td
-                  %span.label{class: sub.style_class}
-                    %i.fa.fa-check
-                    = sub.state
-                %td=sub.email
-                %td=sub.name
-                %td=sub.last_name
-                %td
-                  = link_to edit_manage_list_subscriber_path(@list, sub) do
-                    %i.fa.fa-edit
-                %td
-                  = link_to manage_list_subscriber_path(@list, sub), method: :delete, confirm: "sure?" do
-                    %i.fa.fa-times
+              %td{:scope => "row"}
+                = sub.id
+              %td
+                %span.label{class: sub.style_class}
+                  %i.fa.fa-check
+                  = sub.state
+              %td=sub.email
+              %td=sub.name
+              %td=sub.last_name
+              %td
+                = link_to edit_manage_list_subscriber_path(@list, sub) do
+                  %i.fa.fa-edit
+              %td
+                = link_to manage_list_subscriber_path(@list, sub), method: :delete, confirm: "sure?" do
+                  %i.fa.fa-times
 
   .pagination
     = paginate @subscribers

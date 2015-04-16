@@ -733,8 +733,6 @@ class window.Editor extends Backbone.View
       .find(".#{@current_section.name}Content")
       .css(property, value)
 
-
-
   backgroundFieldsFor: (target)->
     ["<input class='colorpicker' data-css='#{target.selector}' data-css-property='background-color' type='text' autocomplete='off' tabindex='0' value='0'>"].join(" ")
 
