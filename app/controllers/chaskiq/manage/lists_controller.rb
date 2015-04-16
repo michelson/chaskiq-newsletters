@@ -22,6 +22,19 @@ module Chaskiq
       @list =  Chaskiq::List.find(params[:id])
     end
 
+    def upload
+      @list =  Chaskiq::List.find(params[:id])
+      #binding.pry
+      if path = params[:list][:upload_file].try(:tempfile)
+        #binding.pry
+        Chaskiq::ListImporterJob.perform_later(@list, params[:list][:upload_file].tempfile.path)
+        flash[:notice] = "We are importing in background, refresh after a while ;)"
+      else
+        flash[:error] = "Whoops!"
+      end
+      redirect_to manage_list_path(@list)
+    end
+
     def update
       @list =  Chaskiq::List.find(params[:id])
       if @list.update_attributes(resource_params)

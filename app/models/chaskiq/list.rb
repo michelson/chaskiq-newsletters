@@ -6,6 +6,8 @@ module Chaskiq
 
     accepts_nested_attributes_for :subscribers
 
+    attr_accessor :upload_file
+
     def subscription_progress
       return 0 if subscribers.where(state: "subscribed").size.zero?
       (subscribers.where(state: "subscribed").size.to_f / subscribers.size.to_f  * 100.0).to_i

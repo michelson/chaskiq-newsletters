@@ -1,5 +1,11 @@
 
+.pull-right
+  = simple_form_for @list, url: upload_manage_list_path(@list) do |f|
+    = f.input :upload_file, as: :file
+    = f.submit
+
 = render "menu"
+
 
 .wrapper.wrapper-content
   .col-lg-12

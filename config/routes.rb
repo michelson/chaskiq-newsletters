@@ -43,6 +43,10 @@ Chaskiq::Engine.routes.draw do
     end
 
     resources :lists, controller: 'manage/lists' do
+      member do
+        patch :upload
+        get :clear
+      end
       resources :subscribers, controller: 'manage/subscribers'
     end
     resources :templates, controller: 'manage/templates'
