@@ -16,6 +16,7 @@ require 'groupdate'
 require 'chartkick'
 require 'jquery-rails'
 require 'deep_cloneable'
+require 'aws/ses'
 
 Dotenv.load
 

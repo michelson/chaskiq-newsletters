@@ -45,11 +45,11 @@ Rails.application.configure do
   config.action_controller.default_url_options = {host: 'http://localhost:3000'}
   config.action_mailer.default_url_options = {host: 'http://localhost:3000'}
 
-  config.action_mailer.smtp_settings = {
-    :address => ENV['EMAIL_ADDRESS'],
-    :user_name => ENV['EMAIL_USER_NAME'], # Your SMTP user here.
-    :password => ENV['EMAIL_PASSWORD'], # Your SMTP password here.
-    :authentication => :login,
-    :enable_starttls_auto => true
-  }
+  #config.action_mailer.smtp_settings = {
+  #  :address => ENV['EMAIL_ADDRESS'],
+  #  :user_name => ENV['EMAIL_USER_NAME'], # Your SMTP user here.
+  #  :password => ENV['EMAIL_PASSWORD'], # Your SMTP password here.
+  #  :authentication => :login,
+  #  :enable_starttls_auto => true
+  #}
 end

@@ -19,5 +19,6 @@ gem 'wicked', require: true
 gem 'sinatra', :require => nil
 gem "mysql2"
 gem "web-console"
+gem "aws-ses", github: "drewblas/aws-ses"
 
 #gem 'premailer', github: 'premailer/premailer'

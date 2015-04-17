@@ -46,25 +46,30 @@ private
     def process_bounce(m)
       emails = m["bounce"]["bouncedRecipients"].map{|o| o["emailAddress"] }
       source = m["mail"]["source"]
-      track_message_for("bounce", emails, source)
+      binding.pry
+      track_message_for("bounce", m)
     end
 
     def process_complaint(m)
       emails = m["complaint"]["complainedRecipients"].map{|o| o["emailAddress"] }
       source = m["mail"]["source"]
-      track_message_for("spam", emails, source)
+      track_message_for("spam", m)
     end
 
-    def track_message_for(track_type, emails, source)
-      subscribers = Chaskiq::Subscriber.where(email: emails )
-      campaign = Chaskiq::Campaign.find_by(from_email: source)
-      subscriptions = campaign.subscriptions.where(subscriber_id: subscribers.map(&:id) )
+    def track_message_for(track_type, m)
+      data = m["mail"]["messageId"]
+      metric = Chaskiq::Metric.find_by(data:m["mail"]["messageId"])
+      return if metric.blank?
+      campaign = metric.campaign
+      subscriber = metric.trackable
+      subscription = campaign.subscriptions.find_by(subscriber: subscriber)
 
-      subscriptions.each do |s|
-        s.unsubscribe! if track_type == "spam"
-        s.subscriber.send("track_#{track_type}".to_sym, { host: get_referrer, campaign_id: campaign.id })
-      end
-
+      subscription.unsubscribe! if track_type == "spam"
+      subscription.subscriber.send("track_#{track_type}".to_sym, {
+        host: get_referrer,
+        campaign_id: campaign.id,
+        data: data
+      })
     end
 
     def send_subscription_confirmation(request_body)

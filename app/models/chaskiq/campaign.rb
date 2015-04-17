@@ -68,9 +68,7 @@ module Chaskiq
 
     #deliver email + create metric
     def push_notification(subscriber)
-      metrics.create(trackable: subscriber, action: "deliver")
-      mailer = prepare_mail_to(subscriber)
-      mailer.deliver_later
+      Chaskiq::SesSenderJob.perform_later(self, subscriber)
     end
 
     def prepare_mail_to(subscriber)

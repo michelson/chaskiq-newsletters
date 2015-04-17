@@ -10,4 +10,15 @@ TODO: roadmap for 0.0.1
 + public views
   + suscribe
   + unsuscribe
-+ sidekiq deliveries (via active job)
+
+
++ changes for model
+
+mover asociacion de metricas de subscriptor a subscripcion
+detectar campaña en el hook receiver (como está ahora puede generar errores cuando hay varios reply-message)
+
+custom header,
+test , send try my
+put a binding.pry in hooks and check custom header
+
+

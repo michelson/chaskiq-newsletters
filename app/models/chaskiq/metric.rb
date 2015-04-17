@@ -1,7 +1,7 @@
 module Chaskiq
   class Metric < ActiveRecord::Base
     belongs_to :trackable, polymorphic: true, required: true
-
+    belongs_to :campaign
     #system output
     scope :deliveries, ->{where(action: "deliver")}
 
