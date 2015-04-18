@@ -10,8 +10,6 @@ gemspec
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
-# To use a debugger
-# gem 'debugger', group: [:development, :test]
 gem "pry"
 gem 'eventmachine'
 gem "rainbows"
@@ -19,6 +17,3 @@ gem 'wicked', require: true
 gem 'sinatra', :require => nil
 gem "mysql2"
 gem "web-console"
-gem "aws-ses", github: "drewblas/aws-ses"
-
-#gem 'premailer', github: 'premailer/premailer'

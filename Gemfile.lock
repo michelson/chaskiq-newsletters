@@ -1,18 +1,9 @@
-GIT
-  remote: git://github.com/drewblas/aws-ses.git
-  revision: e16be3a217395cf576ac0226a606378839f62a6c
-  specs:
-    aws-ses (0.6.0)
-      builder
-      mail (> 2.2.5)
-      mime-types
-      xml-simple
-
 PATH
   remote: .
   specs:
     chaskiq (0.0.4)
       aasm
+      aws-ses
       bootstrap-sass
       carrierwave
       chartkick
@@ -83,6 +74,11 @@ GEM
     autoprefixer-rails (5.1.9)
       execjs
       json
+    aws-ses (0.6.0)
+      builder
+      mail (> 2.2.5)
+      mime-types
+      xml-simple
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.3.4.1)
@@ -387,7 +383,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aws-ses!
   chaskiq!
   database_cleaner
   eventmachine

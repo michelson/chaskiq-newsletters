@@ -43,6 +43,7 @@ Gem::Specification.new do |s|
   s.add_dependency "chartkick"
   s.add_dependency "jquery-rails"
   s.add_dependency "deep_cloneable"
+  s.add_dependency "aws-ses"
 
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "sqlite3"
