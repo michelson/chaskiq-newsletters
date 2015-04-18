@@ -11,4 +11,16 @@ namespace :chaskiq do
       sub.save
     end
   end
+
+  task update_metrics: :environment do
+    Chaskiq::Metric.all.each do |m|
+      subscription = m.trackable
+
+      if !subscription.blank? && subscription.kind_of?(Chaskiq::Subscriber)
+        m.trackable = subscription.subscriptions.first
+        m.save
+        puts "yes"
+      end
+    end
+  end
 end
