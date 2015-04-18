@@ -6,6 +6,17 @@ body {
   padding-top:50px;
 }
 
+.navbar-default {
+    background-color: white;
+    opacity: 0.9;
+    border-color: #e7e7e7;
+}
+
+.btn {
+    border-radius: 0px;
+    font-size: 14px;
+}
+
 footer {
   margin-top:40px;
   padding-top:40px;
@@ -52,6 +63,18 @@ a,a:hover {
   #masthead h1 {
     font-size: 80px;
   }
+}
+
+.navbar-brand{
+  margin-left: -30px !important;
+}
+.breadcrumb {
+    background-color: transparent !important;
+    border-radius: 4px !important;
+    font-size: 0.8em !important;
+    list-style: outside none none ;
+    margin-bottom: 6px !important;
+    padding: 0 1px !important;
 }
 
 .dropdown-menu {
@@ -172,7 +195,6 @@ a,a:hover {
   font-size: 28px;
   }
 }
-
 
 .ibox {
   clear: both;
@@ -713,6 +735,9 @@ dd.project-people {
 
 
 
+.progress {background: rgba(255, 255, 255, 1); border: 1px solid rgba(245, 245, 245, 1); border-radius: 0px; height: 10px;}
+.progress-bar-custom {background: rgba(82, 72, 84, 1); background: -webkit-linear-gradient(top, rgba(150, 36, 212, 1) 0%, rgba(82, 72, 84, 1) 100%); background: linear-gradient(to bottom, rgba(150, 36, 212, 1) 0%, rgba(82, 72, 84, 1) 100%);}
+.progress-striped .progress-bar-custom {background-color: rgba(82, 72, 84, 1); background-image: -webkit-gradient(linear,0 100%,100% 0,color-stop(0.25,rgba(72, 30, 117, 0.15),color-stop(0.25,transparent),color-stop(0.5,transparent),color-stop(0.5,rgba(72, 30, 117, 0.15)),color-stop(0.75,rgba(72, 30, 117, 0.15)),color-stop(0.75,transparent),to(transparent))); background-image: -webkit-linear-gradient(45deg,rgba(72, 30, 117, 0.15) 25%,transparent 25%,transparent 50%,rgba(72, 30, 117, 0.15) 50%,rgba(72, 30, 117, 0.15) 75%,transparent 75%,transparent); background-image: linear-gradient(45deg,rgba(72, 30, 117, 0.15) 25%,transparent 25%,transparent 50%,rgba(72, 30, 117, 0.15) 50%,rgba(72, 30, 117, 0.15) 75%,transparent 75%,transparent); background-size: 17px 17px;}
 
 
 

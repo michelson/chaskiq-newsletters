@@ -34,18 +34,25 @@
               - Chaskiq::Campaign.order("updated_at desc").limit(5).each do |c|
                 %div
                   .pull-right.text-right
-                    .label.label-primary
-                      %i.fa.fa-paper-plane
-                      = c.metrics.deliveries.size
-
-                    %span.bar_dashboard
-                      = c.sparklines_by_day().join(", ")
+                    = render "chaskiq/manage/campaigns/config_actions", campaign: c
 
                   %h4
-                    = c.name
-                    %br/
+                    = link_to c.name, manage_campaign_path(c)
                     %small.m-r
-                      %a{:href => manage_campaign_path(c)} view campaign
+                      %i.fa.fa-paper-plane
+                        = c.metrics.deliveries.size
+                        deliveries
+
+
+                  %span.bar_dashboard.pull-right
+                    = c.sparklines_by_day().join(", ")
+
+                  -#
+                    .label
+                      %i.fa.fa-paper-plane
+
+
+
                 %hr
 
 - content_for :javascript do

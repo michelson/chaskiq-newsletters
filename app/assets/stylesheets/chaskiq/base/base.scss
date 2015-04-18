@@ -1,3 +1,4 @@
+
 body {
   font-family: $font-stack;
   background-color: $nav-bg;
@@ -417,11 +418,17 @@ img.circle-border {
   cursor: move;
 }
 
+
 .breadcrumb {
-  background-color: white;
-  padding: 0;
-  margin-bottom: 0;
+    background-color: transparent !important;
+    border-radius: 4px !important;
+    font-size: 0.8em !important;
+    list-style: outside none none ;
+    margin-bottom: 6px !important;
+    padding: 0 1px !important;
 }
+
+
 
 .breadcrumb > li a {
   color: inherit;

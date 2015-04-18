@@ -58,7 +58,7 @@
                 %dd
 
                   .progress.active.m-b-sm
-                    .progress-bar{:style => "width: #{@campaign.delivery_progress}%;"}
+                    .progress-bar.progress-bar-custom{:style => "width: #{@campaign.delivery_progress}%;"}
                   %small
                     Deliveries completed in
                     %strong=number_to_percentage(@campaign.delivery_progress, precision: 0)
