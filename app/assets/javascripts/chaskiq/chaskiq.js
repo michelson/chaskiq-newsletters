@@ -25,6 +25,8 @@ $(document).ready(function () {
       return false
     })
 
+    $('.input-field select').select2();
+
 });
 
 

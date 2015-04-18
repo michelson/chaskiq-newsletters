@@ -13,7 +13,7 @@ class window.Editor extends Backbone.View
     "dragleave #bodyTable" : "hideSections"
     "drop #bodyTable" : "hideSections"
     "dragover .tpl-block" : "displayItemOver"
-    "dragover .mojoMcContainerEmptyMessage": "displayItemOver"
+    "dragover .chaskiqContainerEmptyMessage": "displayItemOver"
 
     'drop #templateBody': "drop"
     'drop #templatePreheader': "drop"
@@ -34,7 +34,8 @@ class window.Editor extends Backbone.View
     "change .font-spacing": "changeProperty"
     "change .font-align": "changeProperty"
 
-    "submit form" : "submitEditor"
+    #"submit form" : "submitEditor" #get recursion!
+    "click input.submit": "submitEditor"
 
   initialize: ->
     @textarea = $(@el).find('#campaign_html_content')
@@ -62,10 +63,13 @@ class window.Editor extends Backbone.View
     $("#campaign_css").val(rules.join(" "))
 
   submitEditor: (ev)->
+    @removeTplBlockControls()
     @copyToTextArea()
     @copyCssRulesToTextArea()
-    $(ev.currentTarget).submit()
-    false
+
+    setTimeout ->
+      $(ev.currentTarget).submit()
+    , 600
 
   template: ->
     '<p>dsfsd</p>'
@@ -78,16 +82,27 @@ class window.Editor extends Backbone.View
 
     $('.colorpicker').colorpicker();
 
+    @removeTplBlockControls() #for legacy already embeded tmp controls
+    @addTplBlockControls()
+
+  removeTplBlockControls: ->
+    $(".tpl-block-controls").remove()
+
+  addTplBlockControls: ->
+    _.each $(".chaskiqBlock.tpl-block"), (n)=>
+      $(n).append(@templateBlockControls())
+
   displaySections: (ev)->
 
     #console.log($(ev.currentTarget))
     #console.log($(ev.currentTarget).hasClass("tpl-container"))
     container = $(ev.currentTarget).parent(".tpl-container")
 
-    _.each $('.tpl-container'), (n)->
-      return if $(n).find(".legend").length > 0
-      $(n).append("<div class='legend default'>#{$(n).attr("mc:container")}</div>")
-
+    #_.each $('.tpl-container'), (n)->
+    #  return if $(n).find(".legend").length > 0
+    #  #debugger
+    #  #$(n).append("<div class='legend default'>#{$(n).attr("mc:container")}</div>")
+    container.append("<div class='legend default'>#{$(container).attr("mc:container")}</div>")
     container.addClass("default")
 
     if container.hasClass("tpl-container")
@@ -112,9 +127,9 @@ class window.Editor extends Backbone.View
   displayItemOver: (ev)->
     @displaySections(ev)
 
-    $('.tpl-block').removeClass("dojoDndItemBefore")
+    $('.tpl-block').removeClass("chaskiqDndItemBefore")
     if $(ev.currentTarget).hasClass("tpl-block")
-      $(ev.currentTarget).addClass("dojoDndItemBefore")
+      $(ev.currentTarget).addClass("chaskiqDndItemBefore")
 
     ev.preventDefault()
 
@@ -133,7 +148,7 @@ class window.Editor extends Backbone.View
 
   displayEmptyBlocks: ->
     _.each $('.tpl-container'), (container)->
-      empty_message = $(container).find('.mojoMcContainerEmptyMessage')
+      empty_message = $(container).find('.chaskiqContainerEmptyMessage')
       if $(container).find(".tpl-block").length > 0
         empty_message.hide()
       else
@@ -163,15 +178,15 @@ class window.Editor extends Backbone.View
 
   dropBlock: (container, tmpl)->
     #drop on before item or in tpl-container
-    if $(".tpl-block.dojoDndItemBefore").length > 0
-      container.find(".tpl-block.dojoDndItemBefore").before(tmpl)
-      container.find('.mojoMcContainerEmptyMessage').hide()
+    if $(".tpl-block.chaskiqDndItemBefore").length > 0
+      container.find(".tpl-block.chaskiqDndItemBefore").before(tmpl)
+      container.find('.chaskiqContainerEmptyMessage').hide()
     else
       container.find(".tpl-container").append(tmpl)
-      #container.find('.mojoMcContainerEmptyMessage').hide()
+      #container.find('.chaskiqContainerEmptyMessage').hide()
 
   releaseBeforeItem: ()->
-    $(".tpl-block").removeClass("dojoDndItemBefore")
+    $(".tpl-block").removeClass("chaskiqDndItemBefore")
 
   displayWysiwyg: ->
     $('.block-settings').show()
@@ -233,12 +248,12 @@ class window.Editor extends Backbone.View
     target.parents(".tpl-block").remove()
 
     if container.find(".tpl-block").length is 0
-      container.find(".mojoMcContainerEmptyMessage").show()
+      container.find(".chaskiqContainerEmptyMessage").show()
     false
 
   wrapBlock: (content)->
-    "<div class='mojoMcBlock tpl-block dojoDndItem'>
-      <div data-dojo-attach-point='containerNode'>
+    "<div class='chaskiqBlock tpl-block chaskiqDndItem'>
+      <div data-chaskiq-attach-point='containerNode'>
         #{content}
       </div>
       #{@templateBlockControls()}
@@ -246,9 +261,8 @@ class window.Editor extends Backbone.View
 
   templateBlockControls: ->
     "<div class='tpl-block-controls'>
-      <a data-dojo-attach-point='editBtn' class='tpl-block-edit' href='#' title='Edit Block'><i class='fa fa-edit'></i></a>
-      <a data-dojo-attach-point='cloneBtn' class='tpl-block-clone' href='#' title='Duplicate Block'><i class='fa fa-files-o'></i></a>
-      <a data-dojo-attach-point='deleteBtn' class='tpl-block-delete' href='#' title='Delete Block'><i class='fa fa-trash'></i></a>
+      <a data-chaskiq-attach-point='editBtn' class='tpl-block-edit' href='#' title='Edit Block'><i class='fa fa-arrows'></i></a>
+      <a data-chaskiq-attach-point='deleteBtn' class='tpl-block-delete' href='#' title='Delete Block'><i class='fa fa-trash'></i></a>
     </div>"
 
   baseTemplate: ()->
@@ -265,8 +279,8 @@ class window.Editor extends Backbone.View
                     <table width='600' cellspacing='0' cellpadding='0' border='0' id='templatePreheader'>
                       <tbody>
                         <tr>
-                          <td valign='top' mccontainer='preheader_container' mc:container='preheader_container' style='padding-top:9px;' class='preheaderContainer tpl-container dojoDndSource dojoDndTarget dojoDndContainer'>
-                            <div class='mojoMcContainerEmptyMessage' style='display: block;'>Drop Content Blocks Here</div>
+                          <td valign='top' mccontainer='preheader_container' mc:container='preheader_container' style='padding-top:9px;' class='preheaderContainer tpl-container chaskiqDndSource chaskiqDndTarget chaskiqDndContainer'>
+                            <div class='chaskiqContainerEmptyMessage' style='display: block;'>Drop Content Blocks Here</div>
                           </td>
                         </tr>
                       </tbody>
@@ -280,8 +294,8 @@ class window.Editor extends Backbone.View
                     <table width='600' cellspacing='0' cellpadding='0' border='0' id='templateHeader'>
                       <tbody>
                         <tr>
-                          <td valign='top' mccontainer='header_container' mc:container='header_container' class='headerContainer tpl-container dojoDndSource dojoDndTarget dojoDndContainer'>
-                            <div class='mojoMcContainerEmptyMessage' style='display: block;'>Drop Content Blocks Here</div>
+                          <td valign='top' mccontainer='header_container' mc:container='header_container' class='headerContainer tpl-container chaskiqDndSource chaskiqDndTarget chaskiqDndContainer'>
+                            <div class='chaskiqContainerEmptyMessage' style='display: block;'>Drop Content Blocks Here</div>
                           </td>
                         </tr>
                       </tbody>
@@ -295,8 +309,8 @@ class window.Editor extends Backbone.View
                     <table width='600' cellspacing='0' cellpadding='0' border='0' id='templateBody'>
                       <tbody>
                         <tr>
-                          <td valign='top' mccontainer='body_container' mc:container='body_container' class='bodyContainer tpl-container dojoDndSource dojoDndTarget dojoDndContainer'>
-                            <div class='mojoMcContainerEmptyMessage' style='display: block;'>Drop Content Blocks Here</div>
+                          <td valign='top' mccontainer='body_container' mc:container='body_container' class='bodyContainer tpl-container chaskiqDndSource chaskiqDndTarget chaskiqDndContainer'>
+                            <div class='chaskiqContainerEmptyMessage' style='display: block;'>Drop Content Blocks Here</div>
                           </td>
                         </tr>
                       </tbody>
@@ -310,8 +324,8 @@ class window.Editor extends Backbone.View
                     <table width='600' cellspacing='0' cellpadding='0' border='0' id='templateFooter'>
                       <tbody>
                         <tr>
-                          <td valign='top' mccontainer='footer_container' style='padding-bottom:9px;' mc:container='footer_container' class='footerContainer tpl-container dojoDndSource dojoDndTarget dojoDndContainer'>
-                            <div class='mojoMcContainerEmptyMessage' style='display: block;'>Drop Content Blocks Here</div>
+                          <td valign='top' mccontainer='footer_container' style='padding-bottom:9px;' mc:container='footer_container' class='footerContainer tpl-container chaskiqDndSource chaskiqDndTarget chaskiqDndContainer'>
+                            <div class='chaskiqContainerEmptyMessage' style='display: block;'>Drop Content Blocks Here</div>
                               #{@wrapBlock(@subscriptionBlock())}
                           </td>
                         </tr>
@@ -403,12 +417,12 @@ class window.Editor extends Backbone.View
                 <tr>
                   <td valign='top' style='padding-right: 9px; padding-left: 9px; padding-top: 0; padding-bottom: 0;' class='mcnImageContent'>
                     <table class='mcpreview-image-uploader' style='width:564px;'>
-                      <tr class='mojoImageUploader blockDropTarget' id='dijit__Templated_8' widgetid='dijit__Templated_8'>
+                      <tr class='chaskiqImageUploader blockDropTarget' id='dijit__Templated_8' widgetid='dijit__Templated_8'>
                         <td>
                           <div class='imagePlaceholder'>
-                            <img src='/images/blocks/empty-image-144.png' class='mojoImageItemIcon' data-dojo-attach-point='emptyImage'>
-                            <div data-dojo-attach-point='uploadText'><span>Drop an image here</span><br>or</div>
-                            <div><input type='button' value='browse' class='button-small p3' data-dojo-attach-point='browseBtn'></div>
+                            <img src='/images/blocks/empty-image-144.png' class='chaskiqImageItemIcon' data-chaskiq-attach-point='emptyImage'>
+                            <div data-chaskiq-attach-point='uploadText'><span>Drop an image here</span><br>or</div>
+                            <div><input type='button' value='browse' class='button-small p3' data-chaskiq-attach-point='browseBtn'></div>
                           </div>
                         </td>
                       </tr>
@@ -431,13 +445,13 @@ class window.Editor extends Backbone.View
               <tbody>
                 <tr>
                   <td valign='top' style='padding-left: 9px; padding-top: 0; padding-bottom: 0;' class='mcnImageGroupContent'>
-                    <table data-mc-id='0' class='mcpreview-image-uploader' style='width:264px;'>
-                      <tr class='mojoImageUploader blockDropTarget' id='dijit__Templated_12' widgetid='dijit__Templated_12'>
+                    <table data-chaskiq-id='0' class='mcpreview-image-uploader' style='width:264px;'>
+                      <tr class='chaskiqImageUploader blockDropTarget' id='dijit__Templated_12' widgetid='dijit__Templated_12'>
                         <td>
                           <div class='imagePlaceholder'>
-                            <img src='/images/blocks/empty-image-144.png' class='mojoImageItemIcon' data-dojo-attach-point='emptyImage'>
-                            <div data-dojo-attach-point='uploadText'><span>Drop an image here</span><br>or</div>
-                            <div><input type='button' value='browse' class='button-small p3' data-dojo-attach-point='browseBtn'></div>
+                            <img src='/images/blocks/empty-image-144.png' class='chaskiqImageItemIcon' data-chaskiq-attach-point='emptyImage'>
+                            <div data-chaskiq-attach-point='uploadText'><span>Drop an image here</span><br>or</div>
+                            <div><input type='button' value='browse' class='button-small p3' data-chaskiq-attach-point='browseBtn'></div>
                           </div>
                         </td>
                       </tr>
@@ -450,13 +464,13 @@ class window.Editor extends Backbone.View
               <tbody>
                 <tr>
                   <td valign='top' style='padding-right: 9px; padding-top: 0; padding-bottom: 0;' class='mcnImageGroupContent'>
-                    <table data-mc-id='1' class='mcpreview-image-uploader' style='width:264px;'>
-                      <tr class='mojoImageUploader blockDropTarget' id='dijit__Templated_13' widgetid='dijit__Templated_13'>
+                    <table data-chaskiq-id='1' class='mcpreview-image-uploader' style='width:264px;'>
+                      <tr class='chaskiqImageUploader blockDropTarget' id='dijit__Templated_13' widgetid='dijit__Templated_13'>
                         <td>
                           <div class='imagePlaceholder'>
-                            <img src='/images/blocks/empty-image-144.png' class='mojoImageItemIcon' data-dojo-attach-point='emptyImage'>
-                            <div data-dojo-attach-point='uploadText'><span>Drop an image here</span><br>or</div>
-                            <div><input type='button' value='browse' class='button-small p3' data-dojo-attach-point='browseBtn'></div>
+                            <img src='/images/blocks/empty-image-144.png' class='chaskiqImageItemIcon' data-chaskiq-attach-point='emptyImage'>
+                            <div data-chaskiq-attach-point='uploadText'><span>Drop an image here</span><br>or</div>
+                            <div><input type='button' value='browse' class='button-small p3' data-chaskiq-attach-point='browseBtn'></div>
                           </div>
                         </td>
                       </tr>
@@ -479,13 +493,13 @@ class window.Editor extends Backbone.View
               <tbody>
                 <tr>
                   <td valign='top' align='left' style='padding-top:18px; padding-right:18px; padding-bottom:0; padding-left:18px;' class='mcnImageCardBottomImageContent'>
-                    <table data-mc-id='' class='mcpreview-image-uploader' style='width: 528px;'>
-                      <tr class='mojoImageUploader blockDropTarget' id='dijit__Templated_19' widgetid='dijit__Templated_19'>
+                    <table data-chaskiq-id='' class='mcpreview-image-uploader' style='width: 528px;'>
+                      <tr class='chaskiqImageUploader blockDropTarget' id='dijit__Templated_19' widgetid='dijit__Templated_19'>
                         <td>
                           <div class='imagePlaceholder'>
-                            <img src='/images/blocks/empty-image-144.png' class='mojoImageItemIcon' data-dojo-attach-point='emptyImage'>
-                            <div data-dojo-attach-point='uploadText'><span>Drop an image here</span><br>or</div>
-                            <div><input type='button' value='browse' class='button-small p3' data-dojo-attach-point='browseBtn'></div>
+                            <img src='/images/blocks/empty-image-144.png' class='chaskiqImageItemIcon' data-chaskiq-attach-point='emptyImage'>
+                            <div data-chaskiq-attach-point='uploadText'><span>Drop an image here</span><br>or</div>
+                            <div><input type='button' value='browse' class='button-small p3' data-chaskiq-attach-point='browseBtn'></div>
                           </div>
                         </td>
                       </tr>
@@ -694,13 +708,13 @@ class window.Editor extends Backbone.View
     "<fieldset>#{tpl.join(" ")}</fieldset>"
 
   templateToolsFor: (n)->
-    title = "<h3>#{n.name}</h3><hr>"
+    title = "<h3>#{n.name}</h3>"
     tools = ""
     switch n.template
       when "background"
         tools = @backgroundFieldsFor(n)
       when "typography"
-        tools = @TypoFieldsFor(n)
+        tools = @typoFieldsFor(n)
 
     [title, tools].join(" ")
 
@@ -740,30 +754,30 @@ class window.Editor extends Backbone.View
     Array.apply(null, length: n).map Number.call, Number
 
   #border style, width, color
-  TypoFieldsFor: (target)->
-    color = "<label>Font color</label><input class='colorpicker' data-css='#{target.selector}' data-css-property='color' type='text' autocomplete='off' tabindex='0' value='0'>"
+  typoFieldsFor: (target)->
+    color = "<div class='input-field'><label>Font color</label><input class='colorpicker' data-css='#{target.selector}' data-css-property='color' type='text' autocomplete='off' tabindex='0' value='0'></div>"
 
-    sizeFont = "<label>font Size</label><select class='text-size-picker' id='' data-css='#{target.selector}' data-css-property='font-size'>"
+    sizeFont = "<div class='input-field'><label>font Size</label><select class='text-size-picker' id='' data-css='#{target.selector}' data-css-property='font-size'>"
     _.each @arrayGen(30), (n)->
       sizeFont += "<option value='#{n}px'>#{n}px</option>"
-    sizeFont += "</select>"
+    sizeFont += "</select></div>"
 
-    familyFont = "<label>Font Family</label><select class='font-picker' data-css='#{target.selector}' data-css-property='font-family'>
+    familyFont = "<div class='input-field'><label>Font Family</label><select class='font-picker' data-css='#{target.selector}' data-css-property='font-family'>
       <option value='Helvetica'>Helvetica</option>
       <option value='Arial'>Arial</option>
       <option value='Georgia'>Georgia</option>
       <option value='Verdana'>Verdana</option>
-      </select>"
+      </select></div>"
 
-    weight = "<label>Font Weight</label><select class='font-weight' data-css='#{target.selector}' data-css-property='font-weight'>
+    weight = "<div class='input-field'><label>Font Weight</label><select class='font-weight' data-css='#{target.selector}' data-css-property='font-weight'>
       <option value='normal'>normal</option>
       <option value='bold'>bold</option>
-      </select>"
+      </select></div>"
 
     #styleFont
     #weightline
     #heightletter
-    spacingtext = "<label>Spacing text</label><select class='font-spacing' data-css='#{target.selector}' data-css-property='letter-spacing'>
+    spacingtext = "<div class='input-field'><label>Spacing text</label><select class='font-spacing' data-css='#{target.selector}' data-css-property='letter-spacing'>
           <option value='-5px'>-5px</option>
           <option value='-4px'>-4px</option>
           <option value='-3px'>-3px</option>
@@ -775,13 +789,13 @@ class window.Editor extends Backbone.View
           <option value='-3px'>-3px</option>
           <option value='-4px'>-4px</option>
           <option value='-5px'>-5px</option>
-          </select>"
+          </select></div>"
 
-    align = "<label>Text Align</label><select class='font-align' data-css='#{target.selector}' data-css-property='text-align'>
+    align = "<div class='input-field'><label>Text Align</label><select class='font-align' data-css='#{target.selector}' data-css-property='text-align'>
           <option value='center'>center</option>
           <option value='left'>left</option>
           <option value='right'>right</option>
           <option value='justify'>justify</option>
-          </select>"
+          </select></div>"
 
-    [color, sizeFont, familyFont, weight, spacingtext, align].join("<hr>")
+    [color, sizeFont, familyFont, weight, spacingtext, align].join(" ")

@@ -24,7 +24,7 @@
 //= require summernote/summernote.min.js
 // require stylesheet/jquery.stylesheet.min.js
 //= require datapicker/bootstrap-datepicker.js
-
+//= require select2/select2.min.js
 
 //= require jquery_ujs
 

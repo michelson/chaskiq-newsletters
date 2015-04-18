@@ -57,10 +57,12 @@ read more about heroku, vps installs, amazon integration and more in our wiki pa
 
 # TODO:
 
-+ buscadores.
-+ editor ta casi , pero cambiar nombres apretar estilos.
-+ apretar estilos.
-+ mas reportes.
++ search items.
++ improve mail editor.
++ styles on panel.
++ more reportery.
++ scheduled deliveries.
++ send to list segments.
 
 
 
