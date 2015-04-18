@@ -21,7 +21,6 @@ require 'aws/ses'
 Dotenv.load
 
 module Chaskiq
-  URLcrypt.key = 'chaskiq123'
   autoload :VERSION, "chaskiq/version"
   autoload :Config, "chaskiq/config"
   autoload :CsvImporter, "chaskiq/csv_importer"

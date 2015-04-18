@@ -56,7 +56,6 @@ private
     end
 
     def track_message_for(track_type, m)
-      puts m
       Chaskiq::SnsReceiverJob.perform_later(track_type, m, get_referrer)
     end
 

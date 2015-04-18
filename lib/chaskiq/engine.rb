@@ -12,9 +12,8 @@ module Chaskiq
 
     config.action_mailer.delivery_method = :ses
 
-    initializer "chaskiq_aws_setup", :after => :load_config_initializers, :group => :all do
-      Chaskiq::Config.config_ses
-      Chaskiq::Config.config_fog
+    initializer "chaskiq_setup", :after => :load_config_initializers, :group => :all do
+      Chaskiq::Config.configure!
     end
   end
 end
