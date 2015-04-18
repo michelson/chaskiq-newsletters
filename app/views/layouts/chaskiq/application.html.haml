@@ -15,24 +15,25 @@
     = csrf_meta_tags
   %body.gray-bg
 
-    = render 'layouts/chaskiq/topnavbar'
+    #main-wrap
+      = render 'layouts/chaskiq/topnavbar'
 
-    / /cont
+      / /cont
 
-    = render "shared/flashes"
+      = render "shared/flashes"
 
-    .container
-      .row
-        = yield
-
-    #footer.container
-      .row
-        .col.col-sm-12
-
-    %footer
       .container
         .row
-          = render 'layouts/chaskiq/footer'
+          = yield
+
+      #footer.container
+        .row
+          .col.col-sm-12
+
+      %footer
+        .container
+          .row
+            = render 'layouts/chaskiq/footer'
 
     = render "shared/modal"
 

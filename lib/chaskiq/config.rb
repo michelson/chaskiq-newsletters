@@ -15,12 +15,13 @@ module Chaskiq
     def self.configure!
       begin
         self.check_config_vars
-
         self.config_urlcript
         self.config_ses
         self.config_fog
+      #we will rescue this in order to allow rails g chaskiq:install works
       rescue Chaskiq::ConfigError => e
         puts e
+        puts e.message
       end
     end
 

@@ -10,6 +10,7 @@ class window.Editor extends Backbone.View
     'drag .blocks li a' : 'drag'
     'drag .tpl-block-controls a' : 'drag'
     'dragstart .tpl-block-controls a': 'setDraggedEl'
+    'dragend .tpl-block-controls a': 'removeDraggedEl'
     "dragleave #bodyTable" : "hideSections"
     "drop #bodyTable" : "hideSections"
     "dragover .tpl-block" : "displayItemOver"
@@ -112,17 +113,21 @@ class window.Editor extends Backbone.View
     ev.preventDefault()
 
   setDraggedEl: (e)->
-    crt = $(e.currentTarget).parents(".tpl-block")[0].cloneNode(true) #.clone()
-    crt.style.backgroundColor = "white";
-    crt.style.position = "absolute";
-    crt.style.border = "1px solid #666";
-    crt.style.boxShadow = "1px 2px 2px #adadad"
-    crt.style.top = "0px";
-    crt.style.right = "0px";
-    crt.style.opacity = 0.9;
-    document.body.appendChild(crt);
+    @crt = $(e.currentTarget).parents(".tpl-block")[0].cloneNode(true) #.clone()
+    @crt.style.backgroundColor = "white";
+    @crt.style.position = "absolute";
+    @crt.style.border = "1px solid #666";
+    @crt.style.boxShadow = "1px 2px 2px #adadad"
+    @crt.style.top = "0px";
+    @crt.style.right = "0px";
+    @crt.style.opacity = 0.9;
+    @crt.style.zIndex = -9999;
+    document.body.appendChild(@crt);
     e.dataTransfer = e.originalEvent.dataTransfer;
-    e.dataTransfer.setDragImage(crt, 0, 0);
+    e.dataTransfer.setDragImage(@crt, 0, 0);
+
+  removeDraggedEl: ->
+    $(@crt).remove()
 
   displayItemOver: (ev)->
     @displaySections(ev)
