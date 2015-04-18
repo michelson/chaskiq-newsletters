@@ -2,7 +2,8 @@
 
 ### A Rails engine to send newsletters.
 
-<p>The <i><b>Chasquis</b></i> (also <i><b>Chaskiq (Quechua word)</b></i>) were agile and highly trained <a title="Running" href="/wiki/Running">runners</a> that delivered messages,<sup class="reference" id="cite_ref-1"><a href="#cite_note-1"><span>[</span>1<span>]</span></a></sup> royal delicacies such as fish<sup class="reference" id="cite_ref-2"><a href="#cite_note-2"><span>[</span>2<span>]</span></a></sup> and other objects throughout the <a title="Inca Empire" href="/wiki/Inca_Empire">Inca Empire</a>, principally in the service of the <a title="Sapa Inca" href="/wiki/Sapa_Inca">Sapa Inca</a>.</p>
+
+<p>The <i><b>Chasquis</b></i> (also <i><b>Chaskiq (Quechua word)</b></i>) were agile and highly trained runners that delivered messages royal delicacies such as fish and other objects throughout the Inca Empire, principally in the service of the Sapa Inca.</p>
 
 ### Motivation.
 
@@ -24,6 +25,7 @@ Chaskiq will work with any email setting but is recommended to use Amazon SES+SN
   + Detail list off who opens, clicks, bounces & complaints.
 + Reusable templates.
 + Reusable email lists.
++ Mailchimp like template editor.
 
 
 ### How to install:
@@ -51,59 +53,7 @@ Chaskiq::Config.setup do |config|
 end
 ```
 
-
-### Upload to Heroku
-
-You can use chaskiq in any VPS server, the required services are Redis and mysql/postgres. And you have to run sidekiq side by side with your app server.
-
-in Heroku for example you will have to use 2 services, declared in your Procfile.
-
-```ruby
-worker: bundle exec sidekiq -q default -q mailers
-web: bundle exec rainbows -c config/rainbows.rb -p $PORT
-```
-and add the redis_to_go addon.
-
-config/rainbows.rb
-```ruby
-worker_processes 3
-timeout 30
-preload_app true
-
-Rainbows! do
-  use :EventMachine
-end
-
-before_fork do |server, worker|
-  if defined?(ActiveRecord::Base)
-    ActiveRecord::Base.connection.disconnect!
-  end
-end
-```
-
-config/initializers/sidekiq.rb
-```ruby
-require "redis"
-require "sidekiq"
-
-if Rails.env.production?
-  uri = URI.parse(ENV["REDISTOGO_URL"])
-  REDIS = Redis.new(url: ENV["REDISTOGO_URL"])
-
-
-  Sidekiq.configure_client do |config|
-    config.redis = {url: ENV["REDISTOGO_URL"]}
-    #Sidekiq::RedisConnection.create(:namespace => "resque")
-  end
-
-  Sidekiq.configure_server do |config|
-    config.redis = {url: ENV["REDISTOGO_URL"]}
-    #Sidekiq::RedisConnection.create(:namespace => "resque")
-  end
-
-end
-```
-
+read more about heroku, vps installs, amazon integration and more in our wiki page https://github.com/michelson/chaskiq/wiki
 
 # TODO:
 
