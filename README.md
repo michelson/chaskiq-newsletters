@@ -30,11 +30,9 @@ Chaskiq will work with any email setting but is recommended to use Amazon SES+SN
 
 Use chaskiq as a gem in a rails project.
 
-+ gem 'chaskiq' in your gemfile
-+ rake chaskiq:migrations:install
++ gem 'chaskiq' in your gemfile and execute bundle install
++ rails generate chaskiq:install (will add an initializer , route & migrations)
 + rake db:migrate
-+ add routes:
-  ```mount Chaskiq::Engine => "/"```
 
 + config/initializers/active_job.rb
   ```ActiveJob::Base.queue_adapter = :sidekiq```

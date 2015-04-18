@@ -13,11 +13,15 @@ module Chaskiq
     end
 
     def self.configure!
-      self.check_config_vars
+      begin
+        self.check_config_vars
 
-      self.config_urlcript
-      self.config_ses
-      self.config_fog
+        self.config_urlcript
+        self.config_ses
+        self.config_fog
+      rescue Chaskiq::ConfigError => e
+        puts e
+      end
     end
 
     def self.config_urlcript
