@@ -3,7 +3,7 @@ require 'mustache'
 class ApplicationMailer < ActionMailer::Base
 
   layout 'mailer'
-  default delivery_method: :ses
+  #default delivery_method: :ses
 
   def newsletter(campaign, subscription)
     subscriber = subscription.subscriber
