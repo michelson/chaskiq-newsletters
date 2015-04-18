@@ -58,7 +58,7 @@ end
 
 You can use chaskiq in any VPS server, the required services are Redis and mysql/postgres. And you have to run sidekiq side by side with your app server.
 
-in Heroku for example you will use to services, declared in your Procfile.
+in Heroku for example you will have to use 2 services, declared in your Procfile.
 
 ```ruby
 worker: bundle exec sidekiq -q default -q mailers

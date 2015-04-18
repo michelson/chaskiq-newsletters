@@ -46,7 +46,6 @@ private
     def process_bounce(m)
       emails = m["bounce"]["bouncedRecipients"].map{|o| o["emailAddress"] }
       source = m["mail"]["source"]
-      binding.pry
       track_message_for("bounce", m)
     end
 
@@ -56,10 +55,17 @@ private
       track_message_for("spam", m)
     end
 
+    def parsed_message_id(m)
+      m["mail"]["messageId"]
+    end
+
     def track_message_for(track_type, m)
       data = m["mail"]["messageId"]
-      metric = Chaskiq::Metric.find_by(data:m["mail"]["messageId"])
+
+      metric = Chaskiq::Metric.find_by(data:parsed_message_id(m))
+
       return if metric.blank?
+
       campaign = metric.campaign
       subscriber = metric.trackable
       subscription = campaign.subscriptions.find_by(subscriber: subscriber)

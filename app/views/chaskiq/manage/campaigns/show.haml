@@ -84,13 +84,14 @@
                         %span.input-group-btn
                           %button.btn.btn-sm.btn-primary{:type => "button"} Go!
 
-                  %table.table.table-striped
+                  %table.table.table-striped.table-condensed.table-nowrap
                     %thead
                       %tr
                         %th Status
                         %th Who
                         %th When
-                        %th Info
+                        %th Host
+                        %th Data
                     %tbody
 
                       - @metrics.each do |m|
@@ -109,7 +110,10 @@
                           %td
                             %p.small
                               = m.host
-                              = m.data
+                          %td
+                            %abbr.small{title: m.data}
+                              = truncate m.data, :length   => 30,:separator => /\w/, :omission => "..."
+
                   .clearfix
                   = paginate @metrics
 

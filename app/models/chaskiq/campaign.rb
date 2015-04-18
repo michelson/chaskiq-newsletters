@@ -7,6 +7,7 @@ module Chaskiq
     belongs_to :list
     has_many :subscribers, through: :list
     has_many :subscriptions, through: :subscribers
+    #has_many :metrics, through: :subscriptions
     has_many :attachments
     has_many :metrics
     belongs_to :template, class_name: "Chaskiq::Template"

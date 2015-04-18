@@ -265,6 +265,16 @@ body.body-small .footer.fixed {
   vertical-align: top;
 }
 
+.table-nowrap {
+  table-layout:fixed;
+}
+
+.table-nowrap td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* PANELS */
 
 .panel.blank-panel {
