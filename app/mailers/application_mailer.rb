@@ -3,9 +3,13 @@ require 'mustache'
 class ApplicationMailer < ActionMailer::Base
 
   layout 'mailer'
+  default delivery_method: :ses
 
   def newsletter(campaign, subscription)
     subscriber = subscription.subscriber
+
+    return if subscriber.blank?
+
     content_type  = "text/html"
 
     attrs = subscriber.attributes
