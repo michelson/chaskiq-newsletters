@@ -22,6 +22,9 @@ module Chaskiq
       #list.create_subscriber(subscriber)
       list.create_subscriber FactoryGirl.attributes_for(:chaskiq_subscriber)
     }
+    let(:subscription){
+      subscriber.subscriptions.first
+    }
     let(:campaign){ FactoryGirl.create(:chaskiq_campaign, template: template) }
     let(:premailer_template){"<p>{{name}} {{last_name}} {{email}} {{campaign_url}} {{campaign_subscribe}} {{campaign_unsubscribe}}this is the template</p>"}
 
@@ -61,12 +64,12 @@ module Chaskiq
       end
 
       it "will prepare mail to" do
-        expect(@c.prepare_mail_to(subscriber)).to be_an_instance_of(ActionMailer::MessageDelivery)
+        expect(@c.prepare_mail_to(subscription)).to be_an_instance_of(ActionMailer::MessageDelivery)
       end
 
       it "will prepare mail to can send inline" do
         reset_email
-        @c.prepare_mail_to(subscriber).deliver_now
+        @c.prepare_mail_to(subscription).deliver_now
         expect(ActionMailer::Base.deliveries.size).to be 1
       end
 

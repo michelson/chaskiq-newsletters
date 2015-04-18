@@ -5,6 +5,7 @@ module Chaskiq
     belongs_to :subscriber
     belongs_to :list
     has_many :campaigns, through: :list
+    has_many :metrics , as: :trackable
 
     scope :availables, ->{ where(["chaskiq_subscriptions.state =? or chaskiq_subscriptions.state=?", "passive", "subscribed"]) }
 

@@ -67,8 +67,9 @@ private
       return if metric.blank?
 
       campaign = metric.campaign
-      subscriber = metric.trackable
-      subscription = campaign.subscriptions.find_by(subscriber: subscriber)
+      #subscriber = metric.trackable
+      #subscription = campaign.subscriptions.find_by(subscriber: subscriber)
+      subscription = metric.trackable
 
       subscription.unsubscribe! if track_type == "spam"
       subscription.subscriber.send("track_#{track_type}".to_sym, {
