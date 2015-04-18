@@ -4,8 +4,8 @@ class ApplicationMailer < ActionMailer::Base
 
   layout 'mailer'
 
-  def newsletter(campaign, subscriber)
-
+  def newsletter(campaign, subscription)
+    subscriber = subscription.subscriber
     content_type  = "text/html"
 
     attrs = subscriber.attributes

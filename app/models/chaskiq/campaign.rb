@@ -7,7 +7,6 @@ module Chaskiq
     belongs_to :list
     has_many :subscribers, through: :list
     has_many :subscriptions, through: :subscribers
-    #has_many :metrics, through: :subscriptions
     has_many :attachments
     has_many :metrics
     belongs_to :template, class_name: "Chaskiq::Template"
@@ -32,7 +31,7 @@ module Chaskiq
     end
 
     def subscriber_status_for(subscriber)
-      binding.pry
+      #binding.pry
     end
 
     def step_1?
@@ -68,12 +67,12 @@ module Chaskiq
     end
 
     #deliver email + create metric
-    def push_notification(subscriber)
-      Chaskiq::SesSenderJob.perform_later(self, subscriber)
+    def push_notification(subscription)
+      Chaskiq::SesSenderJob.perform_later(self, subscription)
     end
 
-    def prepare_mail_to(subscriber)
-      Chaskiq::CampaignMailer.newsletter(self, subscriber)
+    def prepare_mail_to(subscription)
+      Chaskiq::CampaignMailer.newsletter(self, subscription)
     end
 
     def copy_template

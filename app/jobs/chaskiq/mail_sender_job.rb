@@ -7,7 +7,7 @@ module Chaskiq
     def perform(campaign)
       campaign.apply_premailer
       campaign.list.subscriptions.availables.each do |s|
-        campaign.push_notification(s.subscriber)
+        campaign.push_notification(s)
       end
     end
 

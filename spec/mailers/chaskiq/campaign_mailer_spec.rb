@@ -19,7 +19,7 @@ module Chaskiq
     before do
       allow_any_instance_of(Chaskiq::Campaign).to receive(:premailer).and_return(premailer_template)
       allow_any_instance_of(Chaskiq::Campaign).to receive(:html_content).and_return(template_html)
-      Chaskiq::CampaignMailer.newsletter(campaign, subscriber).deliver_now
+      Chaskiq::CampaignMailer.newsletter(campaign, subscriber.subscriptions.first).deliver_now
     end
 
     it "pass subscriber attributes to template" do

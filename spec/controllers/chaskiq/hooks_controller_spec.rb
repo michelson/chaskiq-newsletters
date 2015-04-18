@@ -13,10 +13,13 @@ module Chaskiq
     let(:subscriber){
       list.create_subscriber FactoryGirl.attributes_for(:chaskiq_subscriber)
     }
+    let(:subscription){
+      subscriber.subscriptions.first
+    }
     let(:campaign){ FactoryGirl.create(:chaskiq_campaign, list: list) }
 
     let(:metric){
-      FactoryGirl.create(:chaskiq_metric, campaign: campaign, trackable: subscriber)
+      FactoryGirl.create(:chaskiq_metric, campaign: campaign, trackable: subscription)
     }
     let(:bounce_sns){
        {"Message" => {
