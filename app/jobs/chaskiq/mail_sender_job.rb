@@ -1,6 +1,6 @@
 module Chaskiq
   class MailSenderJob < ActiveJob::Base
-    # Set the Queue as Default
+
     queue_as :default
 
     #send to all list with state passive & subscribed
