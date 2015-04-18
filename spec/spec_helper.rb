@@ -65,3 +65,9 @@ RSpec.configure do |config|
   #config.infer_base_class_for_anonymous_controllers = false
   config.order = "random"
 end
+
+def inline_job(&block)
+  ActiveJob::Base.queue_adapter = :inline
+  block.call
+  ActiveJob::Base.queue_adapter = :test
+end

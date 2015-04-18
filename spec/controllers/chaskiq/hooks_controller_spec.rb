@@ -81,22 +81,28 @@ module Chaskiq
     }
 
 
+
     it "will set a bounce" do
-      allow(Chaskiq::Metric).to receive(:find_by).and_return(metric)
-      campaign
-      response = send_data(bounce_sns)
-      expect(response.status).to be == 200
-      expect(campaign.metrics.bounces.size).to be == 1
+      inline_job do
+        allow(Chaskiq::Metric).to receive(:find_by).and_return(metric)
+        campaign
+        response = send_data(bounce_sns)
+        expect(response.status).to be == 200
+        expect(campaign.metrics.bounces.size).to be == 1
+      end
     end
 
-    it "will set a spam metrc and unsubscribe user" do
-      allow(Chaskiq::Metric).to receive(:find_by).and_return(metric)
+    it "will set a spam metric and unsubscribe user" do
+      inline_job do
+        ActiveJob::Base.queue_adapter = :inline
+        allow(Chaskiq::Metric).to receive(:find_by).and_return(metric)
 
-      campaign
-      response = send_data(complaint_sns)
-      expect(response.status).to be == 200
-      expect(campaign.metrics.spams.size).to be == 1
-      expect(subscriber.subscriptions.first.reload).to be_unsubscribed
+        campaign
+        response = send_data(complaint_sns)
+        expect(response.status).to be == 200
+        expect(campaign.metrics.spams.size).to be == 1
+        expect(subscriber.subscriptions.first.reload).to be_unsubscribed
+      end
     end
 
   end
