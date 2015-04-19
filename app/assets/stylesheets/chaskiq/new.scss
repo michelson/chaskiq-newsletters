@@ -14,14 +14,30 @@ body {
 
 .btn {
     border-radius: 0px;
-    font-size: 14px;
+    font-size: 12px;
+}
+
+.btn-primary{
+  background-color: #444;
+  border-color: #444;
+  &:hover, &:active, &:focus, .active{
+    background-color: #555;
+    border-color: #444;
+  }
 }
 
 footer {
   margin-top:40px;
   padding-top:40px;
   padding-bottom:40px;
-  background-color:#ededed;
+  border-top: 1px solid #ededed;
+}
+
+table.table-condensed thead th {
+  font-size: 1.19rem;
+  font-weight: 500;
+  padding-bottom: 0.3rem;
+  padding-top: 0.3rem;
 }
 
 #masthead {
@@ -276,7 +292,7 @@ a,a:hover {
 .ibox-tools a {
   cursor: pointer;
   margin-left: 5px;
-  color: #c4c4c4;
+  //color: #c4c4c4;
 }
 
 .ibox-tools a.btn-primary {
@@ -736,8 +752,8 @@ dd.project-people {
 
 
 .progress {background: rgba(255, 255, 255, 1); border: 1px solid rgba(245, 245, 245, 1); border-radius: 0px; height: 10px;}
-.progress-bar-custom {background: rgba(82, 72, 84, 1); background: -webkit-linear-gradient(top, rgba(150, 36, 212, 1) 0%, rgba(82, 72, 84, 1) 100%); background: linear-gradient(to bottom, rgba(150, 36, 212, 1) 0%, rgba(82, 72, 84, 1) 100%);}
-.progress-striped .progress-bar-custom {background-color: rgba(82, 72, 84, 1); background-image: -webkit-gradient(linear,0 100%,100% 0,color-stop(0.25,rgba(72, 30, 117, 0.15),color-stop(0.25,transparent),color-stop(0.5,transparent),color-stop(0.5,rgba(72, 30, 117, 0.15)),color-stop(0.75,rgba(72, 30, 117, 0.15)),color-stop(0.75,transparent),to(transparent))); background-image: -webkit-linear-gradient(45deg,rgba(72, 30, 117, 0.15) 25%,transparent 25%,transparent 50%,rgba(72, 30, 117, 0.15) 50%,rgba(72, 30, 117, 0.15) 75%,transparent 75%,transparent); background-image: linear-gradient(45deg,rgba(72, 30, 117, 0.15) 25%,transparent 25%,transparent 50%,rgba(72, 30, 117, 0.15) 50%,rgba(72, 30, 117, 0.15) 75%,transparent 75%,transparent); background-size: 17px 17px;}
+//.progress-bar-custom {background: rgba(82, 72, 84, 1); background: -webkit-linear-gradient(top, rgba(150, 36, 212, 1) 0%, rgba(82, 72, 84, 1) 100%); background: linear-gradient(to bottom, rgba(150, 36, 212, 1) 0%, rgba(82, 72, 84, 1) 100%);}
+//.progress-striped .progress-bar-custom {background-color: rgba(82, 72, 84, 1); background-image: -webkit-gradient(linear,0 100%,100% 0,color-stop(0.25,rgba(72, 30, 117, 0.15),color-stop(0.25,transparent),color-stop(0.5,transparent),color-stop(0.5,rgba(72, 30, 117, 0.15)),color-stop(0.75,rgba(72, 30, 117, 0.15)),color-stop(0.75,transparent),to(transparent))); background-image: -webkit-linear-gradient(45deg,rgba(72, 30, 117, 0.15) 25%,transparent 25%,transparent 50%,rgba(72, 30, 117, 0.15) 50%,rgba(72, 30, 117, 0.15) 75%,transparent 75%,transparent); background-image: linear-gradient(45deg,rgba(72, 30, 117, 0.15) 25%,transparent 25%,transparent 50%,rgba(72, 30, 117, 0.15) 50%,rgba(72, 30, 117, 0.15) 75%,transparent 75%,transparent); background-size: 17px 17px;}
 
 
 

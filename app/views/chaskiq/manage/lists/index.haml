@@ -4,12 +4,14 @@
   .col-lg-12
     .wrapper.wrapper-content
       .ibox
+
         .ibox-title
           %h5 All Lists
           .ibox-tools
-            %a.btn.btn-primary.btn-xs{:href => new_manage_list_path }
+            %a.btn.btn-success.btn-xs{:href => new_manage_list_path }
               %i.fa.fa-plus
               Create new List
+
         .ibox-content
 
           .project-list
@@ -17,29 +19,20 @@
               %tbody
                 - @lists.each do |list|
                   %tr
-                  %td.project-status
-                    %span.label.label-primary
-                      = list.state
-                  %td.project-title
-                    %a{:href => manage_list_path(list)}
-                      = list.name
-                    %br/
-                    %small= list.created_at
-                  %td.project-completion
-                    %small Completion with: #{list.subscription_progress}%
-                    .progress.progress-mini
-                      .progress-bar.progress-bar-custom{:style => "width: #{list.subscription_progress}%;"}
 
-                  %td.project-completion
-                    %strong subscribers: #{list.subscribers.size}
+                    %td.project-title
+                      %a{:href => manage_list_path(list)}
+                        = list.name
+                      %br/
+                      %small= list.created_at
 
-                  %td.project-actions
+                    %td.project-actions
 
-                    = link_to edit_manage_list_path(list), class: "btn btn-white btn-sm" do
-                      %i.fa.fa-edit
-                      Edit
+                      = link_to edit_manage_list_path(list), class: "btn btn-white btn-sm" do
+                        %i.fa.fa-edit
+                        Edit
 
-                    = link_to manage_list_path(list), class: "btn btn-white btn-sm", data:{ method: :delete, confirm: "sure?"} do
-                      %i.fa.fa-times
-                      Destroy
+                      = link_to manage_list_path(list), class: "btn btn-white btn-sm", data:{ method: :delete, confirm: "sure?"} do
+                        %i.fa.fa-times
+                        Destroy
 

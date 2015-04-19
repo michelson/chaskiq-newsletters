@@ -15,7 +15,7 @@
         .ibox-title
           %h5 All Campaigns
           .ibox-tools
-            %a.btn.btn-primary.btn-xs{:href => new_manage_campaign_path }
+            %a.btn.btn-success.btn-xs{:href => new_manage_campaign_path }
               %i.fa.fa-plus
               Create new Campaigns
         .ibox-content
@@ -34,22 +34,20 @@
               %tbody
                 - @campaigns.each do |campaign|
                   %tr
-                  %td.project-status
-                    %span.label.label-primary
-                      = campaign.state
-                  %td.project-title
-                    %a{:href => manage_campaign_path(campaign)}
-                      = campaign.name
-                    %br/
-                    %small= campaign.created_at
-                  %td.project-completion
-                    %small Completion with: #{number_to_percentage(campaign.delivery_progress, precision: 0)}
-                    .progress.progress-mini
-                      .progress-bar.progress-bar-custom{:style => "width: #{campaign.delivery_progress}%;"}
 
-                  %td.project-actions
+                    %td.project-title
+                      %a{:href => manage_campaign_path(campaign)}
+                        = campaign.name
+                      %br/
+                      %small= campaign.created_at
+                    %td.project-completion
+                      %small Completion with: #{number_to_percentage(campaign.delivery_progress, precision: 0)}
+                      .progress.progress-mini
+                        .progress-bar.progress-bar-custom{:style => "width: #{campaign.delivery_progress}%;"}
 
-                    = render "actions", campaign: campaign
+                    %td.project-actions
 
-                    = render "config_actions", campaign: campaign
+                      = render "actions", campaign: campaign
+
+                      = render "config_actions", campaign: campaign
 

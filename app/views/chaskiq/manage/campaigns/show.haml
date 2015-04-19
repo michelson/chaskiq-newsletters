@@ -27,19 +27,6 @@
                   %dd
                     %span.label.label-primary= @campaign.state
           .row
-            .col-lg-5
-              %dl.dl-horizontal
-                %dt Deliveries:
-                %dd= @campaign.metrics.deliveries.size
-                %dt Clicks:
-                %dd= @campaign.metrics.clicks.size
-                %dt Opens:
-                %dd= @campaign.metrics.opens.size
-
-                %dt Bounces:
-                %dd= @campaign.metrics.bounces.size
-                %dt Spams:
-                %dd= @campaign.metrics.spams.size
 
             #cluster_info.col-lg-7
               %dl.dl-horizontal
@@ -51,12 +38,30 @@
                 %dd.project-people
                   = link_to @campaign.list.name, manage_list_path(@campaign.list)
 
+            .col-lg-5
+              = pie_chart @campaign.metrics.group(:action).count, height: "130px"
+
+              -#
+                %dl.dl-horizontal
+                  %dt Deliveries:
+                  %dd= @campaign.metrics.deliveries.size
+                  %dt Clicks:
+                  %dd= @campaign.metrics.clicks.size
+                  %dt Opens:
+                  %dd= @campaign.metrics.opens.size
+
+                  %dt Bounces:
+                  %dd= @campaign.metrics.bounces.size
+                  %dt Spams:
+                  %dd= @campaign.metrics.spams.size
+
+
+
           .row
             .col-lg-12
               %dl.dl-horizontal
                 %dt Completed:
                 %dd
-
                   .progress.active.m-b-sm
                     .progress-bar.progress-bar-custom{:style => "width: #{@campaign.delivery_progress}%;"}
                   %small
@@ -126,3 +131,4 @@
 
       %p.small
         = @campaign.try(:description)
+

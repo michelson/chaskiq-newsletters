@@ -3,21 +3,17 @@
   .col-sm-4
     %h1 Welcome To Chaskiq
     %small You have #{@campaigns_count} campaigns and #{@sends_count} sended messages.
-    %ul.list-group
-      - Chaskiq::Campaign.order('updated_at desc').limit(3).each do |c|
-        %li.list-group-item
-          %span.pull-right
-            = l(c.updated_at, format: :short)
-          %span.label.label-success
-            %i.fa.fa-paper-plane
-            = c.metrics.deliveries.size
-          = c.name
+
+    = pie_chart @pie_metrics.count, height: "130px"
+
     .clearfix
 
   .col-sm-8
-    .flot-chart.dashboard-chart
+    .flot-chart.dashboard-chart.m-t-lg
+      %h3
+        %center Last 2 weeks
+      = column_chart( @daily_metrics, height: "170px", width: "500px",  format: "%l %P")
       -##flot-dashboard-chart.flot-chart-content
-      = column_chart( @daily_metrics, height: "200px", width: "500px",  format: "%l %P")
 
 
 .row
@@ -25,35 +21,36 @@
     .wrapper.wrapper-content
       .row
         .col-lg-12
-          .ibox.float-e-margins
-            .ibox-title
-              %h5 Latests Campaigns
-              -#%span.label.label-primary CHASKIQ
 
-            .ibox-content
+          %h3 Latests Campaigns
+
+          %table.table.table-striped.table-condensed.table-nowrap
+            %thead
+              %tr
+                %th Campaign
+                %th Last 2 weeks
+                %th Deliveries
+                %th Actions
+            %tbody
+
               - Chaskiq::Campaign.order("updated_at desc").limit(5).each do |c|
-                %div
-                  .pull-right.text-right
-                    = render "chaskiq/manage/campaigns/config_actions", campaign: c
+                %tr
+                  %td
+                    %h4= link_to c.name, manage_campaign_path(c)
 
-                  %h4
-                    = link_to c.name, manage_campaign_path(c)
+                  %td
+                    %span.bar_dashboard.pull-right
+                      = c.sparklines_by_day().join(", ")
+
+                  %td
                     %small.m-r
                       %i.fa.fa-paper-plane
                         = c.metrics.deliveries.size
                         deliveries
 
+                  %td
+                    = render "chaskiq/manage/campaigns/config_actions", campaign: c
 
-                  %span.bar_dashboard.pull-right
-                    = c.sparklines_by_day().join(", ")
-
-                  -#
-                    .label
-                      %i.fa.fa-paper-plane
-
-
-
-                %hr
 
 - content_for :javascript do
   :javascript
