@@ -2,6 +2,8 @@
 
 ### A Rails engine to send newsletters.
 
+![](./chaskiq-admin.png)
+
 
 <p>The <i><b>Chasquis</b></i> (also <i><b>Chaskiq (Quechua word)</b></i>) were agile and highly trained runners that delivered messages royal delicacies such as fish and other objects throughout the Inca Empire, principally in the service of the Sapa Inca.</p>
 
