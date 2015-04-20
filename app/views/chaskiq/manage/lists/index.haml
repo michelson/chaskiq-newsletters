@@ -14,6 +14,21 @@
 
         .ibox-content
 
+          .row.m-b-sm.m-t-sm
+            .col-md-1
+              %button#loading-example-btn.btn.btn-white.btn-sm{:type => "button"}
+                %i.fa.fa-refresh
+                Refresh
+            .col-md-11
+              .input-group
+
+                = search_form_for @q, url: manage_campaigns_path() do |f|
+
+                  = f.search_field :subscribers_name_or_subscribers_email_or_subscribers_last_name_or_name, class: "input-sm form-control", placeholder: "Search by subscribers or list name"
+
+                %span.input-group-btn
+                  %button.btn.btn-sm.btn-primary{:type => "button"} Go!
+
           .project-list
             %table.table.table-hover
               %tbody
@@ -24,7 +39,7 @@
                       %a{:href => manage_list_path(list)}
                         = list.name
                       %br/
-                      %small= list.created_at
+                      %small= l list.created_at, format: :short
 
                     %td.project-actions
 

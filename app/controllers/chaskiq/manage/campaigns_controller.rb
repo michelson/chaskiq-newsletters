@@ -4,15 +4,15 @@ module Chaskiq
   class Manage::CampaignsController < ApplicationController
 
     before_filter :authentication_method, except: [:preview, :premailer_preview]
+    before_filter :find_campaign, except: [:index, :create, :new]
     helper Chaskiq::Manage::CampaignsHelper
 
-    def index
-      @campaigns = Chaskiq::Campaign.all
-    end
 
-    def show
-      @campaign  = Chaskiq::Campaign.find(params[:id])
-      @metrics = @campaign.metrics.order("id desc").includes(:trackable).page(params[:page]).per(10)
+    def index
+      @q = Chaskiq::Campaign.ransack(params[:q])
+      @campaigns = @q.result
+      .page(params[:page])
+      .per(8)
     end
 
     def new
@@ -31,41 +31,50 @@ module Chaskiq
       else
         render "new"
       end
+    end
 
+    def show
+      find_campaign
+      @metrics = @campaign.metrics
+      @q = @metrics.ransack(params[:q])
+      @metrics = @q.result
+      .includes(:trackable)
+      .page(params[:page])
+      .per(8)
     end
 
     def preview
-      @campaign  = Chaskiq::Campaign.find(params[:id])
+      find_campaign
       @campaign.apply_premailer(exclude_gif: true)
       render layout: false
     end
 
     def premailer_preview
-      @campaign  = Chaskiq::Campaign.find(params[:id])
+      find_campaign
       render layout: false
     end
 
     def editor
-      @campaign  = Chaskiq::Campaign.find(params[:id])
+      find_campaign
       render "editor_frame", layout: false
     end
 
     def test
-      @campaign  = Chaskiq::Campaign.find(params[:id])
+      find_campaign
       @campaign.test_newsletter
       flash[:notice] = "test sended"
       redirect_to manage_campaigns_path()
     end
 
     def deliver
-      @campaign  = Chaskiq::Campaign.find(params[:id])
+      find_campaign
       @campaign.send_newsletter
       flash[:notice] = "newsletter sended"
       redirect_to manage_campaigns_path()
     end
 
     def clone
-      @campaign  = Chaskiq::Campaign.find(params[:id])
+      find_campaign
       new_campaign = @campaign.clone_newsletter
       if new_campaign.save
         flash[:notice] = "cloned"
@@ -77,7 +86,7 @@ module Chaskiq
     end
 
     def purge
-      @campaign = Chaskiq::Campaign.find(params[:id])
+      find_campaign
       @campaign.purge_metrics
       flash[:notice] = "cleaned data!"
       redirect_to manage_campaign_path(@campaign)
@@ -85,11 +94,14 @@ module Chaskiq
 
   protected
 
+    def find_campaign
+      @campaign = Chaskiq::Campaign.find(params[:id])
+    end
+
     def resource_params
       return [] if request.get?
       params.require(:campaign).permit(:list_id)
     end
-
 
   end
 end

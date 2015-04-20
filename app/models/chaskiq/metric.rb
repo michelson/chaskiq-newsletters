@@ -1,7 +1,10 @@
 module Chaskiq
   class Metric < ActiveRecord::Base
-    belongs_to :trackable, polymorphic: true, required: true
     belongs_to :campaign
+    belongs_to :trackable, polymorphic: true, required: true
+    #belongs_to :subscription, ->{ where("chaskiq_metrics.trackable_type =?", "Chaskiq::Subscription")}, foreign_key: :trackable_id
+    belongs_to :subscription, foreign_key: :trackable_id
+
     #system output
     scope :deliveries, ->{where(action: "deliver")}
 

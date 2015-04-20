@@ -30,26 +30,27 @@ Gem::Specification.new do |s|
   s.add_dependency "mustache"
   s.add_dependency "nokogiri"
   s.add_dependency "aasm"
-  s.add_dependency 'bootstrap-sass' #, '3.3.0.0'
-  s.add_dependency 'font-awesome-rails' #, '4.3.0.0'
-  s.add_dependency 'urlcrypt'
-  s.add_dependency 'carrierwave'
-  s.add_dependency 'mini_magick'
-  s.add_dependency 'fog'
-  s.add_dependency 'dotenv-rails'
-  s.add_dependency 'coffee-rails'
-  s.add_dependency 'sanitize'
+  s.add_dependency "bootstrap-sass" #, "3.3.0.0"
+  s.add_dependency "font-awesome-rails" #, "4.3.0.0"
+  s.add_dependency "urlcrypt"
+  s.add_dependency "carrierwave"
+  s.add_dependency "mini_magick"
+  s.add_dependency "fog"
+  s.add_dependency "dotenv-rails"
+  s.add_dependency "coffee-rails"
+  s.add_dependency "sanitize"
   s.add_dependency "groupdate"
   s.add_dependency "chartkick"
   s.add_dependency "jquery-rails"
   s.add_dependency "deep_cloneable"
   s.add_dependency "aws-ses"
+  s.add_dependency "ransack"
 
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rspec"
   s.add_development_dependency "rspec-rails"
-  s.add_development_dependency 'factory_girl_rails'
-  s.add_development_dependency 'shoulda-matchers'
-  s.add_development_dependency 'database_cleaner'
+  s.add_development_dependency "factory_girl_rails"
+  s.add_development_dependency "shoulda-matchers"
+  s.add_development_dependency "database_cleaner"
 end

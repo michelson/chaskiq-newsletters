@@ -16,9 +16,9 @@
               .m-b-md
                 .pull-right
 
-                  = render "actions", campaign: @campaign
+                  = render "chaskiq/manage/campaigns/actions", campaign: @campaign
 
-                  = render "config_actions", campaign: @campaign
+                  = render "chaskiq/manage/campaigns/config_actions", campaign: @campaign
 
                 %h2= @campaign.name
               -#
@@ -85,7 +85,9 @@
 
                     .col-md-11
                       .input-group
-                        %input.input-sm.form-control{:placeholder => "Search", :type => "text"}/
+                        = search_form_for @q, url: manage_campaign_metrics_path(@campaign) do |f|
+                          = f.search_field :subscription_state_or_subscription_subscriber_email_or_subscription_subscriber_name_or_subscription_subscriber_last_name_or_host_or_data_cont, class: "input-sm form-control", placeholder: "Search by columns"
+                        -#%input.input-sm.form-control{:placeholder => "Search", :type => "text", url: }/
                         %span.input-group-btn
                           %button.btn.btn-sm.btn-primary{:type => "button"} Go!
 
@@ -98,26 +100,7 @@
                         %th Host
                         %th Data
                     %tbody
-
-                      - @metrics.each do |m|
-                        %tr
-                          %td
-                            %span.label{class: "label-#{metric_action_class(m)}"}
-                              %i.fa{class: "fa-#{metric_icon_action_class(m)}"}
-                              = m.action
-                          %td
-                            = m.trackable.try(:name)
-                            = m.trackable.try(:last_name)
-                            .small
-                              = m.trackable.try(:email)
-                          %td
-                            = l m.created_at, format: :long
-                          %td
-                            %p.small
-                              = m.host
-                          %td
-                            %abbr.small{title: m.data}
-                              = truncate m.data, :length   => 30,:separator => /\w/, :omission => "..."
+                      = render partial: "chaskiq/manage/metrics/metric", collection: @metrics , as: :metric
 
                   .clearfix
                   = paginate @metrics

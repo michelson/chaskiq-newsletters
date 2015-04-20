@@ -1,0 +1,18 @@
+%tr
+  %td
+    %span.label{class: "label-#{metric_action_class(metric)}"}
+      %i.fa{class: "fa-#{metric_icon_action_class(metric)}"}
+      = metric.action
+  %td
+    = metric.trackable.try(:name)
+    = metric.trackable.try(:last_name)
+    .small
+      = metric.trackable.try(:email)
+  %td
+    = l metric.created_at, format: :long
+  %td
+    %p.small
+      = metric.host
+  %td
+    %abbr.small{title: metric.data}
+      = truncate metric.data, :length   => 30,:separator => /\w/, :omission => "..."

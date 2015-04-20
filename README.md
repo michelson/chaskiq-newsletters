@@ -9,7 +9,7 @@
 
 ### Motivation.
 
-I really don't like the idea to pay ~50USD to send a simple newsletter, I find that commertial alternatives are really awesome, but those solutions have nothing that OS community can't achieve.
+I really don't like the idea to pay ~50USD/mo to send a simple newsletter, I find that commertial alternatives are really awesome, but those solutions have nothing that OS community can't achieve.
 
 ### How it works.
 

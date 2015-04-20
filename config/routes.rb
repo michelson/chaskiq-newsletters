@@ -40,6 +40,7 @@ Chaskiq::Engine.routes.draw do
         get :purge
       end
       resources :attachments, controller: 'manage/attachments'
+      resources :metrics, controller: 'manage/metrics'
     end
 
     resources :lists, controller: 'manage/lists' do

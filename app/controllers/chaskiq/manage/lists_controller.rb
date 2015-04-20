@@ -6,7 +6,10 @@ module Chaskiq
     before_filter :authentication_method
 
     def index
-      @lists = Chaskiq::List.page(params[:page]).per(50)
+      @q = Chaskiq::List.ransack(params[:q])
+      @lists = @q.result
+      .page(params[:page])
+      .per(8)
     end
 
     def show

@@ -26,13 +26,18 @@
                 Refresh
             .col-md-11
               .input-group
-                %input.input-sm.form-control{:placeholder => "Search", :type => "text"}/
+
+                = search_form_for @q, url: manage_campaigns_path() do |f|
+
+                  = f.search_field :subscribers_name_or_subscribers_email_or_subscribers_last_name_or_subject_or_from_name_or_from_email_or_reply_email_or_plain_content_or_name_or_state_cont, class: "input-sm form-control", placeholder: "Search by subscribers or campaign data"
+
+
                 %span.input-group-btn
                   %button.btn.btn-sm.btn-primary{:type => "button"} Go!
           .project-list
             %table.table.table-hover
               %tbody
-                - @campaigns.each do |campaign|
+                - @campaigns.uniq.each do |campaign|
                   %tr
 
                     %td.project-title
