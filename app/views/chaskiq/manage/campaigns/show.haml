@@ -1,6 +1,6 @@
 .row.wrapper.white-bg.page-heading
   .col-sm-4
-    %h2 Campaign #{@campaign.name}
+    %h2= @campaign.name
     %ol.breadcrumb
       %li
         %a{:href => manage_campaigns_path} Campaigns
