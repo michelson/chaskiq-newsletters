@@ -13,22 +13,20 @@ I really don't like the idea to pay ~50USD to send a simple newsletter, I find t
 
 ### How it works.
 
-Chaskiq will work with any email setting but is recommended to use Amazon SES+SNS in order to get the bounce and spam detection features.
+Chaskiq works with Amazon SES to send mails and Amazon SNS service to get the bounces & complaints. The SNS integration is optional but recommended in order to get those features.
 
 #### Features:
 
 + Email template editor out of the box.
 + Mustache tags enables to use variables in templates.
++ Reusable templates.
++ Reusable email lists.
 + Tracks opens and clics.
 + Tracks Bounces and Complaints (via AWS SNS).
 + Displays reports on:
   + % of deliveries.
   + clicks , opens , bounces, complaints.
   + Detail list off who opens, clicks, bounces & complaints.
-+ Reusable templates.
-+ Reusable email lists.
-+ Mailchimp like template editor.
-
 
 ### How to install:
 
@@ -55,17 +53,14 @@ Chaskiq::Config.setup do |config|
 end
 ```
 
-read more about heroku, vps installs, amazon integration and more in our wiki page https://github.com/michelson/chaskiq/wiki
+read more about heroku and vps installs, Amazon integration and more in our wiki page https://github.com/michelson/chaskiq/wiki
 
 # TODO:
++ api support.
++ search items (lists, campaign , metrics).
++ improve mail editor (support for ).
++ more insighfull reportery.
++ scheduled deliveries via (sidetiq or whenever).
++ send to many lists in one campaign and send to list segments.
 
-+ search items.
-+ improve mail editor.
-+ styles on panel.
-+ more reportery.
-+ scheduled deliveries.
-+ send to list segments.
-
-
-
-Miguel Michelson Martinez.
+Miguel Michelson Martinez. released under MIT.
