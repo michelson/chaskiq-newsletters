@@ -11,6 +11,7 @@ module Chaskiq
 
       @metrics = @q.result
                   .includes(:trackable)
+                  .order("chaskiq_metrics.created_at desc")
                   .page(params[:page])
                   .per(8)
 
