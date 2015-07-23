@@ -44,7 +44,8 @@
                       %a{:href => manage_campaign_path(campaign)}
                         = campaign.name
                       %br/
-                      %small= campaign.created_at
+                      %small
+                        = l campaign.created_at, format: :short
                     %td.project-completion
                       %small Completion with: #{number_to_percentage(campaign.delivery_progress, precision: 0)}
                       .progress.progress-mini

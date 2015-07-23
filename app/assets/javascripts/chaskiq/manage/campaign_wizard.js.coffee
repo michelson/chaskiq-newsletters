@@ -256,6 +256,9 @@ class window.Editor extends Backbone.View
       container.find(".chaskiqContainerEmptyMessage").show()
     false
 
+  emptyContainerMessage: ()->
+    "<div class='chaskiqContainerEmptyMessage' style='display: block;'>Drop Content Blocks Here</div>"
+
   wrapBlock: (content)->
     "<div class='chaskiqBlock tpl-block chaskiqDndItem'>
       <div data-chaskiq-attach-point='containerNode'>
@@ -285,7 +288,7 @@ class window.Editor extends Backbone.View
                       <tbody>
                         <tr>
                           <td valign='top' mccontainer='preheader_container' mc:container='preheader_container' style='padding-top:9px;' class='preheaderContainer tpl-container chaskiqDndSource chaskiqDndTarget chaskiqDndContainer'>
-                            <div class='chaskiqContainerEmptyMessage' style='display: block;'>Drop Content Blocks Here</div>
+                            #{@emptyContainerMessage()}
                           </td>
                         </tr>
                       </tbody>
@@ -300,7 +303,7 @@ class window.Editor extends Backbone.View
                       <tbody>
                         <tr>
                           <td valign='top' mccontainer='header_container' mc:container='header_container' class='headerContainer tpl-container chaskiqDndSource chaskiqDndTarget chaskiqDndContainer'>
-                            <div class='chaskiqContainerEmptyMessage' style='display: block;'>Drop Content Blocks Here</div>
+                            #{@emptyContainerMessage()}
                           </td>
                         </tr>
                       </tbody>
@@ -315,7 +318,7 @@ class window.Editor extends Backbone.View
                       <tbody>
                         <tr>
                           <td valign='top' mccontainer='body_container' mc:container='body_container' class='bodyContainer tpl-container chaskiqDndSource chaskiqDndTarget chaskiqDndContainer'>
-                            <div class='chaskiqContainerEmptyMessage' style='display: block;'>Drop Content Blocks Here</div>
+                            #{@emptyContainerMessage()}
                           </td>
                         </tr>
                       </tbody>
@@ -330,8 +333,8 @@ class window.Editor extends Backbone.View
                       <tbody>
                         <tr>
                           <td valign='top' mccontainer='footer_container' style='padding-bottom:9px;' mc:container='footer_container' class='footerContainer tpl-container chaskiqDndSource chaskiqDndTarget chaskiqDndContainer'>
-                            <div class='chaskiqContainerEmptyMessage' style='display: block;'>Drop Content Blocks Here</div>
-                              #{@wrapBlock(@subscriptionBlock())}
+                            #{@emptyContainerMessage()}
+                            #{@wrapBlock(@subscriptionBlock())}
                           </td>
                         </tr>
                       </tbody>

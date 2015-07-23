@@ -90,8 +90,13 @@ module Chaskiq
       skip_track_image = opts[:exclude_gif] ? "exclude_gif=true" : nil
       premailer_url = ["#{host}/manage/campaigns/#{self.id}/premailer_preview", skip_track_image].join("?")
       url = URI.parse(premailer_url)
+      self.update_column(:premailer, clean_inline_css)
+    end
+
+    #will remove content blocks text
+    def clean_inline_css
       premailer = Premailer.new(url, :adapter => :nokogiri, :escape_url_attributes => false)
-      self.update_column(:premailer, premailer.to_inline_css)
+      premailer.to_inline_css.sub("Drop Content Blocks Here")
     end
 
     def attributes_for_mailer(subscriber)

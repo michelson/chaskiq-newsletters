@@ -11,6 +11,7 @@ module Chaskiq
     def index
       @q = Chaskiq::Campaign.ransack(params[:q])
       @campaigns = @q.result
+      .order("updated_at desc")
       .page(params[:page])
       .per(8)
     end
@@ -35,10 +36,11 @@ module Chaskiq
 
     def show
       find_campaign
-      @metrics = @campaign.metrics
+      @metrics = @campaign.metrics.order("chaskiq_metrics.created_at desc")
       @q = @metrics.ransack(params[:q])
       @metrics = @q.result
       .includes(:trackable)
+      .order("chaskiq_metrics.created_at desc")
       .page(params[:page])
       .per(8)
     end
