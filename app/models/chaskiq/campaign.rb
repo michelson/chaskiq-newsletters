@@ -96,7 +96,7 @@ module Chaskiq
     #will remove content blocks text
     def clean_inline_css(url)
       premailer = Premailer.new(url, :adapter => :nokogiri, :escape_url_attributes => false)
-      premailer.to_inline_css.sub("Drop Content Blocks Here")
+      premailer.to_inline_css.sub("Drop Content Blocks Here", "")
     end
 
     def attributes_for_mailer(subscriber)
