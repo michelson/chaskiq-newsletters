@@ -90,11 +90,11 @@ module Chaskiq
       skip_track_image = opts[:exclude_gif] ? "exclude_gif=true" : nil
       premailer_url = ["#{host}/manage/campaigns/#{self.id}/premailer_preview", skip_track_image].join("?")
       url = URI.parse(premailer_url)
-      self.update_column(:premailer, clean_inline_css)
+      self.update_column(:premailer, clean_inline_css(url))
     end
 
     #will remove content blocks text
-    def clean_inline_css
+    def clean_inline_css(url)
       premailer = Premailer.new(url, :adapter => :nokogiri, :escape_url_attributes => false)
       premailer.to_inline_css.sub("Drop Content Blocks Here")
     end
