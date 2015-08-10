@@ -13,7 +13,7 @@ module Chaskiq
     config.action_mailer.delivery_method = :ses
 
     config.assets.precompile += %w(*.svg *.eot *.woff *.ttf *.gif *.png *.ico)
-
+    config.assets.precompile += %w(chaskiq/manage/campaign_wizard.css chaskiq/iframe.js )
     initializer "chaskiq_setup", :after => :load_config_initializers, :group => :all do
       Chaskiq::Config.configure!
     end

@@ -1,7 +1,7 @@
 
 #http://www.kryogenix.org/code/browser/custom-drag-image.html
 #http://www.html5rocks.com/en/tutorials/dnd/basics/#toc-examples
-class window.Editor extends Backbone.View
+class window.Iframe extends Backbone.View
   el: '#chaskiq-mail-editor'
 
   events: ->
@@ -39,16 +39,9 @@ class window.Editor extends Backbone.View
     "click input.submit": "submitEditor"
 
   initialize: ->
-    @textarea = $(@el).find('#campaign_html_content')
-    @css = $(@el).find('#campaign_css')
-
-    document.getElementById("editor-frame").onload = ()=>
-      #put your awesome code here
-      @iframe = $("#editor-frame")[0].contentWindow.iframe
-
-
-  setIframe: (iframe)->
-    @iframe = iframe
+    @editor = top.editor
+    @textarea = $(@editor.el).find('#campaign_html_content')
+    @css = $(@editor.el).find('#campaign_css')
 
   copyToEditor: (ev)->
     $this = $(ev.currentTarget);
@@ -87,9 +80,9 @@ class window.Editor extends Backbone.View
     #$(@el).find('#mail-editor').html(@template())
     $(@el).find('#mail-editor').html(@textarea.val()); #init from saved content
     #$(@el).find('#mail-editor').html(@baseTemplate()) #init from base js tamplarte
-    $("#tab-2").html(@baseStylesTemplate("accordeon", @definitionsForEditor()))
+    #$("#tab-2").html(@baseStylesTemplate("accordeon", @definitionsForEditor()))
 
-    $('.colorpicker').colorpicker();
+    #$('.colorpicker').colorpicker();
 
     @removeTplBlockControls() #for legacy already embeded tmp controls
     @addTplBlockControls()
@@ -176,11 +169,11 @@ class window.Editor extends Backbone.View
     #ev.target.appendChild(data);
     container = $(ev.currentTarget)
 
-    if @dragged.attr('data-block')
-      tmpl = @handleBlock @dragged.data('block')
+    if @editor.dragged.attr('data-block')
+      tmpl = @handleBlock @editor.dragged.data('block')
       @dropBlock(container, tmpl)
     else
-      to_drop = this.dragged.parents(".tpl-block")
+      to_drop = @editor.dragged.parents(".tpl-block")
       @dropBlock(container, to_drop)
 
     @copyToTextArea()
@@ -204,7 +197,7 @@ class window.Editor extends Backbone.View
   displayWysiwyg: ->
     $('.block-settings').show()
     $('.main-settings').hide()
-    @initWysiwyg()
+    @editor.initWysiwyg()
     false
 
   displayBlockButtons: ->
@@ -223,17 +216,17 @@ class window.Editor extends Backbone.View
   setFocus: (ev)->
     $(".tpl-block").removeClass("focus")
     $(ev.currentTarget).addClass("focus")
-    @displayWysiwyg()
-    @renderBlockDesignSettings()
+    @editor.displayWysiwyg()
+    @editor.renderBlockDesignSettings()
     false
 
-  initWysiwyg: ->
-    $('.summernote').destroy()
-    InitSummernote()
-    $('.summernote').code(@currentFocused().find('.mcnTextContent').html());
-
-    #edit = ()->
-    #  $('.click2edit').summernote({ focus: true });
+  #initWysiwyg: ->
+  #  $('.summernote').destroy()
+  #  InitSummernote()
+  #  $('.summernote').code(@currentFocused().find('.mcnTextContent').html());
+  #
+  #  #edit = ()->
+  #  #  $('.click2edit').summernote({ focus: true });
 
   handleBlock: (block_type)->
     html = ""
@@ -634,106 +627,105 @@ class window.Editor extends Backbone.View
     else
       @findRule(selector).style[property] = value
 
-  definitionsForEditor: ->
-    [
-      {name: "page", targets:
-        [{name: "background page", selector: "#bodyTable", template: "background"},
-        {name: "heading 1", selector: "#bodyTable h1", template: "typography"} ,
-        {name: "heading 2", selector: "#bodyTable h2", template: "typography"} ,
-        {name: "page links", selector: "#bodyTable a", template: "typography"} ]}
+  #definitionsForEditor: ->
+  #  [
+  #    {name: "page", targets:
+  #      [{name: "background page", selector: "#bodyTable", template: "background"},
+  #      {name: "heading 1", selector: "#bodyTable h1", template: "typography"} ,
+  #      {name: "heading 2", selector: "#bodyTable h2", template: "typography"} ,
+  #      {name: "page links", selector: "#bodyTable a", template: "typography"} ]}
+  #
+  #    {name: "preheader", targets:
+  #      [{name: "background pre header", selector: "#templatePreheader", template: "background"},
+  #      {name: "headings", selector: "#templatePreHeader h1", template: "typography"},
+  #      {name: "headings", selector: "#templatePreHeader h2", template: "typography"}]}
+  #
+  #    {name: "header", targets:
+  #      [{name: "header background", selector: "#templateHeader", template: "background"} ]}
+  #
+  #    {name: "body", targets:
+  #      [{name: "body background", selector: "#templateBody", template: "background"} ,
+  #      {name: "body content text", selector: ".bodyContainer .mcnTextContent, .bodyContainer .mcnTextContent p", template: "typography"} ]}
+  #
+  #    {name: "footer", targets:
+  #      [{name: "footer background",selector: "#templateFooter", template: "background"},
+  #      {name: "footer content text", selector: ".footerContainer .mcnTextContent, .footerContainer .mcnTextContent p", template: "typography"} ]}
+  #
+  #    {name: "columns", targets: []}
+  #  ]
 
-      {name: "preheader", targets:
-        [{name: "background pre header", selector: "#templatePreheader", template: "background"},
-        {name: "headings", selector: "#templatePreHeader h1", template: "typography"},
-        {name: "headings", selector: "#templatePreHeader h2", template: "typography"}]}
+  #definitionsForBlocks: ->
+  #  [
+  #    {name: "mcnBaseTemplate", targets: []}
+  #    {name: "mcnBoxedText", targets: []}
+  #    {name: "mcnText", targets: [
+  #      {name: "background page", selector: "", template: "background"},
+  #      {name: "heading 1", selector: "", template: "typography"} ,
+  #      {name: "heading 2", selector: "", template: "typography"} ,
+  #      {name: "page links", selector: "", template: "typography"} ]}
+#
+  #    {name: "mcnDivider", targets: []}
+  #    {name: "mcnImage", targets: []}
+  #    {name: "mcnImageGroup", targets: []}
+  #    {name: "mcnImageCard", targets: []}
+  #    {name: "mcnSubscription", targets: []}
+  #  ]
 
-      {name: "header", targets:
-        [{name: "header background", selector: "#templateHeader", template: "background"} ]}
-
-      {name: "body", targets:
-        [{name: "body background", selector: "#templateBody", template: "background"} ,
-        {name: "body content text", selector: ".bodyContainer .mcnTextContent, .bodyContainer .mcnTextContent p", template: "typography"} ]}
-
-      {name: "footer", targets:
-        [{name: "footer background",selector: "#templateFooter", template: "background"},
-        {name: "footer content text", selector: ".footerContainer .mcnTextContent, .footerContainer .mcnTextContent p", template: "typography"} ]}
-
-      {name: "columns", targets: []}
-    ]
-
-  definitionsForBlocks: ->
-    [
-      {name: "mcnBaseTemplate", targets: []}
-      {name: "mcnBoxedText", targets: []}
-      {name: "mcnText", targets: [
-        {name: "background page", selector: "", template: "background"},
-        {name: "heading 1", selector: "", template: "typography"} ,
-        {name: "heading 2", selector: "", template: "typography"} ,
-        {name: "page links", selector: "", template: "typography"} ]}
-
-      {name: "mcnDivider", targets: []}
-      {name: "mcnImage", targets: []}
-      {name: "mcnImageGroup", targets: []}
-      {name: "mcnImageCard", targets: []}
-      {name: "mcnSubscription", targets: []}
-    ]
-
-  renderBlockDesignSettings: ->
-    
-    focused = @iframe.currentFocused().find("table:first").attr("class")
-    section = _.find editor.definitionsForBlocks(), (n)=>
-      "#{n.name}Block" == focused
-
-    console.log("section #{focused}" )
-    if section
-      console.log("display for #{focused}")
-      @current_section = section
-      html = @buildDesignToolForTarget(section)
-      $("#tab-4").html(html)
-
-      $('.colorpicker').colorpicker();
+  #renderBlockDesignSettings: ->
+  #  focused = this.currentFocused().find("table:first").attr("class")
+  #  section = _.find editor.definitionsForBlocks(), (n)=>
+  #    "#{n.name}Block" == focused
+  #
+  #  console.log("section #{focused}" )
+  #  if section
+  #    console.log("display for #{focused}")
+  #    @current_section = section
+  #    html = @buildDesignToolForTarget(section)
+  #    $("#tab-4").html(html)
+  #
+  #    $('.colorpicker').colorpicker();
 
   #size, align, fonttype, color, weight, line heigh, letter spacing
-  baseStylesTemplate: (id, definitions)->
-    "<div class='panel-group' id='#{id}'>
-      <div class='panel panel-default'>
-        #{@colapsiblePanelsFor( id, definitions )}
-      </div>
-    </div>"
+  #baseStylesTemplate: (id, definitions)->
+  #  "<div class='panel-group' id='#{id}'>
+  #    <div class='panel panel-default'>
+  #      #{@colapsiblePanelsFor( id, definitions )}
+  #    </div>
+  #  </div>"
 
-  colapsiblePanelsFor: (id, style_types)->
-    tpl = _.map style_types, (n)=>
-      "<div class='panel-heading'>
-        <h4 class='panel-title'>
-          <a data-toggle='collapse' data-parent='##{id}' href='#collapse#{n.name}'>
-          #{n.name}
-          </a>
-        </h4>
-      </div>
+  #colapsiblePanelsFor: (id, style_types)->
+  #  tpl = _.map style_types, (n)=>
+  #    "<div class='panel-heading'>
+  #      <h4 class='panel-title'>
+  #        <a data-toggle='collapse' data-parent='##{id}' href='#collapse#{n.name}'>
+  #        #{n.name}
+  #        </a>
+  #      </h4>
+  #    </div>
+  #
+  #    <div id='collapse#{n.name}' class='panel-collapse collapse'>
+  #      <div class='panel-body'>
+  #          <p>#{@buildDesignToolForTarget(n)}</p>
+  #      </div>
+  #    </div>"
+  #  tpl.join(" ")
 
-      <div id='collapse#{n.name}' class='panel-collapse collapse'>
-        <div class='panel-body'>
-            <p>#{@buildDesignToolForTarget(n)}</p>
-        </div>
-      </div>"
-    tpl.join(" ")
+  #buildDesignToolForTarget: (section)->
+  #  tpl = _.map section.targets, (n)=>
+  #    @templateToolsFor(n)
+  #
+  #  "<fieldset>#{tpl.join(" ")}</fieldset>"
 
-  buildDesignToolForTarget: (section)->
-    tpl = _.map section.targets, (n)=>
-      @templateToolsFor(n)
-
-    "<fieldset>#{tpl.join(" ")}</fieldset>"
-
-  templateToolsFor: (n)->
-    title = "<h3>#{n.name}</h3>"
-    tools = ""
-    switch n.template
-      when "background"
-        tools = @backgroundFieldsFor(n)
-      when "typography"
-        tools = @typoFieldsFor(n)
-
-    [title, tools].join(" ")
+  #templateToolsFor: (n)->
+  #  title = "<h3>#{n.name}</h3>"
+  #  tools = ""
+  #  switch n.template
+  #    when "background"
+  #      tools = @backgroundFieldsFor(n)
+  #    when "typography"
+  #      tools = @typoFieldsFor(n)
+  #
+  #  [title, tools].join(" ")
 
   #dry this
   changeColor: (ev)->

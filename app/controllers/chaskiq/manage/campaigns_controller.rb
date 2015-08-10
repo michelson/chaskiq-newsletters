@@ -56,6 +56,11 @@ module Chaskiq
       render layout: false
     end
 
+    def iframe
+      find_campaign
+      render layout: false
+    end
+
     def editor
       find_campaign
       render "editor_frame", layout: false

@@ -14,7 +14,6 @@
           %style{:type => "text/css", id: "custom_style"}
             = @campaign.css
 
-
           = render partial: "wizard_steps"
 
           -#%iframe{src: editor_manage_campaign_path(@campaign), width: "100%", height: "300px" }
@@ -23,7 +22,12 @@
 
               #editor-container{data: {"attachments-path"=> manage_campaign_attachments_path(@campaign)}}
                 .col-lg-8
-                  #mail-editor{contenteditable: "false", style:{ height: '227px'}}
+                  
+                  %iframe#editor-frame{src: iframe_manage_campaign_path(@campaign), height: '500px', width: '98%', style: "border:none" }
+                  
+                  -#
+                    #mail-editor{contenteditable: "false", style:{ height: '227px'}}
+
                 .col-lg-4
 
                   .main-settings
@@ -70,7 +74,6 @@
                                     image card
 
                           #tab-2.tab-pane
-
 
                   .block-settings{style:"display: none;"}
 

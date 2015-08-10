@@ -38,6 +38,7 @@ Chaskiq::Engine.routes.draw do
         get :clone
         get :editor
         get :purge
+        get :iframe
       end
       resources :attachments, controller: 'manage/attachments'
       resources :metrics, controller: 'manage/metrics'

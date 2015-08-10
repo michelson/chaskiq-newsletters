@@ -1,0 +1,19 @@
+!!!
+%html
+  %head
+    %title Dummy
+
+    = stylesheet_link_tag 'chaskiq/manage/campaign_wizard', media: 'all'
+    = javascript_include_tag 'chaskiq/iframe'
+
+    %style{:type => "text/css", id: "custom_style"}
+      = @campaign.css
+
+  %body
+    #chaskiq-mail-editor
+      #mail-editor{contenteditable: "false", style:{ height: '227px'}}
+        = raw @campaign.html_content
+
+    :javascript
+      iframe = new window.Iframe
+      iframe.render()
