@@ -16,16 +16,16 @@ class window.Editor extends Backbone.View
     "dragover .tpl-block" : "displayItemOver"
     "dragover .chaskiqContainerEmptyMessage": "displayItemOver"
 
-    'drop #templateBody': "drop"
-    'drop #templatePreheader': "drop"
-    'drop #templateHeader': "drop"
-    'drop #templateBody': "drop"
-    "drop #templateFooter" : "drop"
+    #'drop #templateBody': "drop"
+    #'drop #templatePreheader': "drop"
+    #'drop #templateHeader': "drop"
+    #'drop #templateBody': "drop"
+    #"drop #templateFooter" : "drop"
 
-    "click .tpl-block": "setFocus"
+    #"click .tpl-block": "setFocus"
     "click #editor-controls #save" : "saveAndClose"
-    "click .imagePlaceholder .button-small" : "displayUploaderList"
-    "click .tpl-block-delete": "deleteBloc"
+    #"click .imagePlaceholder .button-small" : "displayUploaderList"
+    #"click .tpl-block-delete": "deleteBloc"
 
     #propery changer
     "changeColor.colorpicker .colorpicker": "changeColor"
@@ -53,7 +53,7 @@ class window.Editor extends Backbone.View
   copyToEditor: (ev)->
     $this = $(ev.currentTarget);
     window.setTimeout ()=>
-      $(@el).find('#mail-editor').html($this.val());
+      $(@iframe.el).find('#mail-editor').html($this.val());
     , 0
 
   copyToTextArea: ()->
@@ -91,8 +91,8 @@ class window.Editor extends Backbone.View
 
     $('.colorpicker').colorpicker();
 
-    @removeTplBlockControls() #for legacy already embeded tmp controls
-    @addTplBlockControls()
+    #@removeTplBlockControls() #for legacy already embeded tmp controls
+    #@addTplBlockControls()
 
   removeTplBlockControls: ->
     $(".tpl-block-controls").remove()
@@ -218,7 +218,7 @@ class window.Editor extends Backbone.View
     false
 
   currentFocused: ()->
-    $(".tpl-block.focus")
+    $(@.iframe.el).find(".tpl-block.focus")
 
   setFocus: (ev)->
     $(".tpl-block").removeClass("focus")
@@ -605,34 +605,34 @@ class window.Editor extends Backbone.View
 
   #http://www.w3.org/wiki/Dynamic_style_-_manipulating_CSS_with_JavaScript
 
-  findStyleSheet: ()->
-    _.find document.styleSheets, (n)->
-      n.ownerNode.id == "custom_style"
-
-  findRule: (name, sheet=@defaultStyleSheet())->
-    _.find sheet.cssRules, (n)->
-      n.selectorText == name
-
-  findRuleIndex: (sheet, name)->
-    indexes = _.map sheet.cssRules, (n, i)->
-      i if n.selectorText == name
-    indexes[0]
+  #findStyleSheet: ()->
+  #  _.find document.styleSheets, (n)->
+  #    n.ownerNode.id == "custom_style"
+  #
+  #findRule: (name, sheet=@defaultStyleSheet())->
+  #  _.find sheet.cssRules, (n)->
+  #    n.selectorText == name
+  #
+  #findRuleIndex: (sheet, name)->
+  #  indexes = _.map sheet.cssRules, (n, i)->
+  #    i if n.selectorText == name
+  #  indexes[0]
 
   defaultStyleSheet: ->
-    @findStyleSheet()
+    @iframe.findStyleSheet()
 
   style: ->
     @defaultStyleSheet()
 
-  modifyRule: (selector, property, value)->
-
-    rule = @findRule(selector)
-    s = @style()
-
-    if _.isUndefined(rule)
-      s.insertRule("#{selector} { property: #{value};}", s.cssRules.length);
-    else
-      @findRule(selector).style[property] = value
+  #modifyRule: (selector, property, value)->
+  #
+  #  rule = @iframe.findRule(selector)
+  #  s = @style()
+  #
+  #  if _.isUndefined(rule)
+  #    s.insertRule("#{selector} { property: #{value};}", s.cssRules.length);
+  #  else
+  #    @iframe.findRule(selector).style[property] = value
 
   definitionsForEditor: ->
     [
@@ -680,7 +680,7 @@ class window.Editor extends Backbone.View
 
   renderBlockDesignSettings: ->
     
-    focused = @iframe.currentFocused().find("table:first").attr("class")
+    focused = @currentFocused().find("table:first").attr("class")
     section = _.find editor.definitionsForBlocks(), (n)=>
       "#{n.name}Block" == focused
 
@@ -743,7 +743,7 @@ class window.Editor extends Backbone.View
     console.log "changing from #{css}, #{property} #{value}"
 
     if css.length > 0
-      @modifyRule(css, property, value)
+      @iframe.modifyRule(css, property, value)
     else
       editor.currentFocused()
       .find("table:first")
@@ -757,7 +757,7 @@ class window.Editor extends Backbone.View
     console.log "changing from #{css}, #{property} #{value}"
 
     if css.length > 0
-      @modifyRule(css, property, value)
+      @iframe.modifyRule(css, property, value)
     else
       editor.currentFocused()
       .find("table:first")

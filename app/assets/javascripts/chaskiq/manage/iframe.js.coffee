@@ -5,7 +5,6 @@ class window.Iframe extends Backbone.View
   el: '#chaskiq-mail-editor'
 
   events: ->
-    'keyup .note-editable': 'copyToFocusedElement'
 
     'drag .blocks li a' : 'drag'
     'drag .tpl-block-controls a' : 'drag'
@@ -23,17 +22,17 @@ class window.Iframe extends Backbone.View
     "drop #templateFooter" : "drop"
 
     "click .tpl-block": "setFocus"
-    "click #editor-controls #save" : "saveAndClose"
+    #"click #editor-controls #save" : "saveAndClose"
     "click .imagePlaceholder .button-small" : "displayUploaderList"
     "click .tpl-block-delete": "deleteBloc"
 
     #propery changer
-    "changeColor.colorpicker .colorpicker": "changeColor"
-    "change .text-size-picker": "changeProperty"
-    "change .font-picker": "changeProperty"
-    "change .font-weight": "changeProperty"
-    "change .font-spacing": "changeProperty"
-    "change .font-align": "changeProperty"
+    #"changeColor.colorpicker .colorpicker": "changeColor"
+    #"change .text-size-picker": "changeProperty"
+    #"change .font-picker": "changeProperty"
+    #"change .font-weight": "changeProperty"
+    #"change .font-spacing": "changeProperty"
+    #"change .font-align": "changeProperty"
 
     #"submit form" : "submitEditor" #get recursion!
     "click input.submit": "submitEditor"
@@ -43,35 +42,35 @@ class window.Iframe extends Backbone.View
     @textarea = $(@editor.el).find('#campaign_html_content')
     @css = $(@editor.el).find('#campaign_css')
 
-  copyToEditor: (ev)->
-    $this = $(ev.currentTarget);
-    window.setTimeout ()=>
-      $(@el).find('#mail-editor').html($this.val());
-    , 0
+  #copyToEditor: (ev)->
+  #  $this = $(ev.currentTarget);
+  #  window.setTimeout ()=>
+  #    $(@el).find('#mail-editor').html($this.val());
+  #  , 0
 
   copyToTextArea: ()->
     $this = $("#mail-editor")
     window.setTimeout ()=>
-      $(@el).find('#campaign_html_content').val($this.html());
+      $(@editor.el).find('#campaign_html_content').val($this.html());
     , 0
 
-  copyToFocusedElement: (ev)->
-    @currentFocused().find('.mcnTextContent').html($(ev.currentTarget).html())
-    @copyToTextArea()
+  #copyToFocusedElement: (ev)->
+  #  @currentFocused().find('.mcnTextContent').html($(ev.currentTarget).html())
+  #  @copyToTextArea()
 
   copyCssRulesToTextArea: ()->
     rules = _.map @style().cssRules , (rule)->
       rule.cssText
     $("#campaign_css").val(rules.join(" "))
 
-  submitEditor: (ev)->
-    @removeTplBlockControls()
-    @copyToTextArea()
-    @copyCssRulesToTextArea()
-
-    setTimeout ->
-      $(ev.currentTarget).submit()
-    , 600
+  #submitEditor: (ev)->
+  #  @removeTplBlockControls()
+  #  @copyToTextArea()
+  #  @copyCssRulesToTextArea()
+  #
+  #  setTimeout ->
+  #    $(ev.currentTarget).submit()
+  #  , 600
 
   template: ->
     '<p>dsfsd</p>'
@@ -168,12 +167,12 @@ class window.Iframe extends Backbone.View
     #data = $(ev.dataTransfer.getData("text"));
     #ev.target.appendChild(data);
     container = $(ev.currentTarget)
-
-    if @editor.dragged.attr('data-block')
-      tmpl = @handleBlock @editor.dragged.data('block')
+    
+    if @editor.dragged && @editor.dragged.attr('data-block')
+      tmpl = @editor.handleBlock @editor.dragged.data('block')
       @dropBlock(container, tmpl)
     else
-      to_drop = @editor.dragged.parents(".tpl-block")
+      to_drop = @dragged.parents(".tpl-block")
       @dropBlock(container, to_drop)
 
     @copyToTextArea()
@@ -181,6 +180,9 @@ class window.Iframe extends Backbone.View
     @releaseBeforeItem()
 
     @displayEmptyBlocks()
+
+    @editor.dragged = null
+    @dragged = null
 
   dropBlock: (container, tmpl)->
     #drop on before item or in tpl-container
@@ -228,6 +230,7 @@ class window.Iframe extends Backbone.View
   #  #edit = ()->
   #  #  $('.click2edit').summernote({ focus: true });
 
+  ###
   handleBlock: (block_type)->
     html = ""
     switch block_type
@@ -247,6 +250,7 @@ class window.Iframe extends Backbone.View
         console.log "Nada"
 
     @wrapBlock(html)
+  ###
 
   deleteBloc: (ev)->
     target = $(ev.currentTarget)
@@ -273,7 +277,7 @@ class window.Iframe extends Backbone.View
       <a data-chaskiq-attach-point='editBtn' class='tpl-block-edit' href='#' title='Edit Block'><i class='fa fa-arrows'></i></a>
       <a data-chaskiq-attach-point='deleteBtn' class='tpl-block-delete' href='#' title='Delete Block'><i class='fa fa-trash'></i></a>
     </div>"
-
+  ###
   baseTemplate: ()->
     "<table width='100%' cellspacing='0' cellpadding='0' border='0' align='center' height='100%' id='bodyTable'>
       <tbody>
@@ -555,6 +559,7 @@ class window.Iframe extends Backbone.View
         </tr>
       </tbody>
     </table>"
+  ###
 
   displayUploaderList: (ev)->
     placeholder = $(ev.currentTarget).parents('.imagePlaceholder')
@@ -627,106 +632,6 @@ class window.Iframe extends Backbone.View
     else
       @findRule(selector).style[property] = value
 
-  #definitionsForEditor: ->
-  #  [
-  #    {name: "page", targets:
-  #      [{name: "background page", selector: "#bodyTable", template: "background"},
-  #      {name: "heading 1", selector: "#bodyTable h1", template: "typography"} ,
-  #      {name: "heading 2", selector: "#bodyTable h2", template: "typography"} ,
-  #      {name: "page links", selector: "#bodyTable a", template: "typography"} ]}
-  #
-  #    {name: "preheader", targets:
-  #      [{name: "background pre header", selector: "#templatePreheader", template: "background"},
-  #      {name: "headings", selector: "#templatePreHeader h1", template: "typography"},
-  #      {name: "headings", selector: "#templatePreHeader h2", template: "typography"}]}
-  #
-  #    {name: "header", targets:
-  #      [{name: "header background", selector: "#templateHeader", template: "background"} ]}
-  #
-  #    {name: "body", targets:
-  #      [{name: "body background", selector: "#templateBody", template: "background"} ,
-  #      {name: "body content text", selector: ".bodyContainer .mcnTextContent, .bodyContainer .mcnTextContent p", template: "typography"} ]}
-  #
-  #    {name: "footer", targets:
-  #      [{name: "footer background",selector: "#templateFooter", template: "background"},
-  #      {name: "footer content text", selector: ".footerContainer .mcnTextContent, .footerContainer .mcnTextContent p", template: "typography"} ]}
-  #
-  #    {name: "columns", targets: []}
-  #  ]
-
-  #definitionsForBlocks: ->
-  #  [
-  #    {name: "mcnBaseTemplate", targets: []}
-  #    {name: "mcnBoxedText", targets: []}
-  #    {name: "mcnText", targets: [
-  #      {name: "background page", selector: "", template: "background"},
-  #      {name: "heading 1", selector: "", template: "typography"} ,
-  #      {name: "heading 2", selector: "", template: "typography"} ,
-  #      {name: "page links", selector: "", template: "typography"} ]}
-#
-  #    {name: "mcnDivider", targets: []}
-  #    {name: "mcnImage", targets: []}
-  #    {name: "mcnImageGroup", targets: []}
-  #    {name: "mcnImageCard", targets: []}
-  #    {name: "mcnSubscription", targets: []}
-  #  ]
-
-  #renderBlockDesignSettings: ->
-  #  focused = this.currentFocused().find("table:first").attr("class")
-  #  section = _.find editor.definitionsForBlocks(), (n)=>
-  #    "#{n.name}Block" == focused
-  #
-  #  console.log("section #{focused}" )
-  #  if section
-  #    console.log("display for #{focused}")
-  #    @current_section = section
-  #    html = @buildDesignToolForTarget(section)
-  #    $("#tab-4").html(html)
-  #
-  #    $('.colorpicker').colorpicker();
-
-  #size, align, fonttype, color, weight, line heigh, letter spacing
-  #baseStylesTemplate: (id, definitions)->
-  #  "<div class='panel-group' id='#{id}'>
-  #    <div class='panel panel-default'>
-  #      #{@colapsiblePanelsFor( id, definitions )}
-  #    </div>
-  #  </div>"
-
-  #colapsiblePanelsFor: (id, style_types)->
-  #  tpl = _.map style_types, (n)=>
-  #    "<div class='panel-heading'>
-  #      <h4 class='panel-title'>
-  #        <a data-toggle='collapse' data-parent='##{id}' href='#collapse#{n.name}'>
-  #        #{n.name}
-  #        </a>
-  #      </h4>
-  #    </div>
-  #
-  #    <div id='collapse#{n.name}' class='panel-collapse collapse'>
-  #      <div class='panel-body'>
-  #          <p>#{@buildDesignToolForTarget(n)}</p>
-  #      </div>
-  #    </div>"
-  #  tpl.join(" ")
-
-  #buildDesignToolForTarget: (section)->
-  #  tpl = _.map section.targets, (n)=>
-  #    @templateToolsFor(n)
-  #
-  #  "<fieldset>#{tpl.join(" ")}</fieldset>"
-
-  #templateToolsFor: (n)->
-  #  title = "<h3>#{n.name}</h3>"
-  #  tools = ""
-  #  switch n.template
-  #    when "background"
-  #      tools = @backgroundFieldsFor(n)
-  #    when "typography"
-  #      tools = @typoFieldsFor(n)
-  #
-  #  [title, tools].join(" ")
-
   #dry this
   changeColor: (ev)->
     css = $(ev.currentTarget).data('css')
@@ -737,7 +642,7 @@ class window.Iframe extends Backbone.View
     if css.length > 0
       @modifyRule(css, property, value)
     else
-      editor.currentFocused()
+      @currentFocused()
       .find("table:first")
       .find(".#{@current_section.name}Content")
       .css(property, value)
@@ -751,7 +656,7 @@ class window.Iframe extends Backbone.View
     if css.length > 0
       @modifyRule(css, property, value)
     else
-      editor.currentFocused()
+      @currentFocused()
       .find("table:first")
       .find(".#{@current_section.name}Content")
       .css(property, value)
