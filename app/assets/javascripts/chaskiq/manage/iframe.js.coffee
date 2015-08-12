@@ -196,21 +196,21 @@ class window.Iframe extends Backbone.View
   releaseBeforeItem: ()->
     $(".tpl-block").removeClass("chaskiqDndItemBefore")
 
-  displayWysiwyg: ->
-    $('.block-settings').show()
-    $('.main-settings').hide()
-    @editor.initWysiwyg()
-    false
-
-  displayBlockButtons: ->
-    $('.block-settings').hide()
-    $('.main-settings').show()
-    false
-
-  saveAndClose: ->
-    @copyToTextArea()
-    @displayBlockButtons()
-    false
+  #displayWysiwyg: ->
+  #  $('.block-settings').show()
+  #  $('.main-settings').hide()
+  #  @editor.initWysiwyg()
+  #  false
+  #
+  #displayBlockButtons: ->
+  #  $('.block-settings').hide()
+  #  $('.main-settings').show()
+  #  false
+  #
+  #saveAndClose: ->
+  #  @copyToTextArea()
+  #  @displayBlockButtons()
+  #  false
 
   currentFocused: ()->
     $(".tpl-block.focus")
@@ -220,6 +220,7 @@ class window.Iframe extends Backbone.View
     $(ev.currentTarget).addClass("focus")
     @editor.displayWysiwyg()
     @editor.renderBlockDesignSettings()
+
     false
 
   #initWysiwyg: ->
@@ -277,6 +278,7 @@ class window.Iframe extends Backbone.View
       <a data-chaskiq-attach-point='editBtn' class='tpl-block-edit' href='#' title='Edit Block'><i class='fa fa-arrows'></i></a>
       <a data-chaskiq-attach-point='deleteBtn' class='tpl-block-delete' href='#' title='Delete Block'><i class='fa fa-trash'></i></a>
     </div>"
+  
   ###
   baseTemplate: ()->
     "<table width='100%' cellspacing='0' cellpadding='0' border='0' align='center' height='100%' id='bodyTable'>
@@ -632,7 +634,9 @@ class window.Iframe extends Backbone.View
     else
       @findRule(selector).style[property] = value
 
+
   #dry this
+  ###
   changeColor: (ev)->
     css = $(ev.currentTarget).data('css')
     property = $(ev.currentTarget).data('css-property')
@@ -666,8 +670,9 @@ class window.Iframe extends Backbone.View
 
   arrayGen: (n)->
     Array.apply(null, length: n).map Number.call, Number
-
+  ###
   #border style, width, color
+  ###
   typoFieldsFor: (target)->
     color = "<div class='input-field'><label>Font color</label><input class='colorpicker' data-css='#{target.selector}' data-css-property='color' type='text' autocomplete='off' tabindex='0' value='0'></div>"
 
@@ -713,3 +718,4 @@ class window.Iframe extends Backbone.View
           </select></div>"
 
     [color, sizeFont, familyFont, weight, spacingtext, align].join(" ")
+  ###

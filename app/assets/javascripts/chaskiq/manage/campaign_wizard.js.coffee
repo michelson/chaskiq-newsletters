@@ -8,13 +8,13 @@ class window.Editor extends Backbone.View
     'keyup .note-editable': 'copyToFocusedElement'
 
     'drag .blocks li a' : 'drag'
-    'drag .tpl-block-controls a' : 'drag'
-    'dragstart .tpl-block-controls a': 'setDraggedEl'
-    'dragend .tpl-block-controls a': 'removeDraggedEl'
-    "dragleave #bodyTable" : "hideSections"
-    "drop #bodyTable" : "hideSections"
-    "dragover .tpl-block" : "displayItemOver"
-    "dragover .chaskiqContainerEmptyMessage": "displayItemOver"
+    #'drag .tpl-block-controls a' : 'drag'
+    #'dragstart .tpl-block-controls a': 'setDraggedEl'
+    #'dragend .tpl-block-controls a': 'removeDraggedEl'
+    #"dragleave #bodyTable" : "hideSections"
+    #"drop #bodyTable" : "hideSections"
+    #"dragover .tpl-block" : "displayItemOver"
+    #"dragover .chaskiqContainerEmptyMessage": "displayItemOver"
 
     #'drop #templateBody': "drop"
     #'drop #templatePreheader': "drop"
@@ -46,6 +46,10 @@ class window.Editor extends Backbone.View
       #put your awesome code here
       @iframe = $("#editor-frame")[0].contentWindow.iframe
 
+      #@buildOptionsFromStyles()
+      $("#tab-2").html(@baseStylesTemplate("accordeon", @definitionsForEditor()))
+
+
 
   setIframe: (iframe)->
     @iframe = iframe
@@ -55,6 +59,9 @@ class window.Editor extends Backbone.View
     window.setTimeout ()=>
       $(@iframe.el).find('#mail-editor').html($this.val());
     , 0
+
+  buildOptionsFromStyles: ()->
+    @renderBlockDesignSettings()
 
   copyToTextArea: ()->
     $this = $("#mail-editor")
@@ -87,9 +94,7 @@ class window.Editor extends Backbone.View
     #$(@el).find('#mail-editor').html(@template())
     $(@el).find('#mail-editor').html(@textarea.val()); #init from saved content
     #$(@el).find('#mail-editor').html(@baseTemplate()) #init from base js tamplarte
-    $("#tab-2").html(@baseStylesTemplate("accordeon", @definitionsForEditor()))
-
-    $('.colorpicker').colorpicker();
+    #$("#tab-2").html(@baseStylesTemplate("accordeon", @definitionsForEditor()))
 
     #@removeTplBlockControls() #for legacy already embeded tmp controls
     #@addTplBlockControls()
@@ -166,7 +171,7 @@ class window.Editor extends Backbone.View
         empty_message.hide()
       else
         empty_message.show()
-
+  ###
   drop: (ev)->
     ev.preventDefault()
     #console.log($(ev.dataTransfer.getData("text")))
@@ -188,6 +193,7 @@ class window.Editor extends Backbone.View
     @releaseBeforeItem()
 
     @displayEmptyBlocks()
+  ###
 
   dropBlock: (container, tmpl)->
     #drop on before item or in tpl-container
@@ -220,12 +226,12 @@ class window.Editor extends Backbone.View
   currentFocused: ()->
     $(@.iframe.el).find(".tpl-block.focus")
 
-  setFocus: (ev)->
-    $(".tpl-block").removeClass("focus")
-    $(ev.currentTarget).addClass("focus")
-    @displayWysiwyg()
-    @renderBlockDesignSettings()
-    false
+  #setFocus: (ev)->
+  #  $(".tpl-block").removeClass("focus")
+  #  $(ev.currentTarget).addClass("focus")
+  #  @displayWysiwyg()
+  #  @renderBlockDesignSettings()
+  #  false
 
   initWysiwyg: ->
     $('.summernote').destroy()
@@ -644,19 +650,19 @@ class window.Editor extends Backbone.View
 
       {name: "preheader", targets:
         [{name: "background pre header", selector: "#templatePreheader", template: "background"},
-        {name: "headings", selector: "#templatePreHeader h1", template: "typography"},
-        {name: "headings", selector: "#templatePreHeader h2", template: "typography"}]}
+        {name: "h1", selector: "#templatePreHeader h1", template: "typography"},
+        {name: "h2", selector: "#templatePreHeader h2", template: "typography"}]}
 
-      {name: "header", targets:
-        [{name: "header background", selector: "#templateHeader", template: "background"} ]}
+      {name: "Header", targets:
+        [{name: "Header background", selector: "#templateHeader", template: "background"} ]}
 
       {name: "body", targets:
         [{name: "body background", selector: "#templateBody", template: "background"} ,
-        {name: "body content text", selector: ".bodyContainer .mcnTextContent, .bodyContainer .mcnTextContent p", template: "typography"} ]}
+        {name: "font", selector: ".bodyContainer .mcnTextContent, .bodyContainer .mcnTextContent p", template: "typography"} ]}
 
       {name: "footer", targets:
-        [{name: "footer background",selector: "#templateFooter", template: "background"},
-        {name: "footer content text", selector: ".footerContainer .mcnTextContent, .footerContainer .mcnTextContent p", template: "typography"} ]}
+        [{name: "background",selector: "#templateFooter", template: "background"},
+        {name: "font", selector: ".footerContainer .mcnTextContent, .footerContainer .mcnTextContent p", template: "typography"} ]}
 
       {name: "columns", targets: []}
     ]
@@ -679,7 +685,12 @@ class window.Editor extends Backbone.View
     ]
 
   renderBlockDesignSettings: ->
-    
+    try
+      $('.colorpicker').colorpicker('destroy') 
+    catch e
+      console.log(e)
+
+
     focused = @currentFocused().find("table:first").attr("class")
     section = _.find editor.definitionsForBlocks(), (n)=>
       "#{n.name}Block" == focused
@@ -692,6 +703,8 @@ class window.Editor extends Backbone.View
       $("#tab-4").html(html)
 
       $('.colorpicker').colorpicker();
+
+    #$('.colorpicker').colorpicker('destroy') 
 
   #size, align, fonttype, color, weight, line heigh, letter spacing
   baseStylesTemplate: (id, definitions)->
@@ -720,32 +733,42 @@ class window.Editor extends Backbone.View
 
   buildDesignToolForTarget: (section)->
     tpl = _.map section.targets, (n)=>
-      @templateToolsFor(n)
+      @templateToolsFor(n , section.name)
 
     "<fieldset>#{tpl.join(" ")}</fieldset>"
 
-  templateToolsFor: (n)->
+  templateToolsFor: (n, parent_name)->
     title = "<h3>#{n.name}</h3>"
     tools = ""
     switch n.template
       when "background"
-        tools = @backgroundFieldsFor(n)
+        tools = @backgroundFieldsFor(n, parent_name)
       when "typography"
-        tools = @typoFieldsFor(n)
+        tools = @typoFieldsFor(n, parent_name)
 
     [title, tools].join(" ")
 
+  rgb2hex: (rgb)->
+    rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+    return if (rgb && rgb.length is 4)  
+      "#" +
+      ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+      ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+      ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) 
+    else
+      ''
+  
   #dry this
   changeColor: (ev)->
     css = $(ev.currentTarget).data('css')
     property = $(ev.currentTarget).data('css-property')
-    value = ev.color.toString()
+    value = @rgb2hex(ev.color.toString())
     console.log "changing from #{css}, #{property} #{value}"
 
     if css.length > 0
       @iframe.modifyRule(css, property, value)
     else
-      editor.currentFocused()
+      @currentFocused()
       .find("table:first")
       .find(".#{@current_section.name}Content")
       .css(property, value)
@@ -764,15 +787,25 @@ class window.Editor extends Backbone.View
       .find(".#{@current_section.name}Content")
       .css(property, value)
 
-  backgroundFieldsFor: (target)->
-    ["<input class='colorpicker' data-css='#{target.selector}' data-css-property='background-color' type='text' autocomplete='off' tabindex='0' value='0'>"].join(" ")
-
   arrayGen: (n)->
     Array.apply(null, length: n).map Number.call, Number
 
+  styleforSelector: (target, style_selector, parent_name)->
+    val = if !target.selector then @currentFocused().find(".#{parent_name}Content") else @.iframe.$el.find(target.selector)
+    o = val.css(style_selector)
+    console.log o
+    o
+
+  backgroundFieldsFor: (target, parent_name)->
+    style_selector = "background-color"
+    val = @styleforSelector(target, style_selector, parent_name)
+    val = @rgb2hex(val)
+    ["AA #{val} #{target.selector} #{style_selector}<input class='colorpicker' data-css='#{target.selector}' data-css-property='#{style_selector}' type='text' autocomplete='off' tabindex='0' value='#{val}'>"].join(" ")
+
   #border style, width, color
-  typoFieldsFor: (target)->
-    color = "<div class='input-field'><label>Font color</label><input class='colorpicker' data-css='#{target.selector}' data-css-property='color' type='text' autocomplete='off' tabindex='0' value='0'></div>"
+  typoFieldsFor: (target, parent_name)->
+    c = @styleforSelector(target, 'color', parent_name)
+    color = "<div class='input-field'><label>Font color</label><input class='colorpicker' data-css='#{target.selector}' data-css-property='color' type='text' autocomplete='off' tabindex='0' value='#{@rgb2hex(c)}'></div>"
 
     sizeFont = "<div class='input-field'><label>font Size</label><select class='text-size-picker' id='' data-css='#{target.selector}' data-css-property='font-size'>"
     _.each @arrayGen(30), (n)->

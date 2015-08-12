@@ -9,111 +9,108 @@
         .ibox-title
           %h5 Design
 
-        .ibox-content
+      = render partial: "wizard_steps"
+
+      -#%iframe{src: editor_manage_campaign_path(@campaign), width: "100%", height: "300px" }
+      #chaskiq-mail-editor
+        = simple_form_for @campaign, url: wizard_path do |f|
+
+          #editor-container{data: {"attachments-path"=> manage_campaign_attachments_path(@campaign)}}
+            .row
+              .col-lg-7
+                
+                %iframe#editor-frame{src: iframe_manage_campaign_path(@campaign), height: '700px', width: '98%', style: "border:none" }
+                
+                -#
+                  #mail-editor{contenteditable: "false", style:{ height: '227px'}}
+
+              .col-lg-5
+
+                .main-settings
+                  .panel.blank-panel
+                    .panel-heading
+                      .panel-title.m-b-md
+                        %h4 Settings
+                      .panel-options
+                        %ul.nav.nav-tabs
+
+                          %li.active
+                            %a{"data-toggle" => "tab", :href => "#tab-1"}
+                              %i.fa.fa-cubes
+                              Blocks
+                          %li
+                            %a{"data-toggle" => "tab", :href => "#tab-2"}
+                              %i.fa.fa-cubes
+                              Design
+
+                    .panel-body{style: "padding:0px"}
+                      .tab-content
+                        #tab-1.tab-pane.active
+
+                          .block-buttons
+                            %ul.blocks
+                              %li.imageIcon
+                                %a.chaskiq-text{data: {block: "text"}, href:"#"}
+                                  Text
+                              %li.imageIcon
+                                %a.chaskiq-separator{data: {block: "separator"}, href:"#"}
+                                  Separator
+                              %li.imageIcon
+                                %a.chaskiq-boxed{data: {block: "boxed"}, href:"#"}
+                                  Boxed
+                              %li.imageIcon
+                                %a.chaskiq-image{data: {block: "image"}, href:"#"}
+                                  image
+                              %li.imageIcon
+                                %a.chaskiq-image-group{data: {block: "image_group"}, href:"#"}
+                                  image group
+
+                              %li.imageIcon
+                                %a.chaskiq-image-card{data: {block: "image_card"}, href:"#"}
+                                  image card
+
+                        #tab-2.tab-pane
+
+                .block-settings{style:"display: none;"}
+
+                  .panel.blank-panel
+                    .panel-heading
+                      .panel-title.m-b-md
+                        %h4 Block Settings
+                      .panel-options
+                        %ul.nav.nav-tabs
+                          %li.active
+                            %a{"data-toggle" => "tab", :href => "#tab-3"}
+                              %i.fa.fa-align-left
+                              Content
+                          %li
+                            %a{"data-toggle" => "tab", :href => "#tab-4"}
+                              %i.fa.fa-cubes
+                              Design
+
+                    .panel-body
+                      .tab-content
+                        #tab-3.tab-pane.active
+
+                          .wysiwyg
+                            .summernote.wrapper.p-md{data:{ upload_path: manage_campaign_attachments_path(@campaign, format: :json) }}
+
+                        #tab-4.tab-pane
 
 
+                      #editor-controls
+                        %a#save.btn.btn-default{href:""} Save & Close
 
-          = render partial: "wizard_steps"
+                .hidden
+                  = f.input :html_content
+                  = f.input :css
 
-          -#%iframe{src: editor_manage_campaign_path(@campaign), width: "100%", height: "300px" }
-          #chaskiq-mail-editor
-            = simple_form_for @campaign, url: wizard_path do |f|
+            .clearfix
 
-              #editor-container{data: {"attachments-path"=> manage_campaign_attachments_path(@campaign)}}
-                .col-lg-8
-                  
-                  %iframe#editor-frame{src: iframe_manage_campaign_path(@campaign), height: '500px', width: '98%', style: "border:none" }
-                  
-                  -#
-                    #mail-editor{contenteditable: "false", style:{ height: '227px'}}
+            .col-ls-12
+              = f.submit class: "btn btn-primary submit"
 
-                .col-lg-4
-
-                  .main-settings
-                    .panel.blank-panel
-                      .panel-heading
-                        .panel-title.m-b-md
-                          %h4 Settings
-                        .panel-options
-                          %ul.nav.nav-tabs
-
-                            %li.active
-                              %a{"data-toggle" => "tab", :href => "#tab-1"}
-                                %i.fa.fa-cubes
-                                Blocks
-                            %li
-                              %a{"data-toggle" => "tab", :href => "#tab-2"}
-                                %i.fa.fa-cubes
-                                Design
-
-                      .panel-body{style: "padding:0px"}
-                        .tab-content
-                          #tab-1.tab-pane.active
-
-                            .block-buttons
-                              %ul.blocks
-                                %li.imageIcon
-                                  %a.chaskiq-text{data: {block: "text"}, href:"#"}
-                                    Text
-                                %li.imageIcon
-                                  %a.chaskiq-separator{data: {block: "separator"}, href:"#"}
-                                    Separator
-                                %li.imageIcon
-                                  %a.chaskiq-boxed{data: {block: "boxed"}, href:"#"}
-                                    Boxed
-                                %li.imageIcon
-                                  %a.chaskiq-image{data: {block: "image"}, href:"#"}
-                                    image
-                                %li.imageIcon
-                                  %a.chaskiq-image-group{data: {block: "image_group"}, href:"#"}
-                                    image group
-
-                                %li.imageIcon
-                                  %a.chaskiq-image-card{data: {block: "image_card"}, href:"#"}
-                                    image card
-
-                          #tab-2.tab-pane
-
-                  .block-settings{style:"display: none;"}
-
-                    .panel.blank-panel
-                      .panel-heading
-                        .panel-title.m-b-md
-                          %h4 Block Settings
-                        .panel-options
-                          %ul.nav.nav-tabs
-                            %li.active
-                              %a{"data-toggle" => "tab", :href => "#tab-3"}
-                                %i.fa.fa-align-left
-                                Content
-                            %li
-                              %a{"data-toggle" => "tab", :href => "#tab-4"}
-                                %i.fa.fa-cubes
-                                Design
-
-                      .panel-body
-                        .tab-content
-                          #tab-3.tab-pane.active
-
-                            .wysiwyg
-                              .summernote.wrapper.p-md{data:{ upload_path: manage_campaign_attachments_path(@campaign, format: :json) }}
-
-                          #tab-4.tab-pane
-
-
-                        #editor-controls
-                          %a#save.btn.btn-default{href:""} Save & Close
-
-                  .hidden
-                    = f.input :html_content
-                    = f.input :css
-
-                .clearfix
-
-                .col-ls-12
-                  = f.submit class: "btn btn-primary submit"
-
-          = render partial: "wizard_nav"
+      = render partial: "wizard_nav"
 
 
 :javascript
