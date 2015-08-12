@@ -544,10 +544,10 @@ class window.Editor extends Backbone.View
     @copyToTextArea()
 
   templateForAttachments: (data)->
-    html = "<ul>"
+    html = "<ul class='attachments-modal-list'>"
     _.each data, (num)->
       html += "<li>"
-      html += "<a href='#' class='image-selector btn btn-success' data-image-url='#{num.image.url}' >Select</a>"
+      html += "<a href='#' class='image-selector btn btn-success pull-right' data-image-url='#{num.image.url}' >Select</a>"
       html += "<img src='#{num.image.url}' width=150>"
       html += "</li>"
 

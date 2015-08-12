@@ -8,7 +8,7 @@
         .ibox-title
           %h5 All Attachments
           .ibox-tools
-            %a.btn.btn-success.btn-xs{:href => new_manage_campaign_attachment_path(@campaign) }
+            = link_to new_manage_campaign_attachment_path(@campaign), remote: true, class: "btn btn-success btn-xs" do
               %i.fa.fa-plus
               Create new Attachment
         .ibox-content
@@ -30,16 +30,16 @@
 
                   %td.project-title
                     %a{:href => manage_campaign_attachment_path(@campaign, attach)}
-                      = image_tag attach.image
+                      = image_tag attach.image , width: 100
                     %br/
                     %small= attach.created_at
 
                   %td.project-actions
 
                     = link_to edit_manage_campaign_attachment_path(@campaign, attach), class: "btn btn-white btn-sm" do
-                      %i.fa.fa-folder
+                      %i.fa.fa-edit
                       Edit
 
                     = link_to manage_campaign_attachment_path(@campaign,attach), class: "btn btn-white btn-sm", method: :delete do
-                      %i.fa.fa-folder
+                      %i.fa.fa-times
                       Destroy

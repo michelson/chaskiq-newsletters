@@ -21,7 +21,7 @@ $(document).ready(function () {
     $("[data-modal]").on("click", function(){
       console.log($(this).attr("data-modal"))
       html = $($(this).attr("data-modal")).html();
-      Chaskiq.Helpers.showModal(html, "Upload CSV");
+      Chaskiq.Helpers.showModal(html, "Upload");
       return false
     })
 

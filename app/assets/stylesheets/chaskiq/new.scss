@@ -12,6 +12,17 @@ body {
     border-color: #e7e7e7;
 }
 
+.attachments-modal-list{
+  overflow:auto;
+  height:400px;
+  padding: 0px;
+  li{
+    padding: 6px 8px 14px;
+    border-bottom: 1px solid #ccc;
+    list-style: none;
+  }
+}
+
 .btn {
     border-radius: 0px;
     font-size: 12px;
