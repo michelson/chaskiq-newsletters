@@ -22,19 +22,9 @@ class window.Iframe extends Backbone.View
     "drop #templateFooter" : "drop"
 
     "click .tpl-block": "setFocus"
-    #"click #editor-controls #save" : "saveAndClose"
     "click .imagePlaceholder .button-small" : "displayUploaderList"
     "click .tpl-block-delete": "deleteBloc"
 
-    #propery changer
-    #"changeColor.colorpicker .colorpicker": "changeColor"
-    #"change .text-size-picker": "changeProperty"
-    #"change .font-picker": "changeProperty"
-    #"change .font-weight": "changeProperty"
-    #"change .font-spacing": "changeProperty"
-    #"change .font-align": "changeProperty"
-
-    #"submit form" : "submitEditor" #get recursion!
     "click input.submit": "submitEditor"
 
   initialize: ->
@@ -42,35 +32,16 @@ class window.Iframe extends Backbone.View
     @textarea = $(@editor.el).find('#campaign_html_content')
     @css = $(@editor.el).find('#campaign_css')
 
-  #copyToEditor: (ev)->
-  #  $this = $(ev.currentTarget);
-  #  window.setTimeout ()=>
-  #    $(@el).find('#mail-editor').html($this.val());
-  #  , 0
-
   copyToTextArea: ()->
     $this = $("#mail-editor")
     window.setTimeout ()=>
       $(@editor.el).find('#campaign_html_content').val($this.html());
     , 0
 
-  #copyToFocusedElement: (ev)->
-  #  @currentFocused().find('.mcnTextContent').html($(ev.currentTarget).html())
-  #  @copyToTextArea()
-
   copyCssRulesToTextArea: ()->
     rules = _.map @style().cssRules , (rule)->
       rule.cssText
     $("#campaign_css").val(rules.join(" "))
-
-  #submitEditor: (ev)->
-  #  @removeTplBlockControls()
-  #  @copyToTextArea()
-  #  @copyCssRulesToTextArea()
-  #
-  #  setTimeout ->
-  #    $(ev.currentTarget).submit()
-  #  , 600
 
   template: ->
     '<p>dsfsd</p>'
@@ -196,22 +167,6 @@ class window.Iframe extends Backbone.View
   releaseBeforeItem: ()->
     $(".tpl-block").removeClass("chaskiqDndItemBefore")
 
-  #displayWysiwyg: ->
-  #  $('.block-settings').show()
-  #  $('.main-settings').hide()
-  #  @editor.initWysiwyg()
-  #  false
-  #
-  #displayBlockButtons: ->
-  #  $('.block-settings').hide()
-  #  $('.main-settings').show()
-  #  false
-  #
-  #saveAndClose: ->
-  #  @copyToTextArea()
-  #  @displayBlockButtons()
-  #  false
-
   currentFocused: ()->
     $(".tpl-block.focus")
 
@@ -223,36 +178,6 @@ class window.Iframe extends Backbone.View
 
     false
 
-  #initWysiwyg: ->
-  #  $('.summernote').destroy()
-  #  InitSummernote()
-  #  $('.summernote').code(@currentFocused().find('.mcnTextContent').html());
-  #
-  #  #edit = ()->
-  #  #  $('.click2edit').summernote({ focus: true });
-
-  ###
-  handleBlock: (block_type)->
-    html = ""
-    switch block_type
-      when "boxed"
-        html = @boxedBlock()
-      when "text"
-        html = @textBlock()
-      when "separator"
-        html = @separatorBlock()
-      when "image"
-        html = @imageBlock()
-      when "image_group"
-        html = @imageGroupBlock()
-      when "image_card"
-        html = @imageCardBlock()
-      else
-        console.log "Nada"
-
-    @wrapBlock(html)
-  ###
-
   deleteBloc: (ev)->
     target = $(ev.currentTarget)
     container = target.parents(".tpl-container")
@@ -262,6 +187,7 @@ class window.Iframe extends Backbone.View
       container.find(".chaskiqContainerEmptyMessage").show()
     false
 
+  
   emptyContainerMessage: ()->
     "<div class='chaskiqContainerEmptyMessage' style='display: block;'>Drop Content Blocks Here</div>"
 
@@ -279,327 +205,10 @@ class window.Iframe extends Backbone.View
       <a data-chaskiq-attach-point='deleteBtn' class='tpl-block-delete' href='#' title='Delete Block'><i class='fa fa-trash'></i></a>
     </div>"
   
-  ###
-  baseTemplate: ()->
-    "<table width='100%' cellspacing='0' cellpadding='0' border='0' align='center' height='100%' id='bodyTable'>
-      <tbody>
-        <tr>
-          <td valign='top' align='center' id='bodyCell'>
-            <!-- BEGIN TEMPLATE // -->
-            <table width='600' cellspacing='0' cellpadding='0' border='0' id='templateContainer'>
-              <tbody>
-                <tr>
-                  <td valign='top' align='center'>
-                    <!-- BEGIN PREHEADER // -->
-                    <table width='600' cellspacing='0' cellpadding='0' border='0' id='templatePreheader'>
-                      <tbody>
-                        <tr>
-                          <td valign='top' mccontainer='preheader_container' mc:container='preheader_container' style='padding-top:9px;' class='preheaderContainer tpl-container chaskiqDndSource chaskiqDndTarget chaskiqDndContainer'>
-                            #{@emptyContainerMessage()}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <!-- // END PREHEADER -->
-                  </td>
-                </tr>
-                <tr>
-                  <td valign='top' align='center'>
-                    <!-- BEGIN HEADER // -->
-                    <table width='600' cellspacing='0' cellpadding='0' border='0' id='templateHeader'>
-                      <tbody>
-                        <tr>
-                          <td valign='top' mccontainer='header_container' mc:container='header_container' class='headerContainer tpl-container chaskiqDndSource chaskiqDndTarget chaskiqDndContainer'>
-                            #{@emptyContainerMessage()}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <!-- // END HEADER -->
-                  </td>
-                </tr>
-                <tr>
-                  <td valign='top' align='center'>
-                    <!-- BEGIN BODY // -->
-                    <table width='600' cellspacing='0' cellpadding='0' border='0' id='templateBody'>
-                      <tbody>
-                        <tr>
-                          <td valign='top' mccontainer='body_container' mc:container='body_container' class='bodyContainer tpl-container chaskiqDndSource chaskiqDndTarget chaskiqDndContainer'>
-                            #{@emptyContainerMessage()}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <!-- // END BODY -->
-                  </td>
-                </tr>
-                <tr>
-                  <td valign='top' align='center'>
-                    <!-- BEGIN FOOTER // -->
-                    <table width='600' cellspacing='0' cellpadding='0' border='0' id='templateFooter'>
-                      <tbody>
-                        <tr>
-                          <td valign='top' mccontainer='footer_container' style='padding-bottom:9px;' mc:container='footer_container' class='footerContainer tpl-container chaskiqDndSource chaskiqDndTarget chaskiqDndContainer'>
-                            #{@emptyContainerMessage()}
-                            #{@wrapBlock(@subscriptionBlock())}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <!-- // END FOOTER -->
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <!-- // END TEMPLATE -->
-          </td>
-        </tr>
-      </tbody>
-    </table>"
-
-  boxedBlock: ()->
-    "<table width='100%' cellspacing='0' cellpadding='0' border='0' class='mcnBoxedTextBlock'>
-      <tbody class='mcnBoxedTextBlockOuter'>
-        <tr>
-          <td valign='top' class='mcnBoxedTextBlockInner'>
-            <table width='600' cellspacing='0' cellpadding='0' border='0' align='left' class='mcnBoxedTextContentContainer'>
-              <tbody>
-                <tr>
-                  <td style='padding-top:9px; padding-left:18px; padding-bottom:9px; padding-right:18px;'>
-                    <table width='100%' cellspacing='0' cellpadding='18' border='0' class='mcnTextContentContainer' style='border: 1px solid rgb(153, 153, 153); background-color: rgb(235, 235, 235);'>
-                      <tbody>
-                        <tr>
-                          <td valign='top' class='mcnTextContent'>
-                            This is a Text Block. Use this to provide text...
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>"
-
-  textBlock: ()->
-    "<table width='100%' cellspacing='0' cellpadding='0' border='0' class='mcnTextBlock'>
-      <tbody class='mcnTextBlockOuter'>
-        <tr>
-          <td valign='top' class='mcnTextBlockInner'>
-            <table width='600' cellspacing='0' cellpadding='0' border='0' align='left' class='mcnTextContentContainer'>
-              <tbody>
-                <tr>
-                  <td valign='top' style='padding-top:9px; padding-right: 18px; padding-bottom: 9px; padding-left: 18px;' class='mcnTextContent'>
-                    This is a Text Block. Use this to provide text...
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>"
-
-  separatorBlock: ()->
-    "<table width='100%' cellspacing='0' cellpadding='0' border='0' class='mcnDividerBlock'>
-      <tbody class='mcnDividerBlockOuter'>
-        <tr>
-          <td style='padding: 18px;' class='mcnDividerBlockInner'>
-            <table width='100%' cellspacing='0' cellpadding='0' border='0' class='mcnDividerContent' style='border-top: 1px solid rgb(153, 153, 153);'>
-              <tbody>
-                <tr>
-                  <td>
-                    <span></span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>"
-
-  imageBlock: ()->
-    "<table width='100%' cellspacing='0' cellpadding='0' border='0' class='mcnImageBlock'>
-      <tbody class='mcnImageBlockOuter'>
-        <tr>
-          <td valign='top' class='mcnImageBlockInner' style='padding:9px'>
-            <table width='100%' cellspacing='0' cellpadding='0' border='0' align='left' class='mcnImageContentContainer'>
-              <tbody>
-                <tr>
-                  <td valign='top' style='padding-right: 9px; padding-left: 9px; padding-top: 0; padding-bottom: 0;' class='mcnImageContent'>
-                    <table class='mcpreview-image-uploader' style='width:564px;'>
-                      <tr class='chaskiqImageUploader blockDropTarget' id='dijit__Templated_8' widgetid='dijit__Templated_8'>
-                        <td>
-                          <div class='imagePlaceholder'>
-                            <img src='/images/blocks/empty-image-144.png' class='chaskiqImageItemIcon' data-chaskiq-attach-point='emptyImage'>
-                            <div data-chaskiq-attach-point='uploadText'><span>Drop an image here</span><br>or</div>
-                            <div><input type='button' value='browse' class='button-small p3' data-chaskiq-attach-point='browseBtn'></div>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>"
-
-  imageGroupBlock: ()->
-    "<table width='100%' cellspacing='0' cellpadding='0' border='0' class='mcnImageGroupBlock'>
-      <tbody class='mcnImageGroupBlockOuter'>
-        <tr>
-          <td valign='top' class='mcnImageGroupBlockInner' style='padding:9px'>
-            <table width='273' cellspacing='0' cellpadding='0' border='0' align='left' class='mcnImageGroupContentContainer'>
-              <tbody>
-                <tr>
-                  <td valign='top' style='padding-left: 9px; padding-top: 0; padding-bottom: 0;' class='mcnImageGroupContent'>
-                    <table data-chaskiq-id='0' class='mcpreview-image-uploader' style='width:264px;'>
-                      <tr class='chaskiqImageUploader blockDropTarget' id='dijit__Templated_12' widgetid='dijit__Templated_12'>
-                        <td>
-                          <div class='imagePlaceholder'>
-                            <img src='/images/blocks/empty-image-144.png' class='chaskiqImageItemIcon' data-chaskiq-attach-point='emptyImage'>
-                            <div data-chaskiq-attach-point='uploadText'><span>Drop an image here</span><br>or</div>
-                            <div><input type='button' value='browse' class='button-small p3' data-chaskiq-attach-point='browseBtn'></div>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table width='273' cellspacing='0' cellpadding='0' border='0' align='right' class='mcnImageGroupContentContainer'>
-              <tbody>
-                <tr>
-                  <td valign='top' style='padding-right: 9px; padding-top: 0; padding-bottom: 0;' class='mcnImageGroupContent'>
-                    <table data-chaskiq-id='1' class='mcpreview-image-uploader' style='width:264px;'>
-                      <tr class='chaskiqImageUploader blockDropTarget' id='dijit__Templated_13' widgetid='dijit__Templated_13'>
-                        <td>
-                          <div class='imagePlaceholder'>
-                            <img src='/images/blocks/empty-image-144.png' class='chaskiqImageItemIcon' data-chaskiq-attach-point='emptyImage'>
-                            <div data-chaskiq-attach-point='uploadText'><span>Drop an image here</span><br>or</div>
-                            <div><input type='button' value='browse' class='button-small p3' data-chaskiq-attach-point='browseBtn'></div>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>"
-
-  imageCardBlock: ()->
-    "<table width='100%' cellspacing='0' cellpadding='0' border='0' class='mcnImageCardBlock'>
-      <tbody class='mcnImageCardBlockOuter'>
-        <tr>
-          <td valign='top' style='padding-top:9px; padding-right:18px; padding-bottom:9px; padding-left:18px;' class='mcnImageCardBlockInner'>
-            <table width='100%' cellspacing='0' cellpadding='0' border='0' align='right' class='mcnImageCardBottomContent' style='border: 1px solid rgb(153, 153, 153); background-color: rgb(235, 235, 235);'>
-              <tbody>
-                <tr>
-                  <td valign='top' align='left' style='padding-top:18px; padding-right:18px; padding-bottom:0; padding-left:18px;' class='mcnImageCardBottomImageContent'>
-                    <table data-chaskiq-id='' class='mcpreview-image-uploader' style='width: 528px;'>
-                      <tr class='chaskiqImageUploader blockDropTarget' id='dijit__Templated_19' widgetid='dijit__Templated_19'>
-                        <td>
-                          <div class='imagePlaceholder'>
-                            <img src='/images/blocks/empty-image-144.png' class='chaskiqImageItemIcon' data-chaskiq-attach-point='emptyImage'>
-                            <div data-chaskiq-attach-point='uploadText'><span>Drop an image here</span><br>or</div>
-                            <div><input type='button' value='browse' class='button-small p3' data-chaskiq-attach-point='browseBtn'></div>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                <tr>
-                  <td width='528' valign='top' style='padding-top:9px; padding-right:18px; padding-bottom:9px; padding-left:18px;' class='mcnTextContent'>
-                    Your text caption goes here
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>"
-
-  subscriptionBlock: ()->
-    "<table width='100%' cellspacing='0' cellpadding='0' border='0' class='mcnTextBlock'>
-      <tbody class='mcnTextBlockOuter'>
-        <tr>
-          <td valign='top' class='mcnTextBlockInner'>
-              <table width='600' cellspacing='0' cellpadding='0' border='0' align='left' class='mcnTextContentContainer'>
-                <tbody><tr>
-
-                  <td valign='top' style='padding-top:9px; padding-right: 18px; padding-bottom: 9px; padding-left: 18px;' class='mcnTextContent'>
-                      <em>&copy;</em>
-                      {{campaign_description}}
-                      <br>
-                      <br>
-                      <strong>Our mailing address is:</strong><br>
-                      {{campaign_url}}
-                      <br>
-                      <br>
-                      <a href='{{campaign_unsubscribe}}' class='utilityLink'>unsubscribe from this list</a>&nbsp;&nbsp;&nbsp;
-                      <a href='{{campaign_unsubscribe}}' class='utilityLink'>update subscription preferences</a>&nbsp;<br>
-                      <br>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>"
-  ###
-
   displayUploaderList: (ev)->
     placeholder = $(ev.currentTarget).parents('.imagePlaceholder')
-    @checkExistentImages(placeholder)
+    @editor.checkExistentImages(placeholder)
     false
-
-  checkExistentImages: (placeholder)->
-    #@targetForUpload = $(ev.currentTarget)
-
-    $.ajax
-      url: $("#editor-container").data("attachments-path")
-      dataType: "json"
-      success: (data)=>
-        Chaskiq.Helpers.showModal(@templateForAttachments(data), "dsdsda")
-        _this = this
-        $('.image-selector').on "click", ()->
-          html = placeholder.parents(".mcpreview-image-uploader")
-          url = $(this).data('image-url')
-          _this.replaceImagePreview(html, url )
-          false
-
-      error: (err)->
-        alert("error retrieving files")
-
-  replaceImagePreview: (html_to_replace, url)->
-    html_to_replace.replaceWith( "<img src='#{url}'/>" );
-    Chaskiq.Helpers.hideModal()
-    @copyToTextArea()
-
-  templateForAttachments: (data)->
-    html = "<ul>"
-    _.each data, (num)->
-      html += "<li>"
-      html += "<img src='#{num.image.url}'>"
-      html += "<a href='#' class='image-selector' data-image-url='#{num.image.url}' >Select</a>"
-      html += "</li>"
-
-    html += "</ul>"
 
   ### Style Handling ###
 
@@ -633,89 +242,3 @@ class window.Iframe extends Backbone.View
       s.insertRule("#{selector} { property: #{value};}", s.cssRules.length);
     else
       @findRule(selector).style[property] = value
-
-
-  #dry this
-  ###
-  changeColor: (ev)->
-    css = $(ev.currentTarget).data('css')
-    property = $(ev.currentTarget).data('css-property')
-    value = ev.color.toString()
-    console.log "changing from #{css}, #{property} #{value}"
-
-    if css.length > 0
-      @modifyRule(css, property, value)
-    else
-      @currentFocused()
-      .find("table:first")
-      .find(".#{@current_section.name}Content")
-      .css(property, value)
-
-  changeProperty: (ev)->
-    css = $(ev.currentTarget).data('css')
-    property = $(ev.currentTarget).data('css-property')
-    value = $(ev.currentTarget).val()
-    console.log "changing from #{css}, #{property} #{value}"
-
-    if css.length > 0
-      @modifyRule(css, property, value)
-    else
-      @currentFocused()
-      .find("table:first")
-      .find(".#{@current_section.name}Content")
-      .css(property, value)
-
-  backgroundFieldsFor: (target)->
-    ["<input class='colorpicker' data-css='#{target.selector}' data-css-property='background-color' type='text' autocomplete='off' tabindex='0' value='0'>"].join(" ")
-
-  arrayGen: (n)->
-    Array.apply(null, length: n).map Number.call, Number
-  ###
-  #border style, width, color
-  ###
-  typoFieldsFor: (target)->
-    color = "<div class='input-field'><label>Font color</label><input class='colorpicker' data-css='#{target.selector}' data-css-property='color' type='text' autocomplete='off' tabindex='0' value='0'></div>"
-
-    sizeFont = "<div class='input-field'><label>font Size</label><select class='text-size-picker' id='' data-css='#{target.selector}' data-css-property='font-size'>"
-    _.each @arrayGen(30), (n)->
-      sizeFont += "<option value='#{n}px'>#{n}px</option>"
-    sizeFont += "</select></div>"
-
-    familyFont = "<div class='input-field'><label>Font Family</label><select class='font-picker' data-css='#{target.selector}' data-css-property='font-family'>
-      <option value='Helvetica'>Helvetica</option>
-      <option value='Arial'>Arial</option>
-      <option value='Georgia'>Georgia</option>
-      <option value='Verdana'>Verdana</option>
-      </select></div>"
-
-    weight = "<div class='input-field'><label>Font Weight</label><select class='font-weight' data-css='#{target.selector}' data-css-property='font-weight'>
-      <option value='normal'>normal</option>
-      <option value='bold'>bold</option>
-      </select></div>"
-
-    #styleFont
-    #weightline
-    #heightletter
-    spacingtext = "<div class='input-field'><label>Spacing text</label><select class='font-spacing' data-css='#{target.selector}' data-css-property='letter-spacing'>
-          <option value='-5px'>-5px</option>
-          <option value='-4px'>-4px</option>
-          <option value='-3px'>-3px</option>
-          <option value='-2px'>-2px</option>
-          <option value='-1px'>-1px</option>
-          <option value='normal'>-normal</option>
-          <option value='-1px'>-1px</option>
-          <option value='-2px'>-2px</option>
-          <option value='-3px'>-3px</option>
-          <option value='-4px'>-4px</option>
-          <option value='-5px'>-5px</option>
-          </select></div>"
-
-    align = "<div class='input-field'><label>Text Align</label><select class='font-align' data-css='#{target.selector}' data-css-property='text-align'>
-          <option value='center'>center</option>
-          <option value='left'>left</option>
-          <option value='right'>right</option>
-          <option value='justify'>justify</option>
-          </select></div>"
-
-    [color, sizeFont, familyFont, weight, spacingtext, align].join(" ")
-  ###

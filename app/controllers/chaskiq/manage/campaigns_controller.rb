@@ -99,6 +99,14 @@ module Chaskiq
       redirect_to manage_campaign_path(@campaign)
     end
 
+    def destroy
+      find_campaign
+      if @campaign.destroy
+        flash[:notice] = "the campaign was removed"
+      end
+      redirect_to manage_campaigns_path 
+    end
+
   protected
 
     def find_campaign

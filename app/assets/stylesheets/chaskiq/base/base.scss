@@ -80,7 +80,7 @@ a:hover, a:focus {
 
 /* Summernote text editor  */
 .note-editor {
-  height: auto;
+  height: auto !important;
   min-height: 300px;
 }
 

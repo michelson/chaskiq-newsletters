@@ -57,7 +57,7 @@ window.InitSummernote = function(){
         ['font', ['strikethrough']],
         ['insert', ['picture', 'link']],
         ['fontsize', ['fontsize']],
-        ['para', ['ul', 'ol', 'paragraph']],
+        ['para', ['FormatH2', 'H3', 'ul', 'ol', 'paragraph']],
       ]
     , onImageUpload: function(files, editor, $editable) {
         sendFile(files[0], function(data){

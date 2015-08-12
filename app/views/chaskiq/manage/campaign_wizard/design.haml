@@ -102,12 +102,13 @@
                         %a#save.btn.btn-default{href:""} Save & Close
 
                 .hidden
-                  = f.input :html_content
-                  = f.input :css
 
             .clearfix
 
             .col-ls-12
+              .hidden
+                = f.input :html_content
+                = f.input :css
               = f.submit class: "btn btn-primary submit"
 
       = render partial: "wizard_nav"
