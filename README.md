@@ -56,11 +56,9 @@ end
 read more about heroku and vps installs, Amazon integration and more in our wiki page https://github.com/michelson/chaskiq/wiki
 
 # TODO:
-+ api support.
-+ search items (lists, campaign , metrics).
-+ improve mail editor (support for ).
-+ more insighfull reportery.
-+ scheduled deliveries via (sidetiq or whenever).
-+ send to many lists in one campaign and send to list segments.
+- [ ] api support.
+- [ ] more insighfull reportery.
+- [ ] scheduled deliveries via (sidetiq or whenever).
+- [ ] send to many lists in one campaign and send to list segments (like mailchimp).
 
 Miguel Michelson Martinez. released under MIT.
