@@ -23,6 +23,9 @@ class window.Editor extends Backbone.View
   initialize: ->
     @textarea = $(@el).find('#campaign_html_content')
     @css = $(@el).find('#campaign_css')
+    window.current_editor = @
+    @placeholder = null
+    @files = []
 
   setIframe: (iframe)->
     @iframe = iframe
@@ -520,6 +523,13 @@ class window.Editor extends Backbone.View
       </tbody>
     </table>"
 
+  listenerForImagesReplace: ()->
+    $('.image-selector').on "click", ()->
+      html = current_editor.placeholder.parents(".mcpreview-image-uploader")
+      url = $(this).data('image-url')
+      current_editor.replaceImagePreview(html, url )
+      false
+
   checkExistentImages: (placeholder)->
     #@targetForUpload = $(ev.currentTarget)
 
@@ -528,12 +538,13 @@ class window.Editor extends Backbone.View
       dataType: "json"
       success: (data)=>
         Chaskiq.Helpers.showModal(@templateForAttachments(data), "dsdsda")
-        _this = this
-        $('.image-selector').on "click", ()->
-          html = placeholder.parents(".mcpreview-image-uploader")
-          url = $(this).data('image-url')
-          _this.replaceImagePreview(html, url )
-          false
+        @placeholder = placeholder
+      
+        @listenerForImagesReplace()
+
+        $('#myModal input[type=file]').on 'change', @prepareUpload
+        $('#myModal #upload-form').on 'submit', @uploadFiles
+
 
       error: (err)->
         alert("error retrieving files")
@@ -543,16 +554,79 @@ class window.Editor extends Backbone.View
     Chaskiq.Helpers.hideModal()
     @copyToTextArea()
 
+  templateforUploader: ->
+    "<form id='upload-form'>
+      <input type='file'/>
+      <input type='submit' value='Submit'>
+    </form>"
+
+  
   templateForAttachments: (data)->
-    html = "<ul class='attachments-modal-list'>"
+    html = @templateforUploader() 
+    html += "<ul class='attachments-modal-list'>"
     _.each data, (num)->
       html += "<li>"
       html += "<a href='#' class='image-selector btn btn-success pull-right' data-image-url='#{num.image.url}' >Select</a>"
       html += "<img src='#{num.image.url}' width=150>"
       html += "</li>"
-
     html += "</ul>"
 
+  appendImageToAttachmentList: (data)->
+    $("#myModal .attachments-modal-list").prepend("
+      <li> 
+      <a href='#' class='image-selector btn btn-success pull-right' data-image-url='#{data.image.url}'>
+        Select
+      </a> 
+      <img src='#{data.image.url}' width=150>
+      </li>")
+
+    @listenerForImagesReplace()
+
+  fileUploader: ->
+    # Catch the form submit and upload the files
+
+  prepareUpload: (event) ->
+    window.current_editor.files = event.target.files
+    return
+
+  uploadFiles: (event) ->
+    console.log("upload upload!")
+    event.stopPropagation()
+    # Stop stuff happening
+    event.preventDefault()
+    # Totally stop stuff happening
+    # START A LOADING SPINNER HERE
+    # Create a formdata object and add the files
+    data = new FormData
+    
+    $.each window.current_editor.files, (key, value) ->
+      #data.append key, value
+      data.append "attachment[image]", value
+      return
+
+    $.ajax
+      url: $("#editor-container").data("attachments-path")
+      type: 'POST'
+      data: data
+      cache: false
+      dataType: 'json'
+      processData: false
+      contentType: false
+      success: (data, textStatus, jqXHR) ->
+        if typeof data.error == 'undefined'
+          # Success so call function to process the form
+          # submitForm event, data
+          current_editor.appendImageToAttachmentList(data)
+        else
+          # Handle errors here
+          console.log 'ERRORS: ' + data.error
+        return
+      error: (jqXHR, textStatus, errorThrown) ->
+        # Handle errors here
+        console.log 'ERRORS: ' + textStatus
+        # STOP LOADING SPINNER
+        return
+    return
 
   defaultStyleSheet: ->
     @iframe.findStyleSheet()
@@ -729,7 +803,7 @@ class window.Editor extends Backbone.View
   styleforSelector: (target, style_selector, parent_name)->
     val = if !target.selector then @currentFocused().find(".#{parent_name}#{target.namespace}") else @.iframe.$el.find(target.selector)
     o = val.css(style_selector)
-    console.log o
+    #console.log o
     o
 
   backgroundFieldsFor: (target, parent_name)->
