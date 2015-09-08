@@ -9,7 +9,7 @@
 
 ### Motivation.
 
-I really don't like the idea to pay ~50USD/mo to send a simple newsletter, I find that commertial alternatives are really awesome, but those solutions have nothing that OS community can't achieve.
+I really don't like the idea to pay ~50USD/mo to send a simple newsletter, I find that commercial alternatives are really awesome, but those solutions have nothing that OS community can't achieve.
 
 ### How it works.
 
@@ -41,9 +41,9 @@ Use chaskiq as a gem in a rails project.
 
 ### Secure system:
 
-you can use any user system just configue Chaskiq authentication method for controllers.
+You can use any user system just configue Chaskiq authentication method for controllers.
 
-assuming you are using device, to protect the admin paths you will use the device's auth method for controllers as is.
+Assuming you are using device, to protect the admin paths you will use the device's auth method for controllers as is.
 
 config/initializers/chaskiq.rb
 
