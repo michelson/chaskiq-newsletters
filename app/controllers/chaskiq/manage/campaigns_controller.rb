@@ -56,6 +56,11 @@ module Chaskiq
       render layout: false
     end
 
+    def iframe
+      find_campaign
+      render layout: false
+    end
+
     def editor
       find_campaign
       render "editor_frame", layout: false
@@ -92,6 +97,14 @@ module Chaskiq
       @campaign.purge_metrics
       flash[:notice] = "cleaned data!"
       redirect_to manage_campaign_path(@campaign)
+    end
+
+    def destroy
+      find_campaign
+      if @campaign.destroy
+        flash[:notice] = "the campaign was removed"
+      end
+      redirect_to manage_campaigns_path 
     end
 
   protected

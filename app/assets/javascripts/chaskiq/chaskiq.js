@@ -21,7 +21,7 @@ $(document).ready(function () {
     $("[data-modal]").on("click", function(){
       console.log($(this).attr("data-modal"))
       html = $($(this).attr("data-modal")).html();
-      Chaskiq.Helpers.showModal(html, "Upload CSV");
+      Chaskiq.Helpers.showModal(html, "Upload");
       return false
     })
 
@@ -57,7 +57,7 @@ window.InitSummernote = function(){
         ['font', ['strikethrough']],
         ['insert', ['picture', 'link']],
         ['fontsize', ['fontsize']],
-        ['para', ['ul', 'ol', 'paragraph']],
+        ['para', ['FormatH2', 'H3', 'ul', 'ol', 'paragraph']],
       ]
     , onImageUpload: function(files, editor, $editable) {
         sendFile(files[0], function(data){

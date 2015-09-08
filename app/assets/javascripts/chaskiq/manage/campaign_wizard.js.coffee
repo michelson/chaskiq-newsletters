@@ -6,26 +6,8 @@ class window.Editor extends Backbone.View
 
   events: ->
     'keyup .note-editable': 'copyToFocusedElement'
-
     'drag .blocks li a' : 'drag'
-    'drag .tpl-block-controls a' : 'drag'
-    'dragstart .tpl-block-controls a': 'setDraggedEl'
-    'dragend .tpl-block-controls a': 'removeDraggedEl'
-    "dragleave #bodyTable" : "hideSections"
-    "drop #bodyTable" : "hideSections"
-    "dragover .tpl-block" : "displayItemOver"
-    "dragover .chaskiqContainerEmptyMessage": "displayItemOver"
-
-    'drop #templateBody': "drop"
-    'drop #templatePreheader': "drop"
-    'drop #templateHeader': "drop"
-    'drop #templateBody': "drop"
-    "drop #templateFooter" : "drop"
-
-    "click .tpl-block": "setFocus"
     "click #editor-controls #save" : "saveAndClose"
-    "click .imagePlaceholder .button-small" : "displayUploaderList"
-    "click .tpl-block-delete": "deleteBloc"
 
     #propery changer
     "changeColor.colorpicker .colorpicker": "changeColor"
@@ -42,14 +24,20 @@ class window.Editor extends Backbone.View
     @textarea = $(@el).find('#campaign_html_content')
     @css = $(@el).find('#campaign_css')
 
+  setIframe: (iframe)->
+    @iframe = iframe
+
   copyToEditor: (ev)->
     $this = $(ev.currentTarget);
     window.setTimeout ()=>
-      $(@el).find('#mail-editor').html($this.val());
+      $(@iframe.el).find('#mail-editor').html($this.val());
     , 0
 
+  buildOptionsFromStyles: ()->
+    @renderBlockDesignSettings()
+
   copyToTextArea: ()->
-    $this = $("#mail-editor")
+    $this = $(@iframe.el).find("#mail-editor")
     window.setTimeout ()=>
       $(@el).find('#campaign_html_content').val($this.html());
     , 0
@@ -76,15 +64,24 @@ class window.Editor extends Backbone.View
     '<p>dsfsd</p>'
 
   render: ->
-    #$(@el).find('#mail-editor').html(@template())
-    $(@el).find('#mail-editor').html(@textarea.val()); #init from saved content
+
+    document.getElementById("editor-frame").onload = ()=>
+      #iframe loaded
+      @iframe = $("#editor-frame")[0].contentWindow.iframe
+
+      #@buildOptionsFromStyles()
+      $("#tab-2").html(@baseStylesTemplate("accordeon", @definitionsForEditor()))
+      $('.colorpicker').colorpicker();
+
+      if _.isEmpty(@textarea.val())
+        $(@iframe.el).find('#mail-editor').html(@baseTemplate())
+      else
+        $(@iframe.el).find('#mail-editor').html(@textarea.val()); #init from saved content
     #$(@el).find('#mail-editor').html(@baseTemplate()) #init from base js tamplarte
-    $("#tab-2").html(@baseStylesTemplate("accordeon", @definitionsForEditor()))
+    #$("#tab-2").html(@baseStylesTemplate("accordeon", @definitionsForEditor()))
 
-    $('.colorpicker').colorpicker();
-
-    @removeTplBlockControls() #for legacy already embeded tmp controls
-    @addTplBlockControls()
+    #@removeTplBlockControls() #for legacy already embeded tmp controls
+    #@addTplBlockControls()
 
   removeTplBlockControls: ->
     $(".tpl-block-controls").remove()
@@ -159,28 +156,6 @@ class window.Editor extends Backbone.View
       else
         empty_message.show()
 
-  drop: (ev)->
-    ev.preventDefault()
-    #console.log($(ev.dataTransfer.getData("text")))
-    #console.log(@dragged.data('block'))
-    console.log ev.target.id
-    #data = $(ev.dataTransfer.getData("text"));
-    #ev.target.appendChild(data);
-    container = $(ev.currentTarget)
-
-    if @dragged.attr('data-block')
-      tmpl = @handleBlock @dragged.data('block')
-      @dropBlock(container, tmpl)
-    else
-      to_drop = this.dragged.parents(".tpl-block")
-      @dropBlock(container, to_drop)
-
-    @copyToTextArea()
-
-    @releaseBeforeItem()
-
-    @displayEmptyBlocks()
-
   dropBlock: (container, tmpl)->
     #drop on before item or in tpl-container
     if $(".tpl-block.chaskiqDndItemBefore").length > 0
@@ -210,22 +185,12 @@ class window.Editor extends Backbone.View
     false
 
   currentFocused: ()->
-    $(".tpl-block.focus")
-
-  setFocus: (ev)->
-    $(".tpl-block").removeClass("focus")
-    $(ev.currentTarget).addClass("focus")
-    @displayWysiwyg()
-    @renderBlockDesignSettings()
-    false
+    $(@.iframe.el).find(".tpl-block.focus")
 
   initWysiwyg: ->
     $('.summernote').destroy()
     InitSummernote()
     $('.summernote').code(@currentFocused().find('.mcnTextContent').html());
-
-    #edit = ()->
-    #  $('.click2edit').summernote({ focus: true });
 
   handleBlock: (block_type)->
     html = ""
@@ -359,7 +324,7 @@ class window.Editor extends Backbone.View
               <tbody>
                 <tr>
                   <td style='padding-top:9px; padding-left:18px; padding-bottom:9px; padding-right:18px;'>
-                    <table width='100%' cellspacing='0' cellpadding='18' border='0' class='mcnTextContentContainer' style='border: 1px solid rgb(153, 153, 153); background-color: rgb(235, 235, 235);'>
+                    <table width='100%' cellspacing='0' cellpadding='18' border='0' class='mcnTextContentContainer' style='border: 1px solid rgb(153, 153, 153);'>
                       <tbody>
                         <tr>
                           <td valign='top' class='mcnTextContent'>
@@ -555,11 +520,6 @@ class window.Editor extends Backbone.View
       </tbody>
     </table>"
 
-  displayUploaderList: (ev)->
-    placeholder = $(ev.currentTarget).parents('.imagePlaceholder')
-    @checkExistentImages(placeholder)
-    false
-
   checkExistentImages: (placeholder)->
     #@targetForUpload = $(ev.currentTarget)
 
@@ -584,94 +544,87 @@ class window.Editor extends Backbone.View
     @copyToTextArea()
 
   templateForAttachments: (data)->
-    html = "<ul>"
+    html = "<ul class='attachments-modal-list'>"
     _.each data, (num)->
       html += "<li>"
-      html += "<img src='#{num.image.url}'>"
-      html += "<a href='#' class='image-selector' data-image-url='#{num.image.url}' >Select</a>"
+      html += "<a href='#' class='image-selector btn btn-success pull-right' data-image-url='#{num.image.url}' >Select</a>"
+      html += "<img src='#{num.image.url}' width=150>"
       html += "</li>"
 
     html += "</ul>"
 
-  ### Style Handling ###
-
-  #http://www.w3.org/wiki/Dynamic_style_-_manipulating_CSS_with_JavaScript
-
-  findStyleSheet: ()->
-    _.find document.styleSheets, (n)->
-      n.ownerNode.id == "custom_style"
-
-  findRule: (name, sheet=@defaultStyleSheet())->
-    _.find sheet.cssRules, (n)->
-      n.selectorText == name
-
-  findRuleIndex: (sheet, name)->
-    indexes = _.map sheet.cssRules, (n, i)->
-      i if n.selectorText == name
-    indexes[0]
 
   defaultStyleSheet: ->
-    @findStyleSheet()
+    @iframe.findStyleSheet()
 
   style: ->
     @defaultStyleSheet()
 
-  modifyRule: (selector, property, value)->
-
-    rule = @findRule(selector)
-    s = @style()
-
-    if _.isUndefined(rule)
-      s.insertRule("#{selector} { property: #{value};}", s.cssRules.length);
-    else
-      @findRule(selector).style[property] = value
-
   definitionsForEditor: ->
     [
-      {name: "page", targets:
-        [{name: "background page", selector: "#bodyTable", template: "background"},
-        {name: "heading 1", selector: "#bodyTable h1", template: "typography"} ,
-        {name: "heading 2", selector: "#bodyTable h2", template: "typography"} ,
-        {name: "page links", selector: "#bodyTable a", template: "typography"} ]}
+      {name: "Page", targets:
+        [ {name: "Background", selector: "#bodyTable", template: "background", namespace: "Content"},
+          {name: "Text", selector: "#bodyTable", template: "typography", namespace: "Content"} 
+        ]
+      }
 
-      {name: "preheader", targets:
-        [{name: "background pre header", selector: "#templatePreheader", template: "background"},
-        {name: "headings", selector: "#templatePreHeader h1", template: "typography"},
-        {name: "headings", selector: "#templatePreHeader h2", template: "typography"}]}
+      {name: "Preheader", targets:
+        [{name: "background", selector: "#templatePreheader", template: "background", namespace: "Content"},
+         {name: "Text", selector: "#templatePreHeader", template: "typography", namespace: "Content"},
+        {name: "h1", selector: "#templatePreHeader h1", template: "typography", namespace: "Content"},
+        {name: "h2", selector: "#templatePreHeader h2", template: "typography", namespace: "Content"}]}
 
-      {name: "header", targets:
-        [{name: "header background", selector: "#templateHeader", template: "background"} ]}
+      {name: "Header", targets:
+        [{name: "Header background", selector: "#templateHeader", template: "background"} ]}
 
-      {name: "body", targets:
-        [{name: "body background", selector: "#templateBody", template: "background"} ,
-        {name: "body content text", selector: ".bodyContainer .mcnTextContent, .bodyContainer .mcnTextContent p", template: "typography"} ]}
+      {name: "Body", targets:
+        [{name: "body background", selector: "#templateBody", template: "background", namespace: "Content"} ,
+        {name: "font", selector: ".bodyContainer .mcnTextContent", template: "typography", namespace: "Content"} 
+        {name: "links", selector: ".bodyContainer .mcnTextContent a", template: "typography", namespace: "Content"} 
 
-      {name: "footer", targets:
-        [{name: "footer background",selector: "#templateFooter", template: "background"},
-        {name: "footer content text", selector: ".footerContainer .mcnTextContent, .footerContainer .mcnTextContent p", template: "typography"} ]}
+        ]}
 
-      {name: "columns", targets: []}
+      {name: "Footer", targets:
+        [{name: "background",selector: "#templateFooter", template: "background", namespace: "Content"},
+        {name: "font", selector: ".footerContainer .mcnTextContent, .footerContainer .mcnTextContent p", template: "typography", namespace: "Content"} ]}
+
+      {name: "Columns", targets: []}
     ]
 
   definitionsForBlocks: ->
     [
       {name: "mcnBaseTemplate", targets: []}
-      {name: "mcnBoxedText", targets: []}
+      {name: "mcnBoxedText", targets: [
+        {name: "background", selector: ".mcnTextContentContainer", template: "background", namespace: "Content"},
+        {name: "font", selector: ".mcnTextContentContainer", template: "typography", namespace: "Content"}
+      ]}
       {name: "mcnText", targets: [
-        {name: "background page", selector: "", template: "background"},
-        {name: "heading 1", selector: "", template: "typography"} ,
-        {name: "heading 2", selector: "", template: "typography"} ,
-        {name: "page links", selector: "", template: "typography"} ]}
+        {name: "background", selector: "", template: "background", namespace: "Content"},
+        {name: "font", selector: "", template: "typography", namespace: "Content"},
+        {name: "heading 1", selector: "h1", template: "typography", namespace: "Content"} ,
+        {name: "heading 2", selector: "h2", template: "typography", namespace: "Content"} ,
+        {name: "page links", selector: "a", template: "typography", namespace: "Content"} ]}
 
       {name: "mcnDivider", targets: []}
       {name: "mcnImage", targets: []}
-      {name: "mcnImageGroup", targets: []}
-      {name: "mcnImageCard", targets: []}
+      {name: "mcnImageGroup", targets: [
+        {name: "background", selector: "", template: "background", namespace: "BlockInner"},
+      ]}
+      {name: "mcnImageCard", targets: [
+        {name: "background", selector: "", template: "background" , namespace: "BottomContent"},
+        {name: "font", selector: "", template: "typography", namespace: "BottomContent"}
+      ]}
       {name: "mcnSubscription", targets: []}
     ]
 
   renderBlockDesignSettings: ->
-    focused = this.currentFocused().find("table:first").attr("class")
+    
+    try
+      $('.colorpicker').colorpicker('destroy') 
+    catch e
+      console.log(e)
+
+    focused = @currentFocused().find("table:first").attr("class")
     section = _.find editor.definitionsForBlocks(), (n)=>
       "#{n.name}Block" == focused
 
@@ -683,6 +636,8 @@ class window.Editor extends Backbone.View
       $("#tab-4").html(html)
 
       $('.colorpicker').colorpicker();
+
+    #$('.colorpicker').colorpicker('destroy') 
 
   #size, align, fonttype, color, weight, line heigh, letter spacing
   baseStylesTemplate: (id, definitions)->
@@ -711,73 +666,102 @@ class window.Editor extends Backbone.View
 
   buildDesignToolForTarget: (section)->
     tpl = _.map section.targets, (n)=>
-      @templateToolsFor(n)
+      @templateToolsFor(n , section.name)
 
     "<fieldset>#{tpl.join(" ")}</fieldset>"
 
-  templateToolsFor: (n)->
+  templateToolsFor: (n, parent_name)->
     title = "<h3>#{n.name}</h3>"
     tools = ""
     switch n.template
       when "background"
-        tools = @backgroundFieldsFor(n)
+        tools = @backgroundFieldsFor(n, parent_name)
       when "typography"
-        tools = @typoFieldsFor(n)
+        tools = @typoFieldsFor(n, parent_name)
 
     [title, tools].join(" ")
 
+  rgb2hex: (rgb)->
+    return if _.isUndefined(rgb)
+    rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+    return if (rgb && rgb.length is 4)  
+      "#" +
+      ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+      ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+      ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) 
+    else
+      ''
+  
   #dry this
   changeColor: (ev)->
-    css = $(ev.currentTarget).data('css')
-    property = $(ev.currentTarget).data('css-property')
-    value = ev.color.toString()
+    target = $(ev.currentTarget)
+    css = target.data('css')
+    property = target.data('css-property')
+    value = @rgb2hex(ev.color.toString())
     console.log "changing from #{css}, #{property} #{value}"
 
     if css.length > 0
-      @modifyRule(css, property, value)
+      @iframe.modifyRule(css, property, value)
     else
-      editor.currentFocused()
+      @currentFocused()
       .find("table:first")
-      .find(".#{@current_section.name}Content")
+      .find(".#{@current_section.name}#{target.data('namespace')}")
       .css(property, value)
 
   changeProperty: (ev)->
-    css = $(ev.currentTarget).data('css')
-    property = $(ev.currentTarget).data('css-property')
-    value = $(ev.currentTarget).val()
+    target = $(ev.currentTarget)
+    css = target.data('css')
+    property = target.data('css-property')
+    value = target.val()
     console.log "changing from #{css}, #{property} #{value}"
 
     if css.length > 0
-      @modifyRule(css, property, value)
+      @iframe.modifyRule(css, property, value)
     else
       editor.currentFocused()
       .find("table:first")
-      .find(".#{@current_section.name}Content")
+      .find(".#{@current_section.name}#{target.data('namespace')}")
       .css(property, value)
-
-  backgroundFieldsFor: (target)->
-    ["<input class='colorpicker' data-css='#{target.selector}' data-css-property='background-color' type='text' autocomplete='off' tabindex='0' value='0'>"].join(" ")
 
   arrayGen: (n)->
     Array.apply(null, length: n).map Number.call, Number
 
-  #border style, width, color
-  typoFieldsFor: (target)->
-    color = "<div class='input-field'><label>Font color</label><input class='colorpicker' data-css='#{target.selector}' data-css-property='color' type='text' autocomplete='off' tabindex='0' value='0'></div>"
+  styleforSelector: (target, style_selector, parent_name)->
+    val = if !target.selector then @currentFocused().find(".#{parent_name}#{target.namespace}") else @.iframe.$el.find(target.selector)
+    o = val.css(style_selector)
+    console.log o
+    o
 
-    sizeFont = "<div class='input-field'><label>font Size</label><select class='text-size-picker' id='' data-css='#{target.selector}' data-css-property='font-size'>"
+  backgroundFieldsFor: (target, parent_name)->
+    style_selector = "background-color"
+    val = @styleforSelector(target, style_selector, parent_name)
+    val = @rgb2hex(val)
+    ["<input class='colorpicker' data-css='#{target.selector}' data-css-property='#{style_selector}' type='text' autocomplete='off' tabindex='0' value='#{val}' data-namespace='#{target.namespace}'>"].join(" ")
+
+  #border style, width, color
+  typoFieldsFor: (target, parent_name)->
+    c = @styleforSelector(target, 'color', parent_name)
+    color = "<div class='input-field'><label>Font color</label><input class='colorpicker' data-css='#{target.selector}' data-css-property='color' data-namespace='#{target.namespace}' type='text' autocomplete='off' tabindex='0' value='#{@rgb2hex(c)}'></div>"
+
+    sizeFont = "<div class='input-field'><label>font Size</label><select class='text-size-picker' id='' data-css='#{target.selector}' data-css-property='font-size' data-namespace='#{target.namespace}'>"
+    sf = @styleforSelector(target, 'font-size', parent_name)
     _.each @arrayGen(30), (n)->
       sizeFont += "<option value='#{n}px'>#{n}px</option>"
+
+    sizeFont += "<option value='#{sf}' selected>#{sf}</option>"
     sizeFont += "</select></div>"
 
-    familyFont = "<div class='input-field'><label>Font Family</label><select class='font-picker' data-css='#{target.selector}' data-css-property='font-family'>
+    ff = @styleforSelector(target, 'font-family', parent_name)
+
+    familyFont = "<div class='input-field'><label>Font Family</label><select class='font-picker' data-css='#{target.selector}' data-css-property='font-family' data-namespace='#{target.namespace}'>
       <option value='Helvetica'>Helvetica</option>
       <option value='Arial'>Arial</option>
       <option value='Georgia'>Georgia</option>
-      <option value='Verdana'>Verdana</option>
-      </select></div>"
+      <option value='Verdana'>Verdana</option>"
+    familyFont += "<option value='#{ff}' selected>#{ff}</option>"
+    familyFont += "</select></div>"
 
-    weight = "<div class='input-field'><label>Font Weight</label><select class='font-weight' data-css='#{target.selector}' data-css-property='font-weight'>
+    weight = "<div class='input-field'><label>Font Weight</label><select class='font-weight' data-css='#{target.selector}' data-css-property='font-weight' data-namespace='#{target.namespace}'>
       <option value='normal'>normal</option>
       <option value='bold'>bold</option>
       </select></div>"
@@ -785,7 +769,7 @@ class window.Editor extends Backbone.View
     #styleFont
     #weightline
     #heightletter
-    spacingtext = "<div class='input-field'><label>Spacing text</label><select class='font-spacing' data-css='#{target.selector}' data-css-property='letter-spacing'>
+    spacingtext = "<div class='input-field'><label>Spacing text</label><select class='font-spacing' data-css='#{target.selector}' data-css-property='letter-spacing' data-namespace='#{target.namespace}'>
           <option value='-5px'>-5px</option>
           <option value='-4px'>-4px</option>
           <option value='-3px'>-3px</option>
@@ -799,7 +783,7 @@ class window.Editor extends Backbone.View
           <option value='-5px'>-5px</option>
           </select></div>"
 
-    align = "<div class='input-field'><label>Text Align</label><select class='font-align' data-css='#{target.selector}' data-css-property='text-align'>
+    align = "<div class='input-field'><label>Text Align</label><select class='font-align' data-css='#{target.selector}' data-css-property='text-align' data-namespace='#{target.namespace}'>
           <option value='center'>center</option>
           <option value='left'>left</option>
           <option value='right'>right</option>
