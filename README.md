@@ -9,7 +9,7 @@
 
 ### Motivation.
 
-I really don't like the idea to pay ~50USD/mo to send a simple newsletter, I find that commercial alternatives are really awesome, but those solutions have nothing that OS community can't achieve.
+I really don't like the idea of paying ~50USD/mo to send a simple newsletter, I find that commercial alternatives are really awesome, but those solutions have nothing that the OS community can't achieve.
 
 ### How it works.
 
@@ -18,34 +18,34 @@ Chaskiq works with Amazon SES to send mails and Amazon SNS service to get the bo
 #### Features:
 
 + Email template editor out of the box.
-+ Mustache tags enables to use variables in templates.
++ Mustache tags enables use of variables in templates.
 + Reusable templates.
 + Reusable email lists.
-+ Tracks opens and clics.
-+ Tracks Bounces and Complaints (via AWS SNS).
++ Tracks opens and clicks.
++ Tracks bounces and complaints (via AWS SNS).
 + Displays reports on:
   + % of deliveries.
-  + clicks , opens , bounces, complaints.
-  + Detail list off who opens, clicks, bounces & complaints.
+  + clicks, opens, bounces, complaints.
+  + Detail list of who opens, clicks, bounces & complains.
 
 ### How to install:
 
 Use chaskiq as a gem in a rails project.
 
-+ gem 'chaskiq' in your gemfile and execute bundle install
-+ rails generate chaskiq:install (will add an initializer , route & migrations)
-+ rake db:migrate
++ `gem 'chaskiq'` in your `Gemfile` and execute `bundle install`
++ `rails generate chaskiq:install` will add an initializer, route & migrations
++ `rake db:migrate`
 
 + config/initializers/active_job.rb
   ```ActiveJob::Base.queue_adapter = :sidekiq```
 
 ### Secure system:
 
-You can use any user system just configue Chaskiq authentication method for controllers.
+You can use any authentication system, just configure the Chaskiq authentication method for controllers.
 
-Assuming you are using device, to protect the admin paths you will use the device's auth method for controllers as is.
+Assuming you are using Devise, to protect the admin paths you will use the Devise `authenticate_*!` method for controllers as is.
 
-config/initializers/chaskiq.rb
+In `config/initializers/chaskiq.rb`:
 
 ```ruby
 Chaskiq::Config.setup do |config|
@@ -53,11 +53,11 @@ Chaskiq::Config.setup do |config|
 end
 ```
 
-read more about heroku and vps installs, Amazon integration and more in our wiki page https://github.com/michelson/chaskiq/wiki
+Read about Heroku, VPS installs, Amazon integration and more on the wiki https://github.com/michelson/chaskiq/wiki
 
 # TODO:
-- [ ] api support.
-- [ ] more insighfull reportery.
+- [ ] API support.
+- [ ] more insightful reporting
 - [ ] scheduled deliveries via (sidetiq or whenever).
 - [ ] send to many lists in one campaign and send to list segments (like mailchimp).
 
