@@ -27,16 +27,14 @@ module Chaskiq
 
     def upload
       @list =  Chaskiq::List.find(params[:id])
-      #binding.pry
+
       if path = params[:list][:upload_file].try(:tempfile)
-        #binding.pry
         Chaskiq::ListImporterJob.perform_later(@list, params[:list][:upload_file].tempfile.path)
         flash[:notice] = "We are importing in background, refresh after a while ;)"
       else
         flash[:error] = "Whoops!"
       end
-      rescue
-        flash[:error] = "Whoops!"
+
       redirect_to manage_list_path(@list)
     end
 

@@ -8,7 +8,8 @@ module Chaskiq
     has_many :campaigns, through: :lists, class_name: "Chaskiq::Campaign"
 
     validates :email , presence: true
-    validates :name , presence: true
+    
+    #validates :name , presence: true
 
     %w[click open bounce spam].each do |action|
       define_method("track_#{action}") do |opts|
