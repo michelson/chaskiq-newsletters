@@ -1,32 +1,4 @@
 # Use this setup block to configure all options available in SimpleForm.
-module SimpleForm
-  module Inputs
-    class FileInput < Base
-      def input
-        idf = "#{lookup_model_names.join("_")}_#{reflection_or_attribute_name}"
-        input_html_options[:style] ||= 'display:none;'
-        input_html_options[:image] ||= ''
-
-        button = template.content_tag(:div, class: 'input-append') do
-          template.tag(:input, id: "pbox_#{idf}", class: 'string input-medium', type: 'text') +
-          template.content_tag(:a, "Browse", class: 'btn btn-default', onclick: "$('input[id=#{idf}]').click();")
-        end
-
-        image = template.content_tag(:div, class: 'input-image') do
-          template.tag(:img, src: input_html_options[:image], class: 'string input-medium', type: 'text')
-        end
-
-        script = template.content_tag(:script, type: 'text/javascript') do
-          "$('input[id=#{idf}]').change(function() { s = $(this).val(); $('#pbox_#{idf}').val(s.slice(s.lastIndexOf('\\\\\\\\')+1)); });".html_safe
-        end
-
-        @builder.file_field(attribute_name, input_html_options) + image + button + script
-      end
-    end
-  end
-end
-
-
 SimpleForm.setup do |config|
 
   config.error_notification_class = 'alert alert-danger'

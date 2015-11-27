@@ -6,11 +6,8 @@
 
 = render "menu"
 
-
 .wrapper.wrapper-content
   .col-lg-12
-
-    %h3 #{@list.subscribers.size} Subscribers in #{@list.name}'s list
 
     .pull-right
       .btn-group
@@ -26,6 +23,10 @@
             = link_to clear_manage_list_path(@list), confirm: "sure?" do
               %i.fa.fa-trash
               Clear list
+
+
+    %h3 #{@list.subscribers.size} Subscribers in #{@list.name}'s list
+
 
     %table.table
       %thead
