@@ -5,7 +5,7 @@ module Chaskiq
 
     layout "chaskiq/empty"
 
-    before_filter :find_campaign
+    before_action :find_campaign
 
     def show
     end

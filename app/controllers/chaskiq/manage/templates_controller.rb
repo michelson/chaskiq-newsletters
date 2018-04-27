@@ -3,7 +3,7 @@ require_dependency "chaskiq/application_controller"
 module Chaskiq
   class Manage::TemplatesController < ApplicationController
 
-    before_filter :authentication_method
+    before_action :authentication_method
 
     def index
       @templates = Chaskiq::Template.all

@@ -18,11 +18,11 @@ module Chaskiq
       # if this is the first time confirmation of subscription, then confirm it
       if amz_message_type.to_s.downcase == 'subscriptionconfirmation'
         send_subscription_confirmation request_body
-        render text: "ok" and return
+        render plain: "ok" and return
       end
 
       process_notification(request_body)
-      render text: "ok" and return
+      render plain: "ok" and return
     end
 
 private

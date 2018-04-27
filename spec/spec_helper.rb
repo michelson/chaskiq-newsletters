@@ -19,11 +19,12 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path("../dummy/config/environment.rb", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 require 'shoulda/matchers'
 require 'database_cleaner'
-require 'active_job/test_helper'
+require 'rails-controller-testing'
 
+#require 'active_job/test_helper'
 #require 'sidekiq/testing'
 #Sidekiq::Testing.fake! # fake is the default mode
 require 'pry'
@@ -36,17 +37,36 @@ def reset_email
   ActionMailer::Base.deliveries = []
 end
 
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    # Choose a test framework:
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   config.mock_with :rspec
 
   ActiveJob::Base.queue_adapter = :test
 
+  [:controller, :view, :request].each do |type|
+    config.include ::Rails::Controller::Testing::TestProcess, :type => type
+    config.include ::Rails::Controller::Testing::TemplateAssertions, :type => type
+    config.include ::Rails::Controller::Testing::Integration, :type => type
+  end
+
   # clean out the queue after each spec
   config.before(:each) do
-    unless ActiveJob::Base.queue_adapter.blank?
-      ActiveJob::Base.queue_adapter.enqueued_jobs = []
-      ActiveJob::Base.queue_adapter.performed_jobs = []
+    begin
+      unless ActiveJob::Base.queue_adapter.blank?
+        ActiveJob::Base.queue_adapter.enqueued_jobs = []
+        ActiveJob::Base.queue_adapter.performed_jobs = []
+      end
+    rescue => e
+      puts("error on ")
+      #binding.pry
     end
   end
 

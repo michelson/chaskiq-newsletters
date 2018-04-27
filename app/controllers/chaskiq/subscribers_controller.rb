@@ -3,7 +3,7 @@ require_dependency "chaskiq/application_controller"
 module Chaskiq
   class SubscribersController < ApplicationController
 
-    before_filter :find_base_models
+    before_action :find_base_models
 
     layout "chaskiq/empty"
 

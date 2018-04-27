@@ -9,17 +9,17 @@ module Chaskiq
   RSpec.describe HooksController, type: :controller do
 
     routes { Chaskiq::Engine.routes }
-    let(:list){ FactoryGirl.create(:chaskiq_list) }
+    let(:list){ FactoryBot.create(:chaskiq_list) }
     let(:subscriber){
-      list.create_subscriber FactoryGirl.attributes_for(:chaskiq_subscriber)
+      list.create_subscriber FactoryBot.attributes_for(:chaskiq_subscriber)
     }
     let(:subscription){
       subscriber.subscriptions.first
     }
-    let(:campaign){ FactoryGirl.create(:chaskiq_campaign, list: list) }
+    let(:campaign){ FactoryBot.create(:chaskiq_campaign, list: list) }
 
     let(:metric){
-      FactoryGirl.create(:chaskiq_metric, campaign: campaign, trackable: subscription)
+      FactoryBot.create(:chaskiq_metric, campaign: campaign, trackable: subscription)
     }
     let(:bounce_sns){
        {"Message" => {

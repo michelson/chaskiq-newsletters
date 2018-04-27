@@ -3,7 +3,7 @@ require_dependency "chaskiq/application_controller"
 module Chaskiq
   class Manage::ListsController < ApplicationController
 
-    before_filter :authentication_method
+    before_action :authentication_method
 
     def index
       @q = Chaskiq::List.ransack(params[:q])

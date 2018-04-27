@@ -3,8 +3,8 @@ require_dependency "chaskiq/application_controller"
 module Chaskiq
   class Manage::MetricsController < ApplicationController
 
-    before_filter :authentication_method
-    before_filter :find_campaign
+    before_action :authentication_method
+    before_action :find_campaign
 
     def index
       @q = @campaign.metrics.ransack(params[:q])

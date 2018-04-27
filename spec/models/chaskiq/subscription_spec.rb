@@ -6,12 +6,12 @@ module Chaskiq
     it{ should belong_to :subscriber }
     it{ should have_many :campaigns }
 
-    let(:template){ FactoryGirl.create(:chaskiq_template) }
-    let(:list){ FactoryGirl.create(:chaskiq_list) }
+    let(:template){ FactoryBot.create(:chaskiq_template) }
+    let(:list){ FactoryBot.create(:chaskiq_list) }
     let(:subscriber){
-      list.create_subscriber FactoryGirl.attributes_for(:chaskiq_subscriber)
+      list.create_subscriber FactoryBot.attributes_for(:chaskiq_subscriber)
     }
-    let(:campaign){ FactoryGirl.create(:chaskiq_campaign, template: template, list: list) }
+    let(:campaign){ FactoryBot.create(:chaskiq_campaign, template: template, list: list) }
 
     it "will set passive state" do
       subscriber

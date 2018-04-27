@@ -7,7 +7,7 @@ module Chaskiq
 
 
     describe "creation" do
-      let(:list){FactoryGirl.create(:chaskiq_list)}
+      let(:list){FactoryBot.create(:chaskiq_list)}
 
       it "will create a list" do
         Chaskiq::Subscriber.delete_all

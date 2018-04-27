@@ -3,7 +3,7 @@ require_dependency "chaskiq/application_controller"
 module Chaskiq
   class TracksController < ApplicationController
 
-    before_filter :find_campaign
+    before_action :find_campaign
 
     #http://localhost:3000/chaskiq/campaigns/1/tracks/1/[click|open|bounce|spam].gif
     %w[open bounce spam].each do |action|

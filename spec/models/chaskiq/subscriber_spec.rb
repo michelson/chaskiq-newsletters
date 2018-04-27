@@ -9,7 +9,7 @@ module Chaskiq
 
 
     describe "states" do
-      let(:subscriber){ FactoryGirl.create(:chaskiq_subscriber)}
+      let(:subscriber){ FactoryBot.create(:chaskiq_subscriber)}
 
       it "will set passive state" do
         #expect(subscriber).to be_passive

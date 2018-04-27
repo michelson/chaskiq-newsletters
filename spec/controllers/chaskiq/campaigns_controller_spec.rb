@@ -5,16 +5,15 @@ module Chaskiq
 
     render_views
     routes { Chaskiq::Engine.routes }
-    let(:list){ FactoryGirl.create(:chaskiq_list) }
+    let(:list){ FactoryBot.create(:chaskiq_list) }
     let(:subscriber){
-      list.create_subscriber FactoryGirl.attributes_for(:chaskiq_subscriber)
+      list.create_subscriber FactoryBot.attributes_for(:chaskiq_subscriber)
     }
-    let(:campaign){ FactoryGirl.create(:chaskiq_campaign, list: list) }
-
+    let(:campaign){ FactoryBot.create(:chaskiq_campaign, list: list) }
 
     it "will show campaign!" do
       campaign
-      response = get("show", id: campaign.id)
+      response = get("show", params: {id: campaign.id})
       expect(response.status).to be == 200
       expect(response.body).to include "subscribe"
       expect(response.body).to include campaign.name

@@ -16,21 +16,21 @@ module Chaskiq
     let(:html_content){
       "<p>hola {{name}} {{email}}</p> <a href='http://google.com'>google</a>"
     }
-    let(:template){ FactoryGirl.create(:chaskiq_template, body: html_content ) }
-    let(:list){ FactoryGirl.create(:chaskiq_list) }
+    let(:template){ FactoryBot.create(:chaskiq_template, body: html_content ) }
+    let(:list){ FactoryBot.create(:chaskiq_list) }
     let(:subscriber){
       #list.create_subscriber(subscriber)
-      list.create_subscriber FactoryGirl.attributes_for(:chaskiq_subscriber)
+      list.create_subscriber FactoryBot.attributes_for(:chaskiq_subscriber)
     }
     let(:subscription){
       subscriber.subscriptions.first
     }
-    let(:campaign){ FactoryGirl.create(:chaskiq_campaign, template: template) }
+    let(:campaign){ FactoryBot.create(:chaskiq_campaign, template: template) }
     let(:premailer_template){"<p>{{name}} {{last_name}} {{email}} {{campaign_url}} {{campaign_subscribe}} {{campaign_unsubscribe}}this is the template</p>"}
 
     describe "creation" do
       it "will create a pending campaign by default" do
-        @c = FactoryGirl.create(:chaskiq_campaign)
+        @c = FactoryBot.create(:chaskiq_campaign)
         expect(@c).to_not be_sent
         allow_any_instance_of(Chaskiq::Campaign).to receive(:premailer).and_return(premailer_template)
       end
@@ -54,10 +54,10 @@ module Chaskiq
       before do
 
         10.times do
-          list.create_subscriber FactoryGirl.attributes_for(:chaskiq_subscriber)
+          list.create_subscriber FactoryBot.attributes_for(:chaskiq_subscriber)
         end
 
-        @c = FactoryGirl.create(:chaskiq_campaign, template: template, list: list)
+        @c = FactoryBot.create(:chaskiq_campaign, template: template, list: list)
 
         allow(@c).to receive(:premailer).and_return("<p>hi</p>")
         allow_any_instance_of(Chaskiq::Campaign).to receive(:apply_premailer).and_return(true)

@@ -4,8 +4,8 @@ require "wicked"
 module Chaskiq
   class Manage::CampaignWizardController < ApplicationController
 
-    before_filter :authentication_method
-    before_filter :find_campaign , except: [:create]
+    before_action :authentication_method
+    before_action :find_campaign , except: [:create]
 
     include Wicked::Wizard
 

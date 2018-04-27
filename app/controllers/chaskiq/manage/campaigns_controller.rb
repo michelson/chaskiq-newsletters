@@ -3,8 +3,8 @@ require_dependency "chaskiq/application_controller"
 module Chaskiq
   class Manage::CampaignsController < ApplicationController
 
-    before_filter :authentication_method, except: [:preview, :premailer_preview]
-    before_filter :find_campaign, except: [:index, :create, :new]
+    before_action :authentication_method, except: [:preview, :premailer_preview]
+    before_action :find_campaign, except: [:index, :create, :new]
     helper Chaskiq::Manage::CampaignsHelper
 
 

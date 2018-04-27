@@ -3,8 +3,8 @@ require_dependency "chaskiq/application_controller"
 module Chaskiq
   class Manage::AttachmentsController < ApplicationController
 
-    before_filter :authentication_method
-    before_filter :find_campaign
+    before_action :authentication_method
+    before_action :find_campaign
 
     def index
       @attachments = @campaign.attachments.page(params[:page]).per(50)
