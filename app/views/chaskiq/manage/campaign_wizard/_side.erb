@@ -1,0 +1,37 @@
+<div class="col-md-3">
+  <h3 class="page-title mb-5">
+    <%= I18n.t("terms_app.terms.new.title", name: params[:category_id]) %>
+  </h3>
+  <div>
+    <div class="list-group list-group-transparent mb-0">
+      
+
+      <% wizard_steps.each_with_index do |wizard_step, index| %>
+    
+
+        <%= link_to wizard_path(wizard_step), class: "list-group-item list-group-item-action d-flex align-items-center #{ step == wizard_step ? 'info' : 'white' }" do %>
+
+          <span class="icon mr-3">
+            <i class="fa fa-check"></i>
+          </span>
+
+          <%= t(".#{wizard_step}") %>
+
+          <strong>
+          <%= params[:category_id] %>
+          </strong> 
+          <span class="ml-auto badge badge-primary">
+             kk
+          </span>
+
+      <% end %>
+      <% end %>
+
+
+    </div>
+    <div class="mt-6">
+      <a href="cx" class="btn btn-secondary btn-block" >oij</a>
+    
+    </div>
+  </div>
+</div>

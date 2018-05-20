@@ -1,4 +1,5 @@
 require 'net/http'
+require 'open-uri'
 
 module Chaskiq
   class Campaign < ActiveRecord::Base
@@ -95,8 +96,13 @@ module Chaskiq
 
     #will remove content blocks text
     def clean_inline_css(url)
-      premailer = Premailer.new(url, :adapter => :nokogiri, :escape_url_attributes => false)
-      premailer.to_inline_css.gsub("Drop Content Blocks Here", "")
+      
+      html = open(url).readlines.join("")
+      document = Roadie::Document.new html
+      document.transform
+
+      #premailer = Premailer.new(url, :adapter => :nokogiri, :escape_url_attributes => false)
+      #premailer.to_inline_css.gsub("Drop Content Blocks Here", "")
     end
 
     def attributes_for_mailer(subscriber)

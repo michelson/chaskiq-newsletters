@@ -17,3 +17,6 @@ gem 'wicked', require: true
 gem 'sinatra', :require => nil
 gem "mysql2"
 gem 'web-console', group: :development
+gem 'webpacker'
+gem 'puma'
+gem 'roadie'

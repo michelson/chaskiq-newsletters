@@ -1,21 +1,23 @@
 !!!
-%html
+%html{:lang => "en"}
   %head
-    %title Dummy
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width,initial-scale=1,shrink-to-fit=no", :name => "viewport"}/
+    %meta{:content => "#000000", :name => "theme-color"}/
+    %link{:href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", :rel => "stylesheet"}/
+    -#%link{:href => "/manifest.json", :rel => "manifest"}/
+    -#%link{:href => "/favicon.ico", :rel => "shortcut icon"}/
+    %title React App
+    = stylesheet_link_tag 'chaskiq/dante/dante', media: 'all'
 
-    = stylesheet_link_tag 'chaskiq/manage/campaign_wizard', media: 'all'
-    = stylesheet_link_tag 'font-awesome', media: 'all'
+    -#%link{:href => "/static/css/main.10577e79.css", :rel => "stylesheet"}/
+  %body
+    %noscript You need to enable JavaScript to run this app.
+    #root
+    %script{:crossorigin => "anonymous", :integrity => "sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=", :src => "https://code.jquery.com/jquery-3.1.1.min.js"}
+    %script{:crossorigin => "anonymous", :integrity => "sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", :src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"}
+    -#%script{:src => "/static/js/main.588feb7c.js", :type => "text/javascript"}
 
     = javascript_include_tag 'chaskiq/iframe'
+    -#= javascript_include_tag "http://localhost:3000/static/js/bundle.js"
 
-    %style{:type => "text/css", id: "custom_style"}
-      = @campaign.css
-
-  %body
-    #chaskiq-mail-editor
-      #mail-editor{contenteditable: "false", style:{ height: '227px'}}
-        = raw @campaign.html_content
-
-    :javascript
-      iframe = new window.Iframe
-      iframe.render()

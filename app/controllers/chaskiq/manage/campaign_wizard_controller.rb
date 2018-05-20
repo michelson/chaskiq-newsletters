@@ -22,7 +22,11 @@ module Chaskiq
 
     def update
       @campaign.update_attributes(resource_params)
-      render_wizard @campaign
+
+      respond_to do |format|
+        format.html{render_wizard @campaign}
+        format.json{render json: {status: :ok}}
+      end
     end
 
     def create

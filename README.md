@@ -55,6 +55,12 @@ end
 
 Read about Heroku, VPS installs, Amazon integration and more on the wiki https://github.com/michelson/chaskiq/wiki
 
+
+### WEBPACKER EDITOR
+
++ bundle exec rails webpacker:install
++ bundle exec rails webpacker:install:react
+
 # TODO:
 - [ ] API support.
 - [ ] more insightful reporting

@@ -1,0 +1,75 @@
+<div class="row">
+  <%= render "side" %>
+  <% render partial: "wizard_nav" %>
+
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">
+          <%= I18n.t("terms_app.terms.new.title", name: params[:category_id]) %>
+        </h3>
+      </div>
+      <div class="card-body">
+
+        <script type="text/javascript">
+
+          window.debug = true
+          window.read_only = false
+          window.store_method = "PUT"
+          window.attachment_pach = "<%=manage_campaign_attachments_path(@campaign)%>"
+          
+          window.save_url = "<%= '#{wizard_path}.json' %>";
+
+          window.save_handler = function(html, plain, serialized){
+            $.ajax({
+              url: window.save_url,
+              method: "PUT",
+              dataType: "json",
+              data: {
+                campaign: {
+                  html_content: html,
+                  plain_content: plain,
+                  html_serialized: serialized
+                }
+              },
+              success: function(data){
+                alert("si ctm")
+              },
+              error: function(err){
+                alert("no csm")
+              }
+            })
+          }
+
+          window.successStoreHandler = function(response){
+            var data = response.data
+            debugger
+            //if(window.location.pathname != targetUrl){
+            //  // setup dante defaults again pointing update url
+            //  window.dante_store_url = targetUrl + ".json";
+            //  window.dante_upload_url = targetUrl + "/uploads.json";
+            //  window.dante_store_method = "put";
+            //  var targetUrlForPush = targetUrl + "/edit";
+            //  window.history.pushState({url: "" + targetUrlForPush}, "edit"//, targetUrlForPush);
+            //}
+          }
+
+
+          window.data = <%= raw @campaign.html_serialized %>;
+
+        </script>
+
+        <!--<iframe src="http://localhost:3000"   
+          height='700px' 
+          width='98%'>
+        </iframe>-->
+                
+        <iframe src="<%= iframe_manage_campaign_path(@campaign)%>"   
+          height='700px' 
+          width='98%'>
+        </iframe>
+
+      </div>
+    </div>
+  </div>
+</div>

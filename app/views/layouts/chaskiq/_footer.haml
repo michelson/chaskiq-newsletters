@@ -1,6 +1,19 @@
-.footer
-  .pull-right
-    Chaskiq
-  %div
-    %strong Chaskiq
-    &#169; #{Time.now.year}
+%footer.footer
+  .container
+    .row.align-items-center.flex-row-reverse
+      .col-auto.ml-lg-auto
+        .row.align-items-center
+          .col-auto
+            %ul.list-inline.list-inline-dots.mb-0
+              %li.list-inline-item
+                %a{:href => "#"}
+                  Documentation
+          .col-auto
+            %a.btn.btn-outline-primary.btn-sm{:href => "https://github.com/michelson/chaskiq"} Source code
+      .col-12.col-lg-auto.mt-3.mt-lg-0.text-center
+        with
+        %i.fa.fa-heart
+        by
+        = succeed "." do
+          %a{:href => "."} Chaskiq
+        %a{:href => "https://codecalm.net", :target => "_blank"} codecalm.net

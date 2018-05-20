@@ -13,6 +13,5 @@ module Chaskiq
     def find_campaign
       @campaign = Chaskiq::Campaign.find(params[:id])
     end
-
   end
 end

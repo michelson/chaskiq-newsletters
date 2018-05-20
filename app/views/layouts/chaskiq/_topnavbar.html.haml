@@ -1,3 +1,43 @@
+.header.py-4
+  .container
+    .d-flex
+      %a.header-brand{:href => root_url}
+        Chaskiq
+        / <img src="./demo/brand/tabler.svg" class="header-brand-img" alt="tabler logo">
+      .d-flex.order-lg-2.ml-auto
+        .dropdown
+          %a.nav-link.pr-0.leading-none{"data-toggle" => "dropdown", :href => "#"}
+            %span.avatar{:style => "background-image: url('')"}
+            %span.ml-2.d-none.d-lg-block
+              %span.text-default
+                = "current_user.email"
+                %small.text-muted.d-block.mt-1 Administrator
+          .dropdown-menu.dropdown-menu-right.dropdown-menu-arrow
+            /
+              <a class="dropdown-item" href="#">
+              <i class="dropdown-icon fe fe-user"></i> Profile
+              </a>
+              <div class="dropdown-divider"></div>
+            %a.dropdown-item{:href => ""}
+              %i.dropdown-icon.fe.fe-log-out
+              = I18n.t("terms_app.sign_out")
+      %a.header-toggler.d-lg-none.ml-3.ml-lg-0{"data-target" => "#headerMenuCollapse", "data-toggle" => "collapse", :href => "#"}
+        %span.header-toggler-icon
+
+        #headerMenuCollapse.header.collapse.d-lg-flex.p-0
+          .container
+            .row.align-items-center
+              .col-lg.order-lg-first
+                %ul.nav.nav-tabs.border-0.flex-column.flex-lg-row
+
+                  %li.nav-item
+                    = link_to "Campaigns", manage_campaigns_path, class: "nav-link"
+                  %li.nav-item
+                    = link_to "Lists", manage_lists_path, class: "nav-link"
+                  %li.nav-item
+                    = link_to "Templates", manage_templates_path, class: "nav-link"
+
+
 
 %header.navbar.navbar-default.navbar-fixed-top{:role => "banner"}
   .container
@@ -11,11 +51,11 @@
     %nav.collapse.navbar-collapse{:role => "navigation"}
       %ul.nav.navbar-nav
         %li
-          = link_to "Campaigns", manage_campaigns_path
+          = link_to "Campaigns", manage_campaigns_path, class: "nav-link"
         %li
-          = link_to "Lists", manage_lists_path
+          = link_to "Lists", manage_lists_path, class: "nav-link"
         %li
-          = link_to "Templates", manage_templates_path
+          = link_to "Templates", manage_templates_path, class: "nav-link"
 
       %ul.nav.navbar-right.navbar-nav
         %li.dropdown
