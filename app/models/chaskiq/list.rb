@@ -14,11 +14,7 @@ module Chaskiq
     end
 
     def import_csv(file)
-      csv_importer.import(file).each do |row|
-        puts "Importing row #{row}"
-        sub = {email: row[0], name: row[1], last_name: row[2]}
-        create_subscriber(sub)
-      end
+      ListImporter.import(file, params: {list_id: self.id})
     end
 
     def create_subscriber(subscriber)

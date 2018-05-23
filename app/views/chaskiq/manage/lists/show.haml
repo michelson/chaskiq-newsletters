@@ -1,9 +1,20 @@
 
-.float-rigth
-  #upload-to-modal.hide
+#upload-to-modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
     = simple_form_for @list, url: upload_manage_list_path(@list) do |f|
-      = f.input :upload_file, as: :file
-      -#= f.submit
+      .modal-content
+        .modal-header
+          %h5#exampleModalLabel.modal-title Upload CSV or EXCEL
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} &#215;
+        .modal-body
+          = f.input :upload_file, as: :file
+          -#= f.submit
+        .modal-footer
+          %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close
+          %button.btn.btn-primary{:type => "button"} Save changes
+
+
 
 .page-header
   .page-title
@@ -26,7 +37,7 @@
         %span.caret
       .dropdown-menu
         .dropdown-item
-          %a{href: "#", 'data-modal'=> "#upload-to-modal"}
+          %a{href: "#", "data-toggle": "modal", "data-target": "#upload-to-modal"}
             %i.fa.fa-upload
             Upload csv
         .dropdown-item

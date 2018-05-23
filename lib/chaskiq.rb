@@ -25,6 +25,5 @@ Dotenv.load
 module Chaskiq
   autoload :VERSION, 'chaskiq/version'
   autoload :Config, 'chaskiq/config'
-  autoload :CsvImporter, 'chaskiq/csv_importer'
   autoload :LinkRenamer, 'chaskiq/link_renamer'
 end
