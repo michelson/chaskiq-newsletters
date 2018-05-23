@@ -1,117 +1,107 @@
-.row.wrapper.white-bg.page-heading
-  .col-sm-4
-    %h2= @campaign.name
-    %ol.breadcrumb
-      %li
-        %a{:href => manage_campaigns_path} Campaigns
-      %li.active
-        %strong= @campaign.name
-.row
-  .col-lg-9
-    .wrapper.wrapper-content.animated.fadeInUp
-      .ibox
-        .ibox-content
-          .row
-            .col-lg-12
-              .m-b-md
-                .pull-right
 
-                  = render "chaskiq/manage/campaigns/actions", campaign: @campaign
-
-                  = render "chaskiq/manage/campaigns/config_actions", campaign: @campaign
-
-                %h3= @campaign.subject
-              -#
-                %dl.dl-horizontal
-                  %dt Status:
-                  %dd
-                    %span.label.label-primary= @campaign.state
-          .row
-
-            #cluster_info.col-lg-7
-              %dl.dl-horizontal
-                %dt Last Updated:
-                %dd= l @campaign.updated_at, format: :long
-                %dt Created:
-                %dd= l @campaign.created_at, format: :long
-                %dt Mail list:
-                %dd.project-people
-                  = link_to @campaign.list.name, manage_list_path(@campaign.list)
-
-            .col-lg-5
-              = pie_chart @campaign.metrics.group(:action).count, height: "130px"
-
-              -#
-                %dl.dl-horizontal
-                  %dt Deliveries:
-                  %dd= @campaign.metrics.deliveries.size
-                  %dt Clicks:
-                  %dd= @campaign.metrics.clicks.size
-                  %dt Opens:
-                  %dd= @campaign.metrics.opens.size
-
-                  %dt Bounces:
-                  %dd= @campaign.metrics.bounces.size
-                  %dt Spams:
-                  %dd= @campaign.metrics.spams.size
+.page-header
+  %h3= @campaign.name
 
 
+.row.row-cards
 
-          .row
-            .col-lg-12
+  .col-lg-6.col-xl-4
+    .card
+      .card-header
+
+        .card-title
+          = @campaign.subject
+
+      .card-body{style: "min-height: 349px;"}
+
+        %img.img-responsive{:src => @campaign.logo}/
+
+        .small.text-muted
+          %br
+          = @campaign.try(:description)
+        %hr
+
+
+        %dl.dl-horizontal
+          %dt Last Updated:
+          %dd= l @campaign.updated_at, format: :long
+          %dt Created:
+          %dd= l @campaign.created_at, format: :long
+          %dt Mail list:
+          %dd.project-people
+            = link_to @campaign.list.name, manage_list_path(@campaign.list)
+
+  .col-lg-6.col-xl-8
+    .card
+      .card-header
+        .card-options
+          = render "chaskiq/manage/campaigns/actions", campaign: @campaign
+
+          = render "chaskiq/manage/campaigns/config_actions", campaign: @campaign
+      .card-body
+
+        .col-lg-5
+          = pie_chart @campaign.metrics.group(:action).count, height: "300px", donut: true, legend: "bottom"
+         
+
+        .col-lg-7  
+          .row 
+            .col-lg-12   
               %dl.dl-horizontal
                 %dt Completed:
                 %dd
                   .progress.active.m-b-sm
                     .progress-bar.progress-bar-custom{:style => "width: #{@campaign.delivery_progress}%;"}
-                  %small
-                    Deliveries completed in
-                    %strong=number_to_percentage(@campaign.delivery_progress, precision: 0)
-          .row.m-t-sm
+
+              %small
+                Deliveries completed in
+                %strong
+                  =number_to_percentage(@campaign.delivery_progress, precision: 0)
+
             .col-lg-12
-              .panel.blank-panel
-                .panel-heading
-                  .panel-options
+              %hr
 
-                    %h3 Last activity
+            .col-lg-12
+              .small.text-muted
+                Last 2 weeks activity:
+              %span.bar_dashboard.pull-right
+                = @campaign.sparklines_by_day().join(", ")
 
-                .panel-body
 
-                  .row.m-b-sm.m-t-sm
-                    .col-md-1
-                      %button#loading-example-btn.btn.btn-white.btn-sm{:type => "button"}
-                        %i.fa.fa-refresh
-                        Refresh
 
-                    .col-md-11
-                      .input-group
-                        = search_form_for @q, url: manage_campaign_metrics_path(@campaign) do |f|
-                          = f.search_field :subscription_state_or_subscription_subscriber_email_or_subscription_subscriber_name_or_subscription_subscriber_last_name_or_host_or_data_cont, class: "input-sm form-control", placeholder: "Search by columns"
-                        -#%input.input-sm.form-control{:placeholder => "Search", :type => "text", url: }/
-                        %span.input-group-btn
-                          %button.btn.btn-sm.btn-primary{:type => "button"} Go!
 
-                  %table.table.table-striped.table-condensed.table-nowrap
-                    %thead
-                      %tr
-                        %th Status
-                        %th Who
-                        %th When
-                        %th Host
-                        %th Data
-                    %tbody
-                      = render partial: "chaskiq/manage/metrics/metric", collection: @metrics , as: :metric
+.card
+  .card-header
+    .card-title
+      Last activity
 
-                  .clearfix
-                  = paginate @metrics
+    .card-options
+      = search_form_for @q, url: manage_campaign_metrics_path(@campaign) do |f|
+        = f.search_field :subscription_state_or_subscription_subscriber_email_or_subscription_subscriber_name_or_subscription_subscriber_last_name_or_host_or_data_cont, class: "input-sm form-control", placeholder: "Search by columns"
 
-  .col-lg-3
-    .wrapper.wrapper-content.project-manager
-      %h4 Campaign description
+  .card-body
 
-      %img.img-responsive{:src => @campaign.logo}/
-      %hr
+    .table-responsive
 
-      %p.small
-        = @campaign.try(:description)
+      %table.table.card-table.table-vcenter.text-nowrap
+        %thead
+          %tr
+            %th Status
+            %th Who
+            %th When
+            %th Host
+            %th Data
+        %tbody
+          = render partial: "chaskiq/manage/metrics/metric", collection: @metrics , as: :metric
 
+
+= paginate @metrics
+
+
+= content_for :javascript do
+  :javascript
+    $(".bar_dashboard").peity("bar", {
+        fill: ["#1ab394", "#d7d7d7"],
+        width: "100%",
+        height: "127px"
+    })

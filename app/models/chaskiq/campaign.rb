@@ -123,7 +123,11 @@ module Chaskiq
       link_prefix = host + "/campaigns/#{self.id}/tracks/#{subscriber.encoded_id}/click?r="
       html = Chaskiq::LinkRenamer.convert(premailer, link_prefix)
 
-      Mustache.render(html, subscriber.attributes.merge(attributes_for_mailer(subscriber)) )
+      Mustache.render(html, 
+        subscriber.attributes
+                  .merge(attributes_for_mailer(subscriber))
+                  .merge(subscriber.options) 
+      )
     end
 
     def compiled_template_for(subscriber)

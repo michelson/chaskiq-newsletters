@@ -1,55 +1,53 @@
-= render "menu"
 
 .row
-  .col-lg-12
-    .wrapper.wrapper-content.animated.fadeInUp
-      .ibox
-        .ibox-title
-          %h5 Confirm
+  = render "side"
+  - render partial: "wizard_nav"
+  .col-md-9
+    .card
+      .card-header
+        %h3.card-title
+          = params[:id]
+      .card-body
 
-        .ibox-content
 
-          = render partial: "wizard_steps"
+        .col-lg-6
+          %h2
+            %i.fa.fa-thumbs-up.fa
+            All set up:
+          %p Just to confirm, check the details of <strong>#{@campaign.name}</strong>"
 
-          .widget.navy-bg.p-xl
-            .col-lg-6
-              %h2
-                %i.fa.fa-thumbs-up.fa
-                All set up:
-              %p Just to confirm, check the details of <strong>#{@campaign.name}</strong>"
+          = link_to preview_manage_campaign_path(@campaign), class: "btn btn-primary", target: :blank do
+            %i.fa.fa-eye
+              preview
 
-              = link_to preview_manage_campaign_path(@campaign), class: "btn btn-primary", target: :blank do
-                %i.fa.fa-eye
-                  preview
+          = link_to test_manage_campaign_path(@campaign), class: "btn btn-default" do
+            %i.fa.fa-heartbeat
+              test
 
-              = link_to test_manage_campaign_path(@campaign), class: "btn btn-default" do
-                %i.fa.fa-heartbeat
-                  test
+          = link_to deliver_manage_campaign_path(@campaign), class: "btn btn-danger", data: {confirm: "Sure?"} do
+            %i.fa.fa-paper-plane
+              send
 
-              = link_to deliver_manage_campaign_path(@campaign), class: "btn btn-danger", data: {confirm: "Sure?"} do
-                %i.fa.fa-paper-plane
-                  send
+        .col-lg-6
+          %ul.list-unstyled.m-t-md
+            %li
+              = image_tag(@campaign.logo.url) rescue nil
+            %li
+              %strong Subject:
+              %h3=" #{@campaign.subject}"
+            %li
+              %strong Sent to:
+              = link_to @campaign.list.name, manage_list_path(@campaign.list)
+            %li
+              %strong from name:
+              =" #{@campaign.from_name}"
+            %li
+              %strong From email:
+              =" #{@campaign.from_email}"
+            %li
+              %strong Reply email:
+              =" #{@campaign.reply_email}"
+            %li
+              %strong Description:
+              =" #{@campaign.description}"
 
-            .col-lg-6
-              %ul.list-unstyled.m-t-md
-                %li
-                  = image_tag(@campaign.logo)
-                %li
-                  %strong Subject:
-                  =" #{@campaign.subject}"
-                %li
-                  %strong from name:
-                  =" #{@campaign.from_name}"
-                %li
-                  %strong From email:
-                  =" #{@campaign.from_email}"
-                %li
-                  %strong Reply email:
-                  =" #{@campaign.reply_email}"
-                %li
-                  %strong Description:
-                  =" #{@campaign.description}"
-
-            .clearfix
-
-          = render partial: "wizard_nav"

@@ -23,6 +23,11 @@ require 'factory_bot_rails'
 require 'shoulda/matchers'
 require 'database_cleaner'
 require 'rails-controller-testing'
+require 'faker'
+
+# Require files in spec/support
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+
 
 #require 'active_job/test_helper'
 #require 'sidekiq/testing'

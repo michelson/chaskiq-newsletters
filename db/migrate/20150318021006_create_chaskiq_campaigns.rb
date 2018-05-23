@@ -1,4 +1,4 @@
-class CreateChaskiqCampaigns < ActiveRecord::Migration
+class CreateChaskiqCampaigns < ActiveRecord::Migration[4.2]
   def change
     create_table :chaskiq_campaigns do |t|
       t.string :subject

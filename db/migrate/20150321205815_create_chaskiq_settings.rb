@@ -1,4 +1,4 @@
-class CreateChaskiqSettings < ActiveRecord::Migration
+class CreateChaskiqSettings < ActiveRecord::Migration[4.2]
   def change
     create_table :chaskiq_settings do |t|
       t.text :config

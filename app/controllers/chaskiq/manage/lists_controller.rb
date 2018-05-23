@@ -14,7 +14,8 @@ module Chaskiq
 
     def show
       @list =  Chaskiq::List.find(params[:id])
-      @subscribers = @list.subscribers.page(params[:page]).per(50)
+      @q = @list.subscribers.ransack(params[:q])
+      @subscribers = @q.result.page(params[:page]).per(50)
     end
 
     def new

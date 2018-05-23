@@ -33,5 +33,63 @@ module Chaskiq
       end
 
     end
+
+
+    describe "options" do
+
+      let(:list){
+        list = Chaskiq::List.new
+        list.name = "new one"
+        list.save
+        list
+      }
+
+      it "will permit creation on accessors" do
+        opt = {name: Faker::Name.name, 
+          email: Faker::Internet.email, 
+          last_name: Faker::Name.name,
+          company: Faker::Company.bs,
+          country: Faker::Nation.nationality }
+
+        list.subscribers.create(opt)
+        expect(list.subscribers.size).to be == 1 
+        expect(list.subscribers.first.company).to be_present
+        expect(list.subscribers.first.country).to be_present
+      end
+
+      it "will permit creation from an options hash key" do
+        opt = {name: Faker::Name.name, 
+          email: Faker::Internet.email, 
+          last_name: Faker::Name.name,
+          options: {
+            company: Faker::Company.bs,
+            country: Faker::Nation.nationality            
+            }
+          }
+
+        list.subscribers.create(opt)
+        expect(list.subscribers.size).to be == 1 
+        expect(list.subscribers.first.company).to be_present
+        expect(list.subscribers.first.country).to be_present
+      end
+
+
+      it "will permit creation on additional options hash key and accessible from it" do
+        opt = {name: Faker::Name.name, 
+          email: Faker::Internet.email, 
+          last_name: Faker::Name.name,
+          options: {
+            interplanetary_galaxy: Faker::Nation.nationality            
+            }
+          }
+
+        list.subscribers.create(opt)
+        expect(list.subscribers.size).to be == 1 
+        expect(list.subscribers.first.company).to be_blank
+        expect(list.subscribers.first.country).to be_blank
+        expect(list.subscribers.first.options[:interplanetary_galaxy]).to be_present
+      end
+
+    end
   end
 end

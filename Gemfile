@@ -20,3 +20,5 @@ gem 'web-console', group: :development
 gem 'webpacker'
 gem 'puma'
 gem 'roadie'
+gem 'turbolinks'
+gem 'faker', github: "stympy/faker"

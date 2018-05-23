@@ -1,53 +1,55 @@
-= render "menu"
+.float-right
+  %a.btn.btn-success.btn-xs{:href => new_manage_list_path }
+    %i.fa.fa-plus
+    Create new List
 
-.row
-  .col-lg-12
-    .wrapper.wrapper-content
-      .ibox
+.page-header
+  %h1 Manage Lists
 
-        .ibox-title
-          %h5 All Lists
-          .ibox-tools
-            %a.btn.btn-success.btn-xs{:href => new_manage_list_path }
-              %i.fa.fa-plus
-              Create new List
+.card
+  .card-header
+    .card-title
+      All Lists
 
-        .ibox-content
+    .card-options
+      = search_form_for @q, url: manage_lists_path() do |f|
 
-          .row.m-b-sm.m-t-sm
-            .col-md-1
-              %button#loading-example-btn.btn.btn-white.btn-sm{:type => "button"}
-                %i.fa.fa-refresh
-                Refresh
-            .col-md-11
-              .input-group
+        = f.search_field :subscribers_name_or_subscribers_email_or_subscribers_last_name_or_name_cont, class: "input-sm form-control", placeholder: "Search by subscribers or list name"
 
-                = search_form_for @q, url: manage_campaigns_path() do |f|
 
-                  = f.search_field :subscribers_name_or_subscribers_email_or_subscribers_last_name_or_name, class: "input-sm form-control", placeholder: "Search by subscribers or list name"
+  .card-body
 
-                %span.input-group-btn
-                  %button.btn.btn-sm.btn-primary{:type => "button"} Go!
+    .table-responsive
+      %table.table.card-table.table-vcenter.text-nowrap
 
-          .project-list
-            %table.table.table-hover
-              %tbody
-                - @lists.each do |list|
-                  %tr
+        %thead
+          %tr
+            %th Name
+            %th Aubscribers
+            %th.text-center Actions
 
-                    %td.project-title
-                      %a{:href => manage_list_path(list)}
-                        = list.name
-                      %br/
-                      %small= l list.created_at, format: :short
+        %tbody
+          - @lists.each do |list|
+            %tr
 
-                    %td.project-actions
+              %td
+                %a{:href => manage_list_path(list)}
+                  = list.name
+                %br/
+                %small= l list.created_at, format: :short
 
-                      = link_to edit_manage_list_path(list), class: "btn btn-white btn-sm" do
-                        %i.fa.fa-edit
-                        Edit
+              %td.text-center
+                = list.subscribers.size
+              %td.text-center
 
-                      = link_to manage_list_path(list), class: "btn btn-white btn-sm", data:{ method: :delete, confirm: "sure?"} do
-                        %i.fa.fa-times
-                        Destroy
+                = link_to edit_manage_list_path(list), class: "btn btn-secondary" do
+                  %i.fa.fa-edit
+                  Edit
 
+                &nbsp
+
+                = link_to manage_list_path(list), class: "btn btn-danger", data:{ method: :delete, confirm: "sure?"} do
+                  %i.fa.fa-times
+                  Destroy
+
+= paginate @lists

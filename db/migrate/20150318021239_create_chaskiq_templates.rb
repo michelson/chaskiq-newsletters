@@ -1,4 +1,4 @@
-class CreateChaskiqTemplates < ActiveRecord::Migration
+class CreateChaskiqTemplates < ActiveRecord::Migration[4.2]
   def change
     create_table :chaskiq_templates do |t|
       t.string :name

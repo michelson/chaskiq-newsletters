@@ -1,61 +1,70 @@
 
-#upload-to-modal.hide
-  = simple_form_for @list, url: upload_manage_list_path(@list) do |f|
-    = f.input :upload_file, as: :file
-    -#= f.submit
+.float-rigth
+  #upload-to-modal.hide
+    = simple_form_for @list, url: upload_manage_list_path(@list) do |f|
+      = f.input :upload_file, as: :file
+      -#= f.submit
 
-= render "menu"
-
-.wrapper.wrapper-content
-  .col-lg-12
-
-    .pull-right
-      .btn-group
-        %button.btn.btn-primary.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown"}
-          Actions
-          %span.caret
-        %ul.dropdown-menu
-          %li
-            %a{href: "#", 'data-modal'=> "#upload-to-modal"}
-              %i.fa.fa-upload
-              Upload csv
-          %li
-            = link_to clear_manage_list_path(@list), confirm: "sure?" do
-              %i.fa.fa-trash
-              Clear list
+.page-header
+  .page-title
+    %h2 Manage lists
 
 
-    %h3 #{@list.subscribers.size} Subscribers in #{@list.name}'s list
+.card
+  .card-header
+    .card-title
+      #{@list.subscribers.size} Subscribers in #{@list.name}'s list
+    .card-options
 
+      = search_form_for @q, url: manage_list_path(@list) do |f|
+        = f.search_field :name_or_email_or_last_name_cont, class: "input-sm form-control", placeholder: "Search by subscribers or campaign data"
+      &nbsp;
 
-    %table.table
-      %thead
-        %tr
-          %th #
-          %th State
-          %th Email
-          %th First Name
-          %th Last Name
-          %th
-          %th
-      %tbody
-        - @subscribers.each do |sub|
+      %button.btn.btn-secondary.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
+        Actions
+
+        %span.caret
+      .dropdown-menu
+        .dropdown-item
+          %a{href: "#", 'data-modal'=> "#upload-to-modal"}
+            %i.fa.fa-upload
+            Upload csv
+        .dropdown-item
+          = link_to clear_manage_list_path(@list), confirm: "sure?" do
+            %i.fa.fa-trash
+            Clear list
+
+  .card-body
+  
+    .table-responsive
+
+      %table.table
+        %thead
           %tr
-            %td{:scope => "row"}
-              = sub.id
-            %td
-              %span.label{class: sub.style_class}
-                %i.fa.fa-check
-                = sub.state
-            %td=sub.email
-            %td=sub.name
-            %td=sub.last_name
-            %td
-              = link_to edit_manage_list_subscriber_path(@list, sub) do
-                %i.fa.fa-edit
-            %td
-              = link_to manage_list_subscriber_path(@list, sub), method: :delete, confirm: "sure?" do
-                %i.fa.fa-times
+            %th #
+            %th State
+            %th Email
+            %th First Name
+            %th Last Name
+            %th
+            %th
+        %tbody
+          - @subscribers.each do |sub|
+            %tr
+              %td{:scope => "row"}
+                = sub.id
+              %td
+                %span.label{class: sub.style_class}
+                  %i.fa.fa-check
+                  = sub.state
+              %td=sub.email
+              %td=sub.name
+              %td=sub.last_name
+              %td
+                = link_to edit_manage_list_subscriber_path(@list, sub), class: "btn btn-secondary" do
+                  %i.fa.fa-edit
+              %td
+                = link_to manage_list_subscriber_path(@list, sub), method: :delete, confirm: "sure?", class: "btn btn-secondary" do
+                  %i.fa.fa-times
 
-  .pagination
-    = paginate @subscribers
+= paginate(@subscribers)

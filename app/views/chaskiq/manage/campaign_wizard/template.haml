@@ -1,24 +1,13 @@
-= render "menu"
-
 
 .row
-  .col-lg-12
-    .wrapper.wrapper-content.animated.fadeInUp
-      .ibox
-        .ibox-title
-          %h5 Choose template
-          .ibox-tools
-
-        .ibox-content
-
-
-          = render partial: "wizard_steps"
-
-
-          = simple_form_for @campaign, url: wizard_path do |f|
-
-            = f.input :template_id , as: :select, collection: Chaskiq::Template.all
-
-            = f.submit
-
-          = render partial: "wizard_nav"
+  = render "side"
+  - render partial: "wizard_nav"
+  .col-md-9
+    .card
+      .card-header
+        %h3.card-title
+          = params[:id]
+      .card-body
+        = simple_form_for @campaign, url: wizard_path do |f|
+          = f.input :template_id , as: :select, collection: Chaskiq::Template.all
+          = f.submit

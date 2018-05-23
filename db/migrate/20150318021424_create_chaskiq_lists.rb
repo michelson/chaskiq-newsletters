@@ -1,4 +1,4 @@
-class CreateChaskiqLists < ActiveRecord::Migration
+class CreateChaskiqLists < ActiveRecord::Migration[4.2]
   def change
     create_table :chaskiq_lists do |t|
       t.string :name

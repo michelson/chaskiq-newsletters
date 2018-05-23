@@ -44,5 +44,5 @@ Rails.application.configure do
   Rails.application.routes.default_url_options = {host: 'http://localhost:3000'}
   config.action_controller.default_url_options = {host: 'http://localhost:3000'}
   config.action_mailer.default_url_options = {host: 'http://localhost:3000'}
-
+  config.action_mailer.preview_path = "#{Chaskiq::Engine.root}/spec/mailers/previews"
 end

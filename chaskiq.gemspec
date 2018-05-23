@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib,vendor}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 5.1.4"
+  s.add_dependency "rails", "~> 5.2.0"
 
   s.add_dependency "premailer"
   s.add_dependency "lazy_high_charts"
@@ -45,6 +45,7 @@ Gem::Specification.new do |s|
   s.add_dependency "deep_cloneable"
   s.add_dependency "aws-ses"
   s.add_dependency "ransack"
+  s.add_dependency "active_importer"
 
   s.add_development_dependency "factory_bot_rails"
   s.add_development_dependency "rails-controller-testing"

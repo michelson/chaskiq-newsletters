@@ -5,7 +5,7 @@ module Chaskiq
     has_many :campaigns
 
     accepts_nested_attributes_for :subscribers
-
+    
     attr_accessor :upload_file
 
     def subscription_progress

@@ -16,4 +16,9 @@ FactoryBot.define do
     end
 
   end
+
+  factory :chaskiq_subscriber_with_options, parent: :chaskiq_subscriber do
+    company "acme"
+  end
+
 end

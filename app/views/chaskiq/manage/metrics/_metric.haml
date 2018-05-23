@@ -1,8 +1,10 @@
 %tr
   %td
-    %span.label{class: "label-#{metric_action_class(metric)}"}
-      %i.fa{class: "fa-#{metric_icon_action_class(metric)}"}
+    %span.tag{class: "tag-#{metric_action_class(metric)}"}
       = metric.action
+      %span.tag-addon
+        %i.fa{class: "fa-#{metric_icon_action_class(metric)}"}
+      
   %td
     = metric.trackable.try(:name)
     = metric.trackable.try(:last_name)

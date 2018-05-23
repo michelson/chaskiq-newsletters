@@ -1,12 +1,14 @@
 module Chaskiq
   class Config
 
-    mattr_accessor :mail_settings,
-    :authentication_method,
-    :ses_access_key,
-    :ses_access_secret_key,
-    :s3_bucket,
-    :chaskiq_secret_key
+    mattr_accessor  :mail_settings,
+                    :authentication_method,
+                    :ses_access_key,
+                    :ses_access_secret_key,
+                    :s3_bucket,
+                    :chaskiq_secret_key,
+                    :is_admin_method,
+                    :logout_url
 
     def self.setup
       yield self
@@ -25,12 +27,17 @@ module Chaskiq
       end
     end
 
+    def self.is_admin?(user)
+      raise ConfigError.new("CHASKIQ CONFIG ERROR! please add is_admin_method to your chaskiq initializer") if @@is_admin_method.blank?
+      @@is_admin_method.call(user) 
+    end
+
     def self.config_urlcript
       URLcrypt.key = chaskiq_secret_key
     end
 
     def self.config_ses
-       ActionMailer::Base.add_delivery_method :ses, AWS::SES::Base,
+      ActionMailer::Base.add_delivery_method :ses, AWS::SES::Base,
       :access_key_id     => ses_access_key,
       :secret_access_key => ses_access_secret_key
     end

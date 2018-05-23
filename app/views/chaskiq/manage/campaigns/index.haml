@@ -1,59 +1,58 @@
 
+.float-right
+  %a.btn.btn-success.btn-xs{:href => new_manage_campaign_path }
+    %i.fa.fa-plus
+    Create new Campaigns
 
-.row.page-heading
-  .col-sm-4
-    %h2 Campaigns list
-    %ol.breadcrumb
-      %li
-        %a{:href => ""} Home
-      %li.active
-        %strong Campaigns list
-.row
-  .col-lg-12
-    .wrapper.wrapper-content
-      .ibox
-        .ibox-title
-          %h5 All Campaigns
-          .ibox-tools
-            %a.btn.btn-success.btn-xs{:href => new_manage_campaign_path }
-              %i.fa.fa-plus
-              Create new Campaigns
-        .ibox-content
-          .row.m-b-sm.m-t-sm
-            .col-md-1
-              %button#loading-example-btn.btn.btn-white.btn-sm{:type => "button"}
-                %i.fa.fa-refresh
-                Refresh
-            .col-md-11
-              .input-group
-
-                = search_form_for @q, url: manage_campaigns_path() do |f|
-
-                  = f.search_field :subscribers_name_or_subscribers_email_or_subscribers_last_name_or_subject_or_from_name_or_from_email_or_reply_email_or_plain_content_or_name_or_state_cont, class: "input-sm form-control", placeholder: "Search by subscribers or campaign data"
+.page-header
+  %h1 Campaigns list
 
 
-                %span.input-group-btn
-                  %button.btn.btn-sm.btn-primary{:type => "button"} Go!
-          .project-list
-            %table.table.table-hover
-              %tbody
-                - @campaigns.uniq.each do |campaign|
-                  %tr
+.row.row-cards
 
-                    %td.project-title
-                      %a{:href => manage_campaign_path(campaign)}
-                        = campaign.name
-                      %br/
-                      %small
-                        = l campaign.created_at, format: :short
-                    %td.project-completion
-                      %small Completion with: #{number_to_percentage(campaign.delivery_progress, precision: 0)}
-                      .progress.progress-mini
-                        .progress-bar.progress-bar-custom{:style => "width: #{campaign.delivery_progress}%;"}
+  .card
+    .card-header
 
-                    %td.project-actions
+      All Campaigns
 
-                      = render "actions", campaign: campaign
+      %div.col-lg-3.ml-auto
+        = search_form_for @q, url: manage_campaigns_path() do |f|
+          = f.search_field :subscribers_name_or_subscribers_email_or_subscribers_last_name_or_subject_or_from_name_or_from_email_or_reply_email_or_plain_content_or_name_or_state_cont, class: "input-sm form-control", placeholder: "Search by subscribers or campaign data"
 
-                      = render "config_actions", campaign: campaign
+    .card-body
+      .table-responsive    
+        %table.table.card-table.table-vcenter.text-nowrap
+          %thead
+            %tr
+              %th Campaign
+              %th Completion
+              %th.text-center Actions
+              %th.text-center More actions
+
+          %tbody
+            - @campaigns.uniq.each do |campaign|
+              %tr
+
+                %td
+                  %div
+                    %a{:href => manage_campaign_path(campaign)}
+                      = campaign.name.try(:upcase)
+                  
+                  .small.text-muted
+                    = l campaign.created_at, format: :short
+
+                %td
+                  %small Completion with: #{number_to_percentage(campaign.delivery_progress, precision: 0)}
+                  .progress.progress-mini
+                    .progress-bar.progress-bar-custom{:style => "width: #{campaign.delivery_progress}%;"}
+
+                %td.text-center
+                  = render "actions", campaign: campaign
+
+                %td.text-center
+                  = render "config_actions", campaign: campaign
+
+    .card-footer
+    
+  = paginate(@campaigns)
 

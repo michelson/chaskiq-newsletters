@@ -1,4 +1,4 @@
-class CreateChaskiqAttachments < ActiveRecord::Migration
+class CreateChaskiqAttachments < ActiveRecord::Migration[4.2]
   def change
     create_table :chaskiq_attachments do |t|
       t.string :image

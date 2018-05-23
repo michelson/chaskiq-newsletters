@@ -1,20 +1,18 @@
-.btn-group
-  %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown"}
-    %i.fa.fa-cog
-    Configuration
-    %span.caret
-  %ul.dropdown-menu
-    %li
-      = link_to manage_campaign_wizard_path(campaign, "setup") do
-        %i.fa.fa-edit
-        Setup
+.item-action.dropdown
+  %a.icon{"data-toggle" => "dropdown", :href => "javascript:void(0)"}
+    %i.fa.fa-ellipsis-v
+  .dropdown-menu.dropdown-menu-right
 
-    %li
-      = link_to manage_campaign_attachments_path(campaign) do
-        %i.fa.fa-paperclip
-        Attachments
+    = link_to manage_campaign_wizard_path(campaign, "setup"), class: "dropdown-item" do
+      %i.fa.fa-edit
+      Setup
 
-    %li
-      = link_to manage_campaign_path(campaign), method: :delete, data: { confirm: "Are you sure?" } do
-        %i.fa.fa-times
-        Remove
+    = link_to manage_campaign_attachments_path(campaign), class: "dropdown-item" do
+      %i.fa.fa-paperclip
+      Attachments
+
+    .dropdown-divider
+
+    = link_to manage_campaign_path(campaign), method: :delete, data: { confirm: "Are you sure?" }, class: "dropdown-item" do
+      %i.fa.fa-times
+      Remove

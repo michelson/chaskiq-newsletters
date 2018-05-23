@@ -9,27 +9,28 @@
 
       <div class="d-flex order-lg-2 ml-auto">
         
-        <div class="dropdown">
-          <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-            <span class="avatar" style="background-image: url('')"></span>
-            <span class="ml-2 d-none d-lg-block">
-              <span class="text-default">
-                <%= "current_user.email" %>
+        <% if controller.current_user.present? && Chaskiq::Config.is_admin?(controller.current_user) %>
+          <div class="dropdown">
+            <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
+              <span class="avatar" style="background-image: url('')"></span>
+              <span class="ml-2 d-none d-lg-block">
+                <span class="text-default">
+                  <%= controller.current_user.email %>
+                </span>
+                
+                  <small class="text-muted d-block mt-1">Administrator</small>
+             
               </span>
-              
-                <small class="text-muted d-block mt-1">Administrator</small>
-           
-            </span>
-          </a>
+            </a>
 
-          <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-              <a class="dropdown-item" href="#">
-                <i class="dropdown-icon fe fe-log-out"></i>
-                Sign out
-              </a>
-    
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                <a class="dropdown-item" href="#">
+                  <i class="dropdown-icon fe fe-log-out"></i>
+                  Sign out
+                </a>
+            </div>
           </div>
-        </div>
+        <% end %>
 
       </div>
 
@@ -49,21 +50,21 @@
  
             <li class="nav-item">
               <a class="nav-link" href="<%= manage_campaigns_path %>">
-                <i class="fas fa-balance-scale"></i>
+                <i class="fas fa-newspaper"></i>
                 Campaigns
               </a>
             </li>
 
             <li class="nav-item">
               <a class="nav-link" href="<%= manage_lists_path %>">
-                <i class="fas fa-suitcase"></i>
+                <i class="fas fa-address-card"></i>
                 Lists
               </a>
             </li>
 
             <li class="nav-item">
               <a class="nav-link" href="<%= manage_templates_path %>">
-                <i class="fas fa-suitcase"></i>
+                <i class="fas fa-object-group"></i>
                 Templates
               </a>
             </li>

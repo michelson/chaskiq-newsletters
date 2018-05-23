@@ -6,7 +6,7 @@ module Chaskiq
     before_action :authentication_method
 
     def index
-      @templates = Chaskiq::Template.all
+      @templates = Chaskiq::Template.page(params[:page]).per(10)
     end
 
     def show

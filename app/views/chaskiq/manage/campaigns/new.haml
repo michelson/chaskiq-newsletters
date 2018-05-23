@@ -1,23 +1,14 @@
 
-.row.wrapper.white-bg.page-heading
-  .col-sm-4
-    %h2 New Campaigns
-    %ol.breadcrumb
-      %li
-        %a{:href => ""} Home
-      %li.active
-        %strong Campaigns list
+.page-header
+  %h1 New Campaign
 
-.row
-  .col-lg-12
-    .wrapper.wrapper-content.animated.fadeInUp
-      .ibox
-        .ibox-title
-          %h5 New Campaign
 
-        .ibox-content
+.card
+  .card-header
+    New Campaign
 
-          = simple_form_for ["manage", @campaign] do |f|
+  .card-body
+    = simple_form_for ["manage", @campaign] do |f|
 
-            = f.input :list_id, as: :select , collection: Chaskiq::List.all, label: "Choose a mail list"
-            = f.submit "Create Campaign"
+      = f.input :list_id, as: :select , collection: Chaskiq::List.all, label: "Choose a mail list"
+      = f.submit "Create Campaign", class: "btn btn-success"

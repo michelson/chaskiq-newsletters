@@ -1,4 +1,4 @@
-class CreateChaskiqSubscriptions < ActiveRecord::Migration
+class CreateChaskiqSubscriptions < ActiveRecord::Migration[4.2]
   def change
     create_table :chaskiq_subscriptions do |t|
       t.string :state

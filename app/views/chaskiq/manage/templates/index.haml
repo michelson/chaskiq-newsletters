@@ -1,32 +1,34 @@
 
-= render "menu"
+.float-right
+  %a.btn.btn-success.btn-xs{:href => new_manage_template_path }
+    %i.fa.fa-plus
+    Create new Template
 
-.row
-  .col-lg-12
-    .wrapper.wrapper-content
-      .ibox
-        .ibox-title
-          %h5 All Templates
-          .ibox-tools
-            %a.btn.btn-success.btn-xs{:href => new_manage_template_path }
-              %i.fa.fa-plus
-              Create new Template
-        .ibox-content
-          - @templates.each do |template|
-            .col-sm-6.col-md-4
-              .thumbnail
-                %img{:alt => "300%x300", "data-holder-rendered" => "true",  :src => "http://placehold.it/300x300"}
-                .caption
-                  %h3#thumbnail-label
-                    = template.name
-                    %a.anchorjs-link{:href => "#thumbnail-label"}
-                      %span.anchorjs-icon
-                  %p
-                    %a.btn.btn-primary{:href => edit_manage_template_path(template), :role => "button"}
-                      %i.fa.fa-edit
-                      Edit
-                    %a.btn.btn-default{:href => manage_template_path(template), :role => "button", method: :delete, data: { confirm: "Are you sure?" }}
-                      %i.fa.fa-times
-                      Remove
+.page-header
+  %h1 All Templates
 
-          .clearfix
+.row.row-cards
+
+  - @templates.each do |template|
+
+    .col-sm-6.col-lg-4
+      .card
+        %img.card-img-top{:alt => "300%x300", "data-holder-rendered" => "true",  :src => "http://placehold.it/300x300"}
+        .card-header
+          %h3.card-title
+            = template.name
+          .card-options
+            %a.btn.btn-primary{:href => edit_manage_template_path(template), :role => "button"}
+              %i.fa.fa-edit
+              Edit
+            %a.btn.btn-secondary{:href => manage_template_path(template), :role => "button", method: :delete, data: { confirm: "Are you sure?" }}
+              %i.fa.fa-times
+              Remove
+
+        .card-body
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam deleniti fugit incidunt, iste, itaque minima neque pariatur perferendis sed suscipit velit vitae voluptatem. A consequuntur, deserunt eaque error nulla temporibus!
+        .card-footer
+          This is standard card footer
+
+
+= paginate @templates

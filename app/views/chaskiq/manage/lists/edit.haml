@@ -1,18 +1,11 @@
-= render "menu"
 
-.wrapper.wrapper-content
-  .row
-    .col-lg-12
-      .ibox.float-e-margins
-        .ibox-title
-          %h5
-            Edit
-            %small
-              = @list.name
-              list
-          .ibox-tools
+.page-header
+  %h2 Manage Lists
 
+.card
+  .card-header
+    .card-title
+      Edit #{@list.name} list
 
-        .ibox-content
-          .row
-            = render partial: "form"
+  .card-body
+    = render partial: "form"

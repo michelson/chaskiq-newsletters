@@ -1,24 +1,18 @@
-= render "menu"
-
 
 .row
-  .col-lg-12
-    .wrapper.wrapper-content.animated.fadeInUp
-      .ibox
-        .ibox-title
-          %h5 List
+  = render "side"
+  - render partial: "wizard_nav"
+  .col-md-9
+    .card
+      .card-header
+        %h3.card-title
+          = params[:id]
+      .card-body
 
-        .ibox-content
+        = simple_form_for @campaign, url: wizard_path do |f|
 
-          = render partial: "wizard_steps"
+          = f.input :name
 
-          = simple_form_for @campaign, url: wizard_path do |f|
+          = f.input :list_id, as: :select, collection: Chaskiq::List.all
 
-            = f.input :name
-
-            = f.input :list_id, as: :select, collection: Chaskiq::List.all
-
-            = f.submit
-
-
-          = render partial: "wizard_nav"
+          = f.submit

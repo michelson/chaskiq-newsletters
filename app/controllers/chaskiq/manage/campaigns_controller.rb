@@ -11,9 +11,9 @@ module Chaskiq
     def index
       @q = Chaskiq::Campaign.ransack(params[:q])
       @campaigns = @q.result
-      .order("updated_at desc")
-      .page(params[:page])
-      .per(8)
+                     .order("updated_at desc")
+                     .page(params[:page])
+                     .per(10)
     end
 
     def new

@@ -1,110 +1,116 @@
 
-.row
-  .col-sm-4
-    %h1 Welcome To Chaskiq
-    %small You have #{@campaigns_count} campaigns and #{@sends_count} sended messages.
+.page-header
+  %h1 Welcome To Chaskiq
 
-    = pie_chart @pie_metrics.count, height: "130px"
+.row.row-cards
 
-    .clearfix
+  .card
+    .card-header
+      %h3.card-title
+        You have #{@campaigns_count} campaigns and #{@sends_count} sended messages.
+        
+    .card-body
 
-  .col-sm-8
-    .flot-chart.dashboard-chart.m-t-lg
-      %h3
-        %center Last 2 weeks
-      = column_chart( @daily_metrics, height: "170px", width: "500px",  format: "%l %P")
-      -##flot-dashboard-chart.flot-chart-content
+      .col-sm-3
+        = pie_chart @pie_metrics.count, height: "220px", legend: "bottom", donut: true
 
+      .col-sm-9
+        %h4.text-center Last 2 weeks
+        .flot-chart.dashboard-chart.m-t-lg
+          = column_chart( @chart_data, height: "220px", width: "100%",  format: "%l %P")
+          -##flot-dashboard-chart.flot-chart-content
 
-.row
-  .col-lg-12
-    .wrapper.wrapper-content
-      .row
-        .col-lg-12
+  .card
+    .card-header
+      %h3.card-title Latests Campaigns
 
-          %h3 Latests Campaigns
+    .card-body
 
-          %table.table.table-striped.table-condensed.table-nowrap
-            %thead
+      .table-responsive
+        
+        %table.table.card-table.table-vcenter.text-nowrap
+          %thead
+            %tr
+              %th Campaign
+              %th Last 2 weeks
+              %th Deliveries
+              %th Actions
+          %tbody
+
+            - @campaigns.each do |c|
               %tr
-                %th Campaign
-                %th Last 2 weeks
-                %th Deliveries
-                %th Actions
-            %tbody
+                %td
+                  %div
+                    = link_to c.name.upcase, manage_campaign_path(c)
+                    .small.text-muted
+                      = c.created_at
 
-              - Chaskiq::Campaign.order("updated_at desc").limit(5).each do |c|
-                %tr
-                  %td
-                    %h4= link_to c.name, manage_campaign_path(c)
+                %td
+                  %span.bar_dashboard.pull-right
+                    = c.sparklines_by_day().join(", ")
 
-                  %td
-                    %span.bar_dashboard.pull-right
-                      = c.sparklines_by_day().join(", ")
+                %td
+                  %small.m-r
+                    %i.fa.fa-paper-plane
+                      = c.metrics.deliveries.size
+                      deliveries
 
-                  %td
-                    %small.m-r
-                      %i.fa.fa-paper-plane
-                        = c.metrics.deliveries.size
-                        deliveries
-
-                  %td
-                    = render "chaskiq/manage/campaigns/config_actions", campaign: c
+                %td.text-center
+                  = render "chaskiq/manage/campaigns/config_actions", campaign: c
 
 
 - content_for :javascript do
   :javascript
-    $(function() {
 
-        $(".bar_dashboard").peity("bar", {
-            fill: ["#1ab394", "#d7d7d7"],
-            width: 100
-        })
+    $(".bar_dashboard").peity("bar", {
+        fill: ["#1ab394", "#d7d7d7"],
+        width: 100
+    })
 
-        $("#sparkline8").sparkline(#{@daily_metrics.map{|o|o.to_a.last}.to_json}, {
-            type: 'bar',
-            barWidth: 8,
-            height: '150px',
-            barColor: '#1ab394',
-            negBarColor: '#c6c6c6'
-        });
-
-        $("#flot-dashboard-chart").length && $.plot($("#flot-dashboard-chart"), [
-            data1, data2
-        ],
-                {
-                    series: {
-                        lines: {
-                            show: false,
-                            fill: true
-                        },
-                        splines: {
-                            show: true,
-                            tension: 0.4,
-                            lineWidth: 1,
-                            fill: 0.4
-                        },
-                        points: {
-                            radius: 0,
-                            show: true
-                        },
-                        shadowSize: 2
-                    },
-                    grid: {
-                        hoverable: true,
-                        clickable: true,
-                        tickColor: "#d5d5d5",
-                        borderWidth: 1,
-                        color: '#d5d5d5'
-                    },
-                    colors: ["#1ab394", "#464f88"],
-                    xaxis: {
-                    },
-                    yaxis: {
-                        ticks: 4
-                    },
-                    tooltip: false
-                }
-        );
-
+    $("#sparkline8").sparkline(#{@daily_metrics.map{|o|o.to_a.last}.to_json}, {
+        type: 'bar',
+        barWidth: 8,
+        height: '150px',
+        barColor: '#1ab394',
+        negBarColor: '#c6c6c6'
     });
+
+    $("#flot-dashboard-chart").length && $.plot($("#flot-dashboard-chart"), [
+        data1, data2
+    ],
+            {
+                series: {
+                    lines: {
+                        show: false,
+                        fill: true
+                    },
+                    splines: {
+                        show: true,
+                        tension: 0.4,
+                        lineWidth: 1,
+                        fill: 0.4
+                    },
+                    points: {
+                        radius: 0,
+                        show: true
+                    },
+                    shadowSize: 2
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: true,
+                    tickColor: "#d5d5d5",
+                    borderWidth: 1,
+                    color: '#d5d5d5'
+                },
+                colors: ["#1ab394", "#464f88"],
+                xaxis: {
+                },
+                yaxis: {
+                    ticks: 4
+                },
+                tooltip: false
+            }
+    );
+
+

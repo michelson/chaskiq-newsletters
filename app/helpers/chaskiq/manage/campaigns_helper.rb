@@ -5,30 +5,30 @@ module Chaskiq
     def metric_action_class(metric)
       case metric.action
       when "deliver"
-        "plain"
+        "teal"
       when "open"
-        "info"
+        "green"
       when "click"
-        "primary"
+        "purple"
       when "bounce"
-        "warning"
+        "yellow"
       when "spam"
-        "danger"
+        "red"
       end
     end
 
     def metric_icon_action_class(metric)
       case metric.action
       when "deliver"
-        "check"
+        "paper-plane"
       when "open"
-        "check"
+        "envelope-open"
       when "click"
-        "check"
+        "hand-point-up"
       when "bounce"
-        "exclamation"
+        "bell"
       when "spam"
-        "exclamation-triangle"
+        "error"
       end
     end
 

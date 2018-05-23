@@ -18,6 +18,7 @@ require 'jquery-rails'
 require 'deep_cloneable'
 require 'aws/ses'
 require 'ransack'
+require 'active_importer'
 
 Dotenv.load
 
