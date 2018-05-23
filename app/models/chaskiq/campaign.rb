@@ -98,11 +98,11 @@ module Chaskiq
     def clean_inline_css(url)
       
       html = open(url).readlines.join("")
-      document = Roadie::Document.new html
-      document.transform
+      #document = Roadie::Document.new html
+      #document.transform
 
-      #premailer = Premailer.new(url, :adapter => :nokogiri, :escape_url_attributes => false)
-      #premailer.to_inline_css.gsub("Drop Content Blocks Here", "")
+      premailer = Premailer.new(url, :adapter => :nokogiri, :escape_url_attributes => false)
+      premailer.to_inline_css
     end
 
     def attributes_for_mailer(subscriber)
