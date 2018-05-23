@@ -7,6 +7,7 @@ class CreateChaskiqCampaigns < ActiveRecord::Migration[4.2]
       t.string :reply_email
       t.text :plain_content
       t.text :html_content
+      t.text :html_serialized
       t.text :premailer
       t.text :description
       t.string :logo
