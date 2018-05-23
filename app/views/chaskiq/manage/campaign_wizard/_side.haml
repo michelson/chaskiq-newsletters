@@ -1,0 +1,26 @@
+.col-md-3
+  %h3.page-title.mb-5
+    Publish steps
+  %div
+    .list-group.list-group-transparent.mb-0
+      - wizard_steps.each_with_index do |wizard_step, index|
+        = link_to wizard_path(wizard_step), class: "list-group-item list-group-item-action d-flex align-items-center #{ step == wizard_step ? 'active' : 'white' }" do
+
+
+          %span.icon.mr-3
+            - case wizard_step.to_s
+              - when "list"
+                %i.fa.fa-sort-alpha-up
+              - when "setup"
+                %i.fa.fa-cog
+              - when "template"
+                %i.fa.fa-object-group
+              - when "design"
+                %i.fa.fa-pencil
+              - when "confirm"
+                %i.fa.fa-check
+              - else
+                = wizard_step
+                %i.fa.fa-check
+
+          = t(".#{wizard_step}")

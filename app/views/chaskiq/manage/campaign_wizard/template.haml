@@ -10,4 +10,4 @@
       .card-body
         = simple_form_for @campaign, url: wizard_path do |f|
           = f.input :template_id , as: :select, collection: Chaskiq::Template.all
-          = f.submit
+          = f.submit :class => "btn btn-primary", disable_with: "loading"

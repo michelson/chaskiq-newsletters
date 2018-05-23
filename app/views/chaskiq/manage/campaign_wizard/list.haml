@@ -15,4 +15,4 @@
 
           = f.input :list_id, as: :select, collection: Chaskiq::List.all
 
-          = f.submit
+          = f.submit :class => "btn btn-primary", disable_with: "loading"
