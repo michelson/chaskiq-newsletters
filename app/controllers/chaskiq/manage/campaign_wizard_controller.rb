@@ -23,9 +23,16 @@ module Chaskiq
     def update
       @campaign.update_attributes(resource_params)
 
-      respond_to do |format|
-        format.html{render_wizard @campaign}
-        format.json{render json: {status: :ok}}
+      if @campaign.errors.blank?
+        respond_to do |format|
+          format.html{render_wizard @campaign}
+          format.json{render json: {status: :ok}}
+        end
+      else
+        respond_to do |format|
+          format.html{render_wizard @campaign, notice: "error"}
+          format.json{render json: {status: :nok}}
+        end
       end
     end
 

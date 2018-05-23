@@ -4,13 +4,13 @@ require 'open-uri'
 module Chaskiq
   class Campaign < ActiveRecord::Base
 
-    belongs_to :parent, class_name: "Chaskiq::Campaign"
+    belongs_to :parent, class_name: "Chaskiq::Campaign", optional: true
     belongs_to :list
     has_many :subscribers, through: :list
     has_many :subscriptions, through: :subscribers
     has_many :attachments
     has_many :metrics
-    belongs_to :template, class_name: "Chaskiq::Template"
+    belongs_to :template, class_name: "Chaskiq::Template", optional: true
     #accepts_nested_attributes_for :template, :campaign_template
 
     attr_accessor :step

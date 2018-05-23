@@ -11,36 +11,37 @@
 
         = simple_form_for @campaign, url: wizard_path, html: {class: "wizard-big wizard clearfix"}  do |f|
 
-          .col-lg-6
-            = f.input :name
-          .col-lg-6
-            = f.input :subject
+          .row
+            .col-lg-6
+              = f.input :name
+            .col-lg-6
+              = f.input :subject
 
-          .col-lg-6
-            = f.input :logo, as: :file, input_html:{ image: @campaign.logo}
+            .col-lg-6
+              = f.input :logo, as: :file, input_html:{ image: @campaign.logo}
 
-          .col-lg-6
-            = f.input :from_name
+            .col-lg-6
+              = f.input :from_name
 
-          .col-lg-6
-            = f.input :from_email
+            .col-lg-6
+              = f.input :from_email
 
-          .col-lg-6
-            = f.input :reply_email
+            .col-lg-6
+              = f.input :reply_email
 
-          .col-lg-6
-            = f.input :query_string
+            .col-lg-6
+              = f.input :query_string
 
-          .col-lg-6
-            = f.input :scheduled_at, as: :date_time_picker
+            .col-lg-6
+              = f.input :scheduled_at, as: :date_time_picker
 
-          .col-lg-6
-            = f.input :timezone, as: :select , collection: ActiveSupport::TimeZone.us_zones, default: "Pacific Time (US & Canada)"
+            .col-lg-6
+              = f.input :timezone, as: :select , collection: ActiveSupport::TimeZone.us_zones, default: "Pacific Time (US & Canada)"
 
-          .col-lg-12
-            = f.input :description
-          -#= f.input :created_at
-          -#= f.input :updated_at
+            .col-lg-12
+              = f.input :description
+            -#= f.input :created_at
+            -#= f.input :updated_at
           .clearfix
           %hr
           = f.button :submit, "Setup!", :class => "btn btn-primary", disable_with: "loading"

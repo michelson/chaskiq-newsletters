@@ -2,8 +2,8 @@ require "aasm"
 
 module Chaskiq
   class Subscription < ActiveRecord::Base
-    belongs_to :subscriber
-    belongs_to :list
+    belongs_to :subscriber, optional: true
+    belongs_to :list, optional: true
     has_many :campaigns, through: :list
     has_many :metrics , as: :trackable
 
