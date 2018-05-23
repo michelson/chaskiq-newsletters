@@ -77,7 +77,8 @@ module Chaskiq
     end
 
     def copy_template
-      self.html_content = self.template.body
+      self.html_content    = self.template.body
+      self.html_serialized = self.template.body
       self.css = self.template.css
     end
 

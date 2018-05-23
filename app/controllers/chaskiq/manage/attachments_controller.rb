@@ -3,6 +3,7 @@ require_dependency "chaskiq/application_controller"
 module Chaskiq
   class Manage::AttachmentsController < ApplicationController
 
+    skip_before_action :verify_authenticity_token
     before_action :authentication_method
     before_action :find_campaign
 
