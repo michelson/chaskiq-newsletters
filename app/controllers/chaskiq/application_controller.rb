@@ -6,8 +6,7 @@ module Chaskiq
     protect_from_forgery with: :exception
     
     def get_referrer
-      ip = request.ip
-      ip = env['HTTP_X_FORWARDED_FOR'].split(",").first if Rails.env.production?
+      ip = request.remote_ip
     end
 
     def authentication_method
