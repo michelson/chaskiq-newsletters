@@ -3,6 +3,8 @@ require "wicked"
 module Chaskiq
   class ApplicationController < ActionController::Base
 
+    protect_from_forgery with: :exception
+    
     def get_referrer
       ip = request.ip
       ip = env['HTTP_X_FORWARDED_FOR'].split(",").first if Rails.env.production?

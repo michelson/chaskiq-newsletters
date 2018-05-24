@@ -9,7 +9,7 @@
       %i.fa.fa-edit
       Setup
 
-    = link_to preview_manage_campaign_path(campaign), class: "dropdown-item" do
+    = link_to preview_manage_campaign_path(campaign), class: "dropdown-item" , target: "blank" do
       %i.fa.fa-eye
       Preview
 
@@ -17,14 +17,14 @@
       %i.fa.fa-heartbeat
       Test
 
-    = link_to deliver_manage_campaign_path(campaign), data: { confirm: "Are you sure?" }, class: "dropdown-item" do
+    = link_to deliver_manage_campaign_path(campaign), data: { confirm: "Are you sure?", turbolinks: "false" }, class: "dropdown-item" do
       %i.fa.fa-paper-plane
       Send
 
-    = link_to clone_manage_campaign_path(campaign), data: { confirm: "Are you sure?" }, class: "dropdown-item" do
+    = link_to clone_manage_campaign_path(campaign), data: { confirm: "Are you sure?", turbolinks:"false" }, class: "dropdown-item" do
       %i.fa.fa-copy
       clone
 
-    = link_to purge_manage_campaign_path(campaign), data: { confirm: "Are you sure?" }, class: "dropdown-item" do
+    = link_to purge_manage_campaign_path(campaign), data: { confirm: "Are you sure?", turbolinks: "false" }, class: "dropdown-item" do
       %i.fa.fa-trash
       purge metrics

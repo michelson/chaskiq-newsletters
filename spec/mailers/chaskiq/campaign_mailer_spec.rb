@@ -11,14 +11,29 @@ module Chaskiq
     let(:campaign){ FactoryBot.create(:chaskiq_campaign, template: template, list: list) }
     let(:template_html){ "<p>{{name}}</p>"}
     let(:premailer_template){"<p>
-      {{name}} {{last_name}} {{email}} {{campaign_url}}
-      {{campaign_subscribe}} {{campaign_unsubscribe}}
-      {{campaign_description}} {{track_image_url}}
-      this is the template</p>"}
+      {{name}} {{last_name}} 
+      {{email}} 
+      {{campaign_url}}
+      {{campaign_subscribe}} 
+      {{campaign_unsubscribe}}
+      {{campaign_description}} 
+      {{track_image_url}}
+
+      this is the template
+
+      <a href='http://google.com'>don't be evil</a>
+      <a href='{{campaign_url}}'>campaign url</a>
+      <a href='{{campaign_unsubscribe}}'>campaign url</a>
+
+      {{company}}
+      {{country}}
+      </p>"}
 
     before do
       allow_any_instance_of(Chaskiq::Campaign).to receive(:premailer).and_return(premailer_template)
       allow_any_instance_of(Chaskiq::Campaign).to receive(:html_content).and_return(template_html)
+      allow_any_instance_of(Chaskiq::Subscriber).to receive(:options).and_return({country: "Athens", company: "Acme"})
+      
       Chaskiq::CampaignMailer.newsletter(campaign, subscriber.subscriptions.first).deliver_now
     end
 
@@ -37,6 +52,7 @@ module Chaskiq
     end
 
     it "should deliver with open.gif" do
+      binding.pry
       expect(last_email.body).to include("open.gif")
     end
 

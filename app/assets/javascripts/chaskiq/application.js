@@ -11,20 +11,20 @@
 // about supported directives.
 //
 
-//= require jquery/jquery-2.1.1.js
-//= require peity/jquery.peity.min.js
-//= require chaskiq/chaskiq.js
-//= require cocoon
-//= require datapicker/bootstrap-datepicker.js
-//= require select2/select2.min.js
 
-//= require jquery_ujs
+//= require jquery
+// require jquery_ujs
+//= require rails-ujs
+//= require turbolinks
+
+//= require peity/jquery.peity.min.js
+//= require cocoon
+
 
 // DASHBOARD
 //= require sparkline/jquery.sparkline.min.js
 //= require Chart.bundle
 //= require chartkick
-//= require turbolinks
 
 //CODE
 //= require codemirror/codemirror.js

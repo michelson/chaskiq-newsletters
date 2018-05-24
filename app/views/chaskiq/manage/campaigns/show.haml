@@ -38,7 +38,7 @@
           = render "chaskiq/manage/campaigns/actions", campaign: @campaign
 
           = render "chaskiq/manage/campaigns/config_actions", campaign: @campaign
-      .card-body
+      .card-body.row
 
         .col-lg-5
           = pie_chart @campaign.metrics.group(:action).count, height: "300px", donut: true, legend: "bottom"

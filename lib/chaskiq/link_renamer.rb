@@ -17,8 +17,6 @@ module Chaskiq
       #  end
       #end
 
-      content.css('div.mojoMcContainerEmptyMessage').remove
-
       #make sure nokogiri does not rips off my mustaches
       content.to_html.gsub("%7B%7B", "{{").gsub("%7D%7D", "}}")
     end

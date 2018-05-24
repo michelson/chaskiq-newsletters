@@ -7,7 +7,7 @@
       .card-header
         %h3.card-title
           = params[:id]
-      .card-body
+      .card-body.row
 
 
         .col-lg-6
@@ -20,11 +20,15 @@
             %i.fa.fa-eye
               preview
 
-          = link_to test_manage_campaign_path(@campaign), class: "btn btn-default" do
+          &nbsp;
+
+          = link_to test_manage_campaign_path(@campaign), class: "btn btn-secondary", data: {confirm: "Sure?", turbolinks: false} do
             %i.fa.fa-heartbeat
               test
 
-          = link_to deliver_manage_campaign_path(@campaign), class: "btn btn-danger", data: {confirm: "Sure?"} do
+          &nbsp;
+
+          = link_to deliver_manage_campaign_path(@campaign), class: "btn btn-danger", data: {confirm: "Sure?", turbolinks: false} do
             %i.fa.fa-paper-plane
               send
 
@@ -36,10 +40,10 @@
               %strong Subject:
               %h3=" #{@campaign.subject}"
             %li
-              %strong Sent to:
+              %strong Send list:
               = link_to @campaign.list.name, manage_list_path(@campaign.list)
             %li
-              %strong from name:
+              %strong From name:
               =" #{@campaign.from_name}"
             %li
               %strong From email:

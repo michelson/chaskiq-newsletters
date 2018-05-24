@@ -74,6 +74,7 @@ module Chaskiq
     end
 
     def deliver
+      binding.pry
       find_campaign
       @campaign.send_newsletter
       flash[:notice] = "newsletter sended"
