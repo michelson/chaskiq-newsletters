@@ -127,10 +127,9 @@ module Chaskiq
       subscriber_options = subscriber.attributes
                                       .merge(attributes_for_mailer(subscriber))
                                       .merge(subscriber.options)
-
-                                      binding.pry
-      premailer.gsub!("%7B%7B", "{{").gsub!("%7D%7D", "}}")                               
-      compiled_mustache = Mustache.render(premailer, subscriber_options)
+                             
+      compiled_premailer = premailer.gsub("%7B%7B", "{{").gsub("%7D%7D", "}}")                               
+      compiled_mustache = Mustache.render(compiled_premailer, subscriber_options)
 
       html = Chaskiq::LinkRenamer.convert(compiled_mustache, link_prefix)
       html

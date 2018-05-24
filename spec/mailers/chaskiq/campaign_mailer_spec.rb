@@ -52,7 +52,6 @@ module Chaskiq
     end
 
     it "should deliver with open.gif" do
-      binding.pry
       expect(last_email.body).to include("open.gif")
     end
 

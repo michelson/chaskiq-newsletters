@@ -5,6 +5,10 @@ module Chaskiq
     column 'email', :email
     column 'name', :name
 
+    fetch_model do
+      Chaskiq::Subscriber.where(email: row['email']).first_or_initialize
+    end
+
     on :row_processing do
       [row.keys - columns.keys].flatten.each do |k|
         key = k.gsub(" ", "-").underscore
@@ -19,7 +23,9 @@ module Chaskiq
     end
 
     on :row_processed do
-      model.subscriptions.create(list: @list) if model.errors.blank?
+      if model.errors.blank? && model.subscriptions.where(list: @list).blank?
+        model.subscriptions.create(list: @list) 
+      end
       @row_count += 1
     end
 

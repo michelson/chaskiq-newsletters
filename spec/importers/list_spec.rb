@@ -5,7 +5,7 @@ module Chaskiq
     
     let(:spreadsheet_data) do
       arr = [] 
-      arr << ['Email', ' Name ', 'last name', 'Department', 'Manager']
+      arr << ['email', ' name ', 'last name', 'Department', 'Manager']
       (1..2).each{|o| 
           arr << [Faker::Name.name, 
            Faker::Internet.email, 
