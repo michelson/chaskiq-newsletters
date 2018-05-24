@@ -2,13 +2,12 @@ module Chaskiq
   class ListImporter < ActiveImporter::Base
     imports Subscriber
 
-    column 'Email', :email
-    column 'Name', :name
-    column 'last name', :last_name
+    column 'email', :email
+    column 'name', :name
 
     on :row_processing do
       [row.keys - columns.keys].flatten.each do |k|
-        model.options[k.gsub(" ", "-").tableize ] = row[k] 
+        model.options[k.gsub(" ", "-").underscore ] = row[k] 
       end
     end
 
@@ -18,7 +17,7 @@ module Chaskiq
     end
 
     on :row_processed do
-      model.subscriptions.create(list: @list)
+      model.subscriptions.create(list: @list) if model.errors.blank?
       @row_count += 1
     end
 
@@ -37,7 +36,7 @@ module Chaskiq
   private
 
     def send_notification(message)
-      # ...
+      puts message
     end
 
   end

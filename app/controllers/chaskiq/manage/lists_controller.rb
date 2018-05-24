@@ -30,7 +30,16 @@ module Chaskiq
       @list =  Chaskiq::List.find(params[:id])
 
       if path = params[:list][:upload_file].try(:tempfile)
-        Chaskiq::ListImporterJob.perform_later(@list, params[:list][:upload_file].tempfile.path)
+
+        f = params[:list][:upload_file].tempfile
+
+        path = Rails.root.join("tmp").join( params[:list][:upload_file].original_filename ).to_s
+        
+        FileUtils.cp(f.path, path)
+
+        
+        Chaskiq::ListImporterJob.perform_later(@list, path)
+
         flash[:notice] = "We are importing in background, refresh after a while ;)"
       else
         flash[:error] = "Whoops!"
@@ -42,7 +51,7 @@ module Chaskiq
     def clear
       @list =  Chaskiq::List.find(params[:id])
       @list.subscriptions.delete_all
-      flash[:notice] = "We are importing in background, refresh after a while ;)"
+      flash[:notice] = "deleted subscribers"
 
       redirect_to manage_list_path(@list)
     end

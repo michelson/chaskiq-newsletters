@@ -12,7 +12,7 @@
           -#= f.submit
         .modal-footer
           %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close
-          %button.btn.btn-primary{:type => "button"} Save changes
+          = f.submit "import file", class: "btn btn-primary"
 
 
 
