@@ -1,0 +1,11 @@
+
+.page-header
+  %h2 Manage Lists
+
+.card
+  .card-header
+    .card-title
+      Edit #{@list.name} list
+
+  .card-body
+    = render partial: "form"

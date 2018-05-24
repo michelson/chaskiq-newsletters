@@ -1,0 +1,44 @@
+= simple_form_for ["manage", @list ,  @subscriber] do |f|
+
+  .col-lg-12
+    %h3 Edit subscriptor
+
+    = f.input :name, placeholder: "name"
+    = f.input :last_name, placeholder: "last name"
+    = f.input :email, placeholder: "email"
+
+    #jsoneditor{:style => "width: 100%; height: 400px;"}
+
+    = f.input :options, as: :hidden
+
+    %hr
+
+  .col-lg-12
+    = f.submit "edit subscriptor", class: "btn btn-primary"
+
+  %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.16.0/jsoneditor.css", :rel => "stylesheet"}/
+
+  %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.16.0/jsoneditor-minimalist.js"}
+
+  :javascript
+      // create the editor
+      var container = document.getElementById("jsoneditor");
+      var options = {
+
+        onChange: function (e) {
+          $("#subscriber_options").val(JSON.stringify(editor.get()))
+        },
+
+      };
+      var editor = new JSONEditor(container, options);
+
+      // set json
+      var json = #{@subscriber.options.to_json.html_safe};
+      editor.set(json);
+
+      // get json
+      var json = editor.get();
+
+      $("form.edit_subscriber").on("submit", function(ev){
+        $("#subscriber_options").val(JSON.stringify(editor.get()))
+      })

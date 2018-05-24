@@ -7,6 +7,8 @@ module Chaskiq
 
     on :row_processing do
       [row.keys - columns.keys].flatten.each do |k|
+        key = k.gsub(" ", "-").underscore
+        next if key.empty?
         model.options[k.gsub(" ", "-").underscore ] = row[k] 
       end
     end

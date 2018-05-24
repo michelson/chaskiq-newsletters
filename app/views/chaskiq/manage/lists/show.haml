@@ -57,6 +57,7 @@
             %th Email
             %th First Name
             %th Last Name
+            %th options
             %th
             %th
         %tbody
@@ -71,6 +72,7 @@
               %td=sub.email
               %td=sub.name
               %td=sub.last_name
+              %td=sub.options
               %td
                 = link_to edit_manage_list_subscriber_path(@list, sub), class: "btn btn-secondary" do
                   %i.fa.fa-edit

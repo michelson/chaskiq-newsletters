@@ -10,20 +10,11 @@
  *
  *= require_self
  *= require font-awesome
- * require animate/animate.css
- *= require summernote/summernote-bs3.css
- *= require summernote/summernote.css
-
 
  *= require datapicker/datepicker3.css
- *= require toastr/toastr.css
  *= require codemirror/elegant.css
  *= require codemirror/codemirror.css
- *= require colorpicker/css/bootstrap-colorpicker.scss
  *= require select2/select2.css
-
- * require chaskiq/manage/campaign_wizard.css
- * require chaskiq/style
 
  *= require chaskiq/dashboard.scss
 
