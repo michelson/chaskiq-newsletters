@@ -132,7 +132,6 @@ module Chaskiq
       premailer.gsub!("%7B%7B", "{{").gsub!("%7D%7D", "}}")                               
       compiled_mustache = Mustache.render(premailer, subscriber_options)
 
-      binding.pry
       html = Chaskiq::LinkRenamer.convert(compiled_mustache, link_prefix)
       html
     end
