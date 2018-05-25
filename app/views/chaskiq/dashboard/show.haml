@@ -9,7 +9,7 @@
       %h3.card-title
         You have #{@campaigns_count} campaigns and #{@sends_count} sended messages.
         
-    .card-body
+    .card-body.row
 
       .col-sm-3
         = pie_chart @pie_metrics.count, height: "220px", legend: "bottom", donut: true
