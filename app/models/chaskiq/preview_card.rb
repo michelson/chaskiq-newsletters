@@ -7,8 +7,6 @@ module Chaskiq
 
     enum type: [:link, :photo, :video, :rich]
 
-    belongs_to :status
-
     mount_uploader :image, PreviewUploader
 
     validates :url, presence: true

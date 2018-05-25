@@ -96,7 +96,7 @@ module Chaskiq
       card.description      = meta_property(page, 'og:description') || meta_property(page, 'description')
 
       card.remote_image_url = meta_property(page, 'og:image') if meta_property(page, 'og:image')
-
+      
       return if card.title.blank?
 
       card.save_with_optional_image!
