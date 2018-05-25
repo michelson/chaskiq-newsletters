@@ -2,6 +2,8 @@ Chaskiq::Engine.routes.draw do
 
   root 'dashboard#show'
 
+  resource :oembed, controller: "oembed", only: :show
+
   #public
   resources :campaigns, only: :show do
     member do

@@ -46,6 +46,8 @@ Gem::Specification.new do |s|
   s.add_dependency "aws-ses"
   s.add_dependency "ransack"
   s.add_dependency "active_importer"
+  s.add_dependency "ruby-oembed"
+  s.add_dependency "http"
 
   s.add_development_dependency "factory_bot_rails"
   s.add_development_dependency "rails-controller-testing"

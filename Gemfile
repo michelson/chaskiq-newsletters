@@ -22,3 +22,4 @@ gem 'puma'
 gem 'roadie'
 gem 'turbolinks'
 gem 'faker', github: "stympy/faker"
+gem 'webmock', '~> 3.0'

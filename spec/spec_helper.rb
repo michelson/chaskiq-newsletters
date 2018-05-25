@@ -24,10 +24,15 @@ require 'shoulda/matchers'
 require 'database_cleaner'
 require 'rails-controller-testing'
 require 'faker'
+require 'webmock/rspec'
+
 
 # Require files in spec/support
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
+def request_fixture(name)
+  File.read(File.join(Chaskiq::Engine.root, 'spec', 'fixtures', 'requests', name))
+end
 
 #require 'active_job/test_helper'
 #require 'sidekiq/testing'
